@@ -23,3 +23,7 @@ Tahun 2022 lalu, BNMO milik Indra dan Doni telah berhasil kalian perbaiki dan te
 2. Gradle 6.6+
 
 ## Features
+
+## How to Use
+
+1. `gradle test run`

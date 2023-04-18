@@ -10,5 +10,9 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        Point p1 = new Point();
+        Point p2 = new Point(5, 3);
+        System.out.println("x: " + p1.getX() + ", y: " + p1.getY());
+        System.out.println("x: " + p2.getX() + ", y: " + p2.getY());
     }
 }

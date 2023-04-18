@@ -32,3 +32,9 @@ application {
     // Define the main class for the application.
     mainClassName = 'bnmo.App'
 }
+
+
+test {
+    // useTestNG()
+    include '**bnmo/*'
+}
