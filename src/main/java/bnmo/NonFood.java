@@ -1,6 +1,8 @@
 package bnmo;
 
 public class NonFood extends Objek {
+    //Atribut
+    
     private int objLength;
     private int objWidth;
     private int objPrice;
@@ -8,7 +10,7 @@ public class NonFood extends Objek {
     private Point startPoint;
     private Point endPoint;
 
-    //Konstruktor jangan lupa
+    //Konstruktor
 
     public NonFood(String objekName, int objLength, int objWidth, int objPrice, Action action, Point starPoint, Point endPoint){
         super(objekName);
@@ -41,6 +43,8 @@ public class NonFood extends Objek {
         this.startPoint = starPoint;
         this.endPoint = endPoint;
     }
+
+    //Method
 
     public int getObjLength(){
         return objLength;
