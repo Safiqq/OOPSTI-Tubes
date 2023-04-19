@@ -115,63 +115,98 @@ public class Time {
     } 
 
     public void setYear(int year) throws IllegalArgumentException {
-        if (year < 1000 || year > 3000){
-            throw new IllegalArgumentException("Tahun yang dimasukkan tidak valid");
-        }
+        try {
+            if (year < 1000 || year > 3000){
+                throw new IllegalArgumentException("Tahun yang dimasukkan tidak valid");
+            }
 
-        this.year = year;
+            this.year = year;
+
+        } catch (IllegalArgumentException e){
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
     }
 
     public void setMonth(int month) throws IllegalArgumentException {
-        if (month < 1 || month > 12){
-            throw new IllegalArgumentException("Bulan yang dimasukkan tidak valid");
-        }
+        try {
+            if (month < 1 || month > 12){
+                throw new IllegalArgumentException("Bulan yang dimasukkan tidak valid");
+            }
 
-        this.month = month;
+            this.month = month;
+
+        } catch (IllegalArgumentException e){
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
     }
 
     public void setDay(int day) throws IllegalArgumentException {
-        if (day < 1 || day > getMaxDay(month, year)){
-            throw new IllegalArgumentException("Hari yang dimasukkan tidak valid");
-        }
+        try {
+            if (day < 1 || day > getMaxDay(month, year)){
+                throw new IllegalArgumentException("Hari yang dimasukkan tidak valid");
+            }
 
-        this.day = day;
+            this.day = day;
+
+        } catch (IllegalArgumentException e){
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
     }
 
     public void setHour(int hour) throws IllegalArgumentException {
-        if (hour < 0 || hour > 23){
-            throw new IllegalArgumentException("Jam yang dimasukkan tidak valid");
-        }
+        try {
+            if (hour < 0 || hour > 23){
+                throw new IllegalArgumentException("Jam yang dimasukkan tidak valid");
+            }
 
-        this.hour = hour;
+            this.hour = hour;
+
+        } catch (IllegalArgumentException e){
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
     }
 
     public void setMinute(int minute) throws IllegalArgumentException {
-        if (minute < 0 || minute > 59){
-            throw new IllegalArgumentException("Menit yang dimasukkan tidak valid");
-        }
+        try {
+            if (minute < 0 || minute > 59){
+                throw new IllegalArgumentException("Menit yang dimasukkan tidak valid");
+            }
 
-        this.minute = minute;
+            this.minute = minute;
+    
+        } catch (IllegalArgumentException e){
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
     }
 
     public void setSecond(int second) throws IllegalArgumentException {
-        if (second < 0 || second > 59){
-            throw new IllegalArgumentException("Detik yang dimasukkan tidak valid");
-        }
+        try {
+            if (second < 0 || second > 59){
+                throw new IllegalArgumentException("Detik yang dimasukkan tidak valid");
+            }
 
-        this.second = second;
+            this.second = second;
+        
+        } catch (IllegalArgumentException e){
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
     }
 
     public void setTime(int day, int month, int year, int hour, int minute, int second) throws IllegalArgumentException {
-        if(!isValid(day, month, year, hour, minute, second)){
-            throw new IllegalArgumentException("Tanggal yang dimasukkan tidak valid");
-        }
+        try {
+            if(!isValid(day, month, year, hour, minute, second)){
+                throw new IllegalArgumentException("Tanggal yang dimasukkan tidak valid");
+            }
 
-        this.day = day;
-        this.month = month;
-        this.year = year;
-        this.hour = hour;
-        this.minute = minute;
-        this.second = second;
+            this.day = day;
+            this.month = month;
+            this.year = year;
+            this.hour = hour;
+            this.minute = minute;
+            this.second = second;
+
+        } catch (IllegalArgumentException e){
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
     }
 }
