@@ -22,25 +22,16 @@ public class MotiveTest {
 
     @Test
     public void testMotiveTest(){
-        motive.minMood(20);
-        motive.minHunger(30);
-        motive.minHealth(50);
+        motive.changeMood(-20);
+        motive.changeHunger(30);
         assertEquals("mood not equal", motive.getMood(), 80);
-        assertEquals("hunger not equal", motive.getHunger(), 70);
-        assertEquals("health not equal", motive.getHealth(), 50);
+        assertEquals("hunger not equal", motive.getHunger(), 100);
+        assertThrows(IllegalArgumentException.class, () -> motive.changeHealth(-120));
 
-        motive.addMood(30);
-        motive.addHunger(20);
-        motive.addHealth(10);
-        assertEquals("mood not equal", motive.getMood(), 100);
-        assertEquals("hunger not equal", motive.getHunger(), 90);
-        assertEquals("health not equal", motive.getHealth(), 60);
-
-        motive.setMood(120);
-        motive.setHunger(50);
-        motive.setHealth(70);
-        assertEquals("mood not equal", motive.getMood(), 100);
-        assertEquals("hunger not equal", motive.getHunger(), 50);
-        assertEquals("health not equal", motive.getHealth(), 70);
+        motive.setMood(30);
+        motive.setHealth(10);
+        assertEquals("mood not equal", motive.getMood(), 30);
+        assertThrows(IllegalArgumentException.class, () -> motive.setHunger(-10));
+        assertEquals("health not equal", motive.getHealth(), 10);
     }
 }
