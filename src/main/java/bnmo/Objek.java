@@ -1,6 +1,6 @@
 package bnmo;
 
-public class Objek {
+public class Objek{
     private String objekName;
 
     public Objek(String objekName){
@@ -14,4 +14,5 @@ public class Objek {
     public void setObjekName(String objekName){
         this.objekName = objekName;
     }
+
 }
