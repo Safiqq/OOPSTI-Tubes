@@ -46,6 +46,12 @@ public class TimeTest {
         assertEquals("minute not equal", time1.getMinute(), 1);
         assertEquals("second not equal", time1.getSecond(), 1);
 
-        time2.setTime(29, 2, 2003, 0, 0, 0); // exception        
+        assertThrows(IllegalArgumentException.class, () -> time2.setYear(0));
+        assertThrows(IllegalArgumentException.class, () -> time2.setMonth(0));
+        assertThrows(IllegalArgumentException.class, () -> time2.setDay(0));
+        assertThrows(IllegalArgumentException.class, () -> time2.setHour(24));
+        assertThrows(IllegalArgumentException.class, () -> time2.setMinute(60));
+        assertThrows(IllegalArgumentException.class, () -> time2.setSecond(60));
+        assertThrows(IllegalArgumentException.class, () -> time2.setTime(29, 2, 2003, 0, 0, 0)); 
     }
 }
