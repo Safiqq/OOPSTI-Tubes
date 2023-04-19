@@ -3,6 +3,10 @@ package bnmo;
 public class Objek {
     private String objekName;
 
+    public Objek(String objekName){
+        this.objekName = objekName;
+    }
+
     public String getObjekName(){
         return objekName;
     }
