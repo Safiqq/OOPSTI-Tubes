@@ -10,6 +10,10 @@ public class Groceries extends Objek {
         this.grocHunger = grocHunger;
     }
 
+    public Groceries(String objekName){
+        super(objekName);
+    }
+
     public int getGrocPrice(){
         return grocPrice;
     }
