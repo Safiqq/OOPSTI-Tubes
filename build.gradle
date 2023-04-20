@@ -30,11 +30,11 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'bnmo.App'
+    mainClassName = 'simplicity.App'
 }
 
 
 test {
     // useTestNG()
-    include '**bnmo/*'
+    include '**simplicity/*'
 }

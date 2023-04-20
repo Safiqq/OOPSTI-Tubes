@@ -1,4 +1,4 @@
-package bnmo;
+package simplicity;
 
 public class Groceries extends Objek {
     //Atribut

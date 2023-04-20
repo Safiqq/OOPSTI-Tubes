@@ -1,4 +1,4 @@
-package bnmo;
+package simplicity;
 
 import javax.swing.*;
 
@@ -6,7 +6,7 @@ public class App {
 
     public static class cobaJavaSwing {
         public static void start() {
-            JFrame f = new JFrame("BNMO");
+            JFrame f = new JFrame("Sim-Plicity");
             JButton b = new JButton("Start");
             b.setBounds(130, 100, 100, 40);
             f.add(b);
