@@ -16,18 +16,18 @@ public class PointTest {
 
     @Test
     public void testPointConstructor() {
-        assertEquals(0, p1.getX(), 0);
-        assertEquals(0, p1.getY(), 0);
+        assertEquals("x not equal", 0, p1.getX());
+        assertEquals("y not equal", 0, p1.getY());
 
-        assertEquals(5, p2.getX(), 0);
-        assertEquals(3, p2.getY(), 0);
+        assertEquals("x not equal", 5, p2.getX());
+        assertEquals("y not equal", 3, p2.getY());
     }
 
     @Test
     public void testPointSet() {
         p1.setX(3);
         p1.setY(5);
-        assertEquals(3, p1.getX(), 0);
-        assertEquals(5, p1.getY(), 0);
+        assertEquals("x not equal", 3, p1.getX());
+        assertEquals("y not equal", 5, p1.getY());
     }
 }

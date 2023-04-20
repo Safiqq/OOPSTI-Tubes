@@ -2,10 +2,10 @@ package simplicity;
 
 public class Effect {
     private String motiveName;
-    private Integer motiveEffect;
-    private Integer cooldown;
+    private int motiveEffect;
+    private int cooldown;
 
-    public Effect(String motiveName, Integer motiveEffect, Integer cooldown) {
+    public Effect(String motiveName, int motiveEffect, int cooldown) {
         this.motiveName = motiveName;
         this.motiveEffect = motiveEffect;
         this.cooldown = cooldown; // in seconds
@@ -15,11 +15,11 @@ public class Effect {
         return motiveName;
     }
 
-    public Integer getMotiveEffect() {
+    public int getMotiveEffect() {
         return motiveEffect;
     }
 
-    public Integer getCooldown() {
+    public int getCooldown() {
         return cooldown;
     }
 
@@ -27,11 +27,11 @@ public class Effect {
         this.motiveName = motiveName;
     }
 
-    public void setMotiveName(Integer motiveEffect) {
+    public void setMotiveName(int motiveEffect) {
         this.motiveEffect = motiveEffect;
     }
 
-    public void setCooldown(Integer cooldown) {
+    public void setCooldown(int cooldown) {
         this.cooldown = cooldown;
     }
 }
