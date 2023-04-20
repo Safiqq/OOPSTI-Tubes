@@ -1,4 +1,4 @@
-package bnmo;
+package simplicity;
 
 import java.util.*;
 
