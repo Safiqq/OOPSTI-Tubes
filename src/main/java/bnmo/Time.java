@@ -123,7 +123,7 @@ public class Time {
             this.year = year;
 
         } catch (IllegalArgumentException e){
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -136,7 +136,7 @@ public class Time {
             this.month = month;
 
         } catch (IllegalArgumentException e){
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -149,7 +149,7 @@ public class Time {
             this.day = day;
 
         } catch (IllegalArgumentException e){
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -162,7 +162,7 @@ public class Time {
             this.hour = hour;
 
         } catch (IllegalArgumentException e){
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -175,7 +175,7 @@ public class Time {
             this.minute = minute;
     
         } catch (IllegalArgumentException e){
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -188,7 +188,7 @@ public class Time {
             this.second = second;
         
         } catch (IllegalArgumentException e){
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -206,7 +206,7 @@ public class Time {
             this.second = second;
 
         } catch (IllegalArgumentException e){
-            System.out.println("Terjadi kesalahan: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 }
