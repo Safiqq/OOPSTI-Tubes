@@ -1,4 +1,4 @@
-# **BNMO**
+# **Sim-Plicity**
 
 Program ini dibuat oleh kelompok 8 dari kelas K02, khusus untuk menyelesaikan tugas besar mata kuliah IF2212 Pemrograman Berorientasi Objek STI.
 

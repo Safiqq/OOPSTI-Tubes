@@ -1,17 +1,17 @@
-package bnmo;
+package simplicity;
 
 public class Inventory {
     private Box<NonFood> boxNonFood;
     private Box<Groceries> boxGroceries;
     private Box<Food> boxFood;
 
-    Inventory() {
+    public Inventory() {
         boxNonFood = new Box<NonFood>();
         boxGroceries = new Box<Groceries>();
         boxFood = new Box<Food>();
     }
 
-    Inventory(Box<NonFood> boxNonFood, Box<Groceries> boxGroceries, Box<Food> boxFood) {
+    public Inventory(Box<NonFood> boxNonFood, Box<Groceries> boxGroceries, Box<Food> boxFood) {
         this.boxNonFood = boxNonFood;
         this.boxGroceries = boxGroceries;
         this.boxFood = boxFood;

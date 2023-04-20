@@ -1,4 +1,4 @@
-package bnmo;
+package simplicity;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
