@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class House {
     // Attribute
-    private String owner = sim.getFullName();
+    // private String owner = sim.getFullName();
+    private String owner;
     private ArrayList<Room> listRoom;
     private Point houseLoc;
     private int emptyRoom;

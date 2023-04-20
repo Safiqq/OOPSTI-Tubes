@@ -1,4 +1,4 @@
-package bnmo;
+package simplicity;
 
 public class World {
     //attribute

@@ -21,7 +21,7 @@ public class Motive {
             }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
-            System.exit(0);
+            // System.exit(0);
         }
     }
 
@@ -35,7 +35,7 @@ public class Motive {
             }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
-            System.exit(0);
+            // System.exit(0);
         }
     }
 
@@ -49,7 +49,7 @@ public class Motive {
             }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
-            System.exit(0);
+            // System.exit(0);
         }
     }
 
@@ -77,7 +77,7 @@ public class Motive {
             }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
-            System.exit(0);
+            // System.exit(0);
         }
     }
 
@@ -93,7 +93,7 @@ public class Motive {
             }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
-            System.exit(0);
+            // System.exit(0);
         }
     }
 
@@ -109,7 +109,7 @@ public class Motive {
             }
         } catch (IllegalArgumentException e){
             System.out.println(e.getMessage());
-            System.exit(0);
+            // System.exit(0);
         }
     }
 }
