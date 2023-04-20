@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 
 public class TimeTest {
-    private static Time time;
+    private static Time time1, time2;
 
     @BeforeClass
     public static void setUp() throws Exception {

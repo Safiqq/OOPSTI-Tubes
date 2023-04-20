@@ -11,7 +11,7 @@ public class OccupationTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        Occupation occupation = new Occupation();
+        occupation = new Occupation();
     }
 
     @Test
