@@ -9,9 +9,9 @@ public class Time {
     private int second;
 
     public Time(){
-        day = 19;
-        month = 4;
-        year = 2023;
+        day = 1;
+        month = 1;
+        year = 1;
         hour = 0;
         minute = 0;
         second = 0;
@@ -30,7 +30,7 @@ public class Time {
             return false;
         }
 
-        if (year < 1000 || year > 3000){
+        if (year < 1){
             return false;
         }
 
@@ -116,7 +116,7 @@ public class Time {
 
     public void setYear(int year) throws IllegalArgumentException {
         try {
-            if (year < 1000 || year > 3000){
+            if (year < 1){
                 throw new IllegalArgumentException("Tahun yang dimasukkan tidak valid");
             }
 
