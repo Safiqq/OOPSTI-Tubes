@@ -6,9 +6,9 @@ public class Motive {
     private int health;
 
     public Motive(){
-        mood = 100;
-        hunger = 100;
-        health = 100;
+        mood = 80;
+        hunger = 80;
+        health = 80;
     }
     
     public void changeMood(int points) throws IllegalArgumentException {
