@@ -51,14 +51,14 @@ public class Main {
         // cobaJavaSwing.start();
         Time time = new Time();
         time.runTime();
-        System.out.println("Waktu: " + time.getTime());
+        System.out.println("Waktu yang tersisa di " + time.getTime());
         Scanner scanner = new Scanner(System.in);
         Main main = new Main();
         main.showMenu();
         boolean isStarted = false;
         System.out.println("Ketik 'START GAME' untuk memulai game atau 'HELP' untuk melihat menu game");
         while (!isStarted){
-            System.out.println("Waktu: " + time.getTime());
+            System.out.println("Waktu yang tersisa di " + time.getTime());
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
             String menuUpper = menu.toUpperCase();
@@ -66,7 +66,7 @@ public class Main {
                 isStarted = true;
             } else if (menuUpper.equals("EXIT")){
                 System.out.println("Anda keluar dari game Simplicity");
-                System.out.println("Waktu: " + time.getTime());
+                System.out.println("Waktu yang tersisa di " + time.getTime());
                 System.out.println("Bye...");
                 System.exit(0);
             } else if (menuUpper.equals("HELP")){
@@ -78,7 +78,7 @@ public class Main {
 
         System.out.println("Ketik 'HELP' untuk melihat menu game yang tersedia ");
         while (isStarted){
-            System.out.println("Waktu: " + time.getTime());
+            System.out.println("Waktu yang tersisa di " + time.getTime());
             System.out.println("Masukkan perintah: ");
             String menu = scanner.nextLine();
             String menuUpper = menu.toUpperCase();
@@ -86,7 +86,7 @@ public class Main {
                 main.showMenu();
             } else if (menuUpper.equals("EXIT")){
                 System.out.println("Anda keluar dari game Simplicity");
-                System.out.println("Waktu: " + time.getTime());
+                System.out.println("Waktu yang tersisa di " + time.getTime());
                 System.out.println("Bye...");
                 System.exit(0);
             } else if (menuUpper.equals("VIEW SIM INFO")){

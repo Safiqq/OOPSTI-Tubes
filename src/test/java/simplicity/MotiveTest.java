@@ -17,16 +17,16 @@ public class MotiveTest {
 
     @Test
     public void testMotiveConstructor() {
-        assertEquals("mood not equal", motive1.getMood(), 100);
-        assertEquals("hunger not equal", motive1.getHunger(), 100);
-        assertEquals("health not equal", motive1.getHealth(), 100);
+        assertEquals("mood not equal", motive1.getMood(), 80);
+        assertEquals("hunger not equal", motive1.getHunger(), 80);
+        assertEquals("health not equal", motive1.getHealth(), 80);
     }
 
     @Test
     public void testMotiveTest() {
         motive2.changeMood(-20);
         motive2.changeHunger(30);
-        assertEquals("mood not equal", motive2.getMood(), 80);
+        assertEquals("mood not equal", motive2.getMood(), 60);
         assertEquals("hunger not equal", motive2.getHunger(), 100);
         assertThrows(IllegalArgumentException.class, () -> motive2.changeHealth(-120));
 
