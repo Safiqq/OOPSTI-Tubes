@@ -5,33 +5,33 @@ public class Location {
     private Room room;
     private Point point;
 
-    public Location(House house, Room room, Point point){
+    public Location(House house, Room room, Point point) {
         this.house = house;
         this.room = room;
         this.point = point;
     }
 
-    public House getHouse(){
+    public House getHouse() {
         return house;
     }
 
-    public Room getRoom(){
+    public Room getRoom() {
         return room;
     }
 
-    public Point getPoint(){
+    public Point getPoint() {
         return point;
     }
 
-    public void setHouse(House house){
+    public void setHouse(House house) {
         this.house = house;
     }
 
-    public void setRoom(Room room){
+    public void setRoom(Room room) {
         this.room = room;
     }
 
-    public void setPoint(Point point){
+    public void setPoint(Point point) {
         this.point = point;
     }
 }

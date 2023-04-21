@@ -22,8 +22,8 @@ public class Time {
 
         if (minute < 0 || minute > 12) {
             return false;
-        } else if (minute == 12){
-            if (second != 0){
+        } else if (minute == 12) {
+            if (second != 0) {
                 return false;
             }
         }
@@ -35,28 +35,28 @@ public class Time {
         return true;
     }
 
-    public void countdown(){
+    public void countdown() {
         second--;
 
-        if (second == -1){
+        if (second == -1) {
             second = 59;
             minute--;
         }
 
-        if (minute == -1){
+        if (minute == -1) {
             minute = 11;
             day++;
         }
     }
 
-    public void runTime(){
-        Thread thread = new Thread(new Runnable(){
-            public void run(){
-                while (true){
+    public void runTime() {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
                     try {
                         Thread.sleep(1000); // 1 detik
-                    } catch (InterruptedException e){
-                        
+                    } catch (InterruptedException e) {
+
                     }
                     countdown();
                 }
@@ -84,50 +84,34 @@ public class Time {
 
     // setter
     public void setDay(int day) throws IllegalArgumentException {
-        // try {
         if (day < 1) {
             throw new IllegalArgumentException("Hari yang dimasukkan tidak valid");
         }
 
         this.day = day;
-
-        // } catch (IllegalArgumentException e) {
-        // System.out.println(e.getMessage());
-        // }
     }
 
     public void setMinute(int minute) throws IllegalArgumentException {
-        // try {
         if (minute < 0 || minute > 12) {
             throw new IllegalArgumentException("Menit yang dimasukkan tidak valid");
-        } else if (minute == 12){
-            if (second != 0){
+        } else if (minute == 12) {
+            if (second != 0) {
                 throw new IllegalArgumentException("Menit yang dimasukkan tidak valid");
             }
         }
 
         this.minute = minute;
-
-        // } catch (IllegalArgumentException e) {
-        // System.out.println(e.getMessage());
-        // }
     }
 
     public void setSecond(int second) throws IllegalArgumentException {
-        // try {
         if (second < 0 || second > 59) {
             throw new IllegalArgumentException("Detik yang dimasukkan tidak valid");
         }
 
         this.second = second;
-
-        // } catch (IllegalArgumentException e) {
-        // System.out.println(e.getMessage());
-        // }
     }
 
     public void setTime(int day, int minute, int second) throws IllegalArgumentException {
-        // try {
         if (!isValid(day, minute, second)) {
             throw new IllegalArgumentException("Tanggal yang dimasukkan tidak valid");
         }
@@ -135,9 +119,5 @@ public class Time {
         this.day = day;
         this.minute = minute;
         this.second = second;
-
-        // } catch (IllegalArgumentException e) {
-        // System.out.println(e.getMessage());
-        // }
     }
 }

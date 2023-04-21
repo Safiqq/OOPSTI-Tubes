@@ -1,4 +1,5 @@
 package simplicity;
+
 import java.util.*;
 
 public class Sim {
@@ -15,12 +16,12 @@ public class Sim {
     private int dayChangeJob = 0;
 
     public Sim(String fullName) {
-        this.motive = new Motive(); //inisiasi di class motive
+        this.motive = new Motive(); // inisiasi di class motive
         this.money = 100;
-        this.occupation = new Occupation(); //inisiasi di class occupation
+        this.occupation = new Occupation(); // inisiasi di class occupation
         this.fullName = fullName;
-        this.inventory = new Inventory(); //inisiasi di class inventory
-        //this.simLoc = new Location(null, null, null); //inisiasi di class location
+        this.inventory = new Inventory(); // inisiasi di class inventory
+        // this.simLoc = new Location(null, null, null); //inisiasi di class location
     }
 
     public String getFullName() {
@@ -75,21 +76,22 @@ public class Sim {
         this.status = status;
     }
 
-    public void setCurrentTime(Time time){
+    public void setCurrentTime(Time time) {
         this.currentTime = time;
     }
 
     public void work(int time) {
-        // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
-        if (currentTime.getDay() > dayChangeJob){
+        // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian
+        // pekerjaan
+        if (currentTime.getDay() > dayChangeJob) {
             // validasi time kelipatan 120
             boolean done = false;
             Scanner scanner = new Scanner(System.in);
-            while (!done){
-                if (time % 120 != 0){
+            while (!done) {
+                if (time % 120 != 0) {
                     System.out.println("Durasi bekerja harus kelipatan 120");
                     System.out.print("Masukkan durasi kerja (dalam detik): ");
-                    time = scanner.nextLine();
+                    time = scanner.nextInt();
                 } else {
                     done = true;
                 }
@@ -100,14 +102,14 @@ public class Sim {
 
             // efek -10 kekenyangan/30 dtk, -10 mood/30 dtk
             // pake list Effect?
-            minusPoints = -10 * (time/30);
+            int minusPoints = -10 * (time / 30);
             motive.changeHunger(minusPoints);
             motive.changeMood(minusPoints);
 
             workTime += time;
             // anggap pokoknya harus 4 menit (240 dtk) baru digaji, ga liat harinya
             int notPaid = workTime - paidTime;
-            if (notPaid > 240){
+            if (notPaid > 240) {
                 int payday = workTime / 240;
                 money += payday * occupation.getDailySalary();
                 paidTime += payday * 240; // kalo ada time sisa yg belum dibayar
@@ -117,15 +119,15 @@ public class Sim {
         }
     }
 
-    public void newJob(){
+    public void newJob() {
         // harus > 12 menit bekerja
         // asumsi: 12 menit di pekerjaan lama
-        if(workTime >= 720){
+        if (workTime >= 720) {
             Occupation oldJob = occupation;
             occupation.changeJob();
             // harus bayar 1/2 dari gaji harian pekerjaan baru
-            int payChangeJob = 0.5 * occupation.getDailySalary();
-            if (money < payChangeJob){
+            int payChangeJob = (int) (0.5 * occupation.getDailySalary());
+            if (money < payChangeJob) {
                 System.out.println("Uang tidak mencukupi untuk pindah pekerjaan");
                 occupation.setJobName(oldJob.getJobName());
                 occupation.setDailySalary(oldJob.getDailySalary());

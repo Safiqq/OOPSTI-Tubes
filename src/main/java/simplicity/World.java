@@ -39,18 +39,18 @@ public class World {
         this.matrixHouse = matrixHouse;
     }
 
-    //other methods
-    public void addHouse(House house, Point houseLoc) throws Exception{
-    //add house ke world
+    // other methods
+    public void addHouse(House house, Point houseLoc) throws Exception {
+        // add house ke world
         // try{
-            if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null){
-                matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
-            } else {
-                throw new Exception("Sudah ada rumah Sim lain");
-            }
+        if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null) {
+            matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
+        } else {
+            throw new Exception("Sudah ada rumah Sim lain");
+        }
         // }
         // catch(Exception e){
-        //     System.out.println(e.getMessage());
+        // System.out.println(e.getMessage());
         // }
     }
 

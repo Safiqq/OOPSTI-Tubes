@@ -8,20 +8,20 @@ public class Occupation {
     private static Map<String, Integer> listJob = new HashMap<>();
     private static List<String> keys;
 
-    public Occupation(){
+    public Occupation() {
         fillListJob();
         keys = new ArrayList<>(listJob.keySet());
         Random random = new Random();
         jobName = keys.get(random.nextInt(keys.size()));
-        dailySalary = listJob.get(jobName); 
+        dailySalary = listJob.get(jobName);
     }
 
-    private void fillListJob(){
+    private void fillListJob() {
         listJob.put("Badut Sulap", 15);
         listJob.put("Koki", 30);
         listJob.put("Polisi", 35);
         listJob.put("Programmer", 45);
-        listJob.put("Dokter", 50);   
+        listJob.put("Dokter", 50);
         listJob.put("Ojek Payung", 1);
         listJob.put("Pawang Hujan", 5);
         listJob.put("Pelukis", 20);
@@ -29,19 +29,19 @@ public class Occupation {
         listJob.put("Pengusaha", 60);
     }
 
-    public void changeJob(){
+    public void changeJob() {
         System.out.println("Daftar pekerjaan yang tersedia: ");
-        for (int i = 0; i < keys.size(); i++){
-            System.out.println(i+1 + ". " + keys.get(i));
+        for (int i = 0; i < keys.size(); i++) {
+            System.out.println(i + 1 + ". " + keys.get(i));
         }
 
         Scanner scanner = new Scanner(System.in);
         boolean done = false;
         String oldJobName = jobName;
-        while (!done){
+        while (!done) {
             System.out.print("Masukkan nama pekerjaan baru: ");
             jobName = scanner.nextLine();
-            if (!jobName.equals(oldJobName)){
+            if (!jobName.equals(oldJobName)) {
                 done = true;
             } else {
                 System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama");
@@ -52,19 +52,19 @@ public class Occupation {
         scanner.close();
     }
 
-    public void setJobName(String jobName){
+    public void setJobName(String jobName) {
         this.jobName = jobName;
     }
 
-    public void setDailySalary(int dailySalary){
+    public void setDailySalary(int dailySalary) {
         this.dailySalary = dailySalary;
     }
-    
-    public String getJobName(){
+
+    public String getJobName() {
         return jobName;
     }
 
-    public int getDailySalary(){
+    public int getDailySalary() {
         return dailySalary;
     }
 }
