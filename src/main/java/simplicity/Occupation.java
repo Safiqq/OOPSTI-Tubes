@@ -51,6 +51,14 @@ public class Occupation {
         dailySalary = listJob.get(jobName);
         scanner.close();
     }
+
+    public void setJobName(String jobName){
+        this.jobName = jobName;
+    }
+
+    public void setDailySalary(int dailySalary){
+        this.dailySalary = dailySalary;
+    }
     
     public String getJobName(){
         return jobName;

@@ -44,6 +44,8 @@ public class Main {
         menu.append("11. List Object\n");
         menu.append("12. Go to Object\n");
         menu.append("13. Action\n");
+        menu.append("14. Work")
+        menu.append("15. Change Job");
         System.out.println(menu);
     }
 
@@ -111,6 +113,10 @@ public class Main {
 
             } else if (menuUpper.equals("ACTION")){
 
+            } else if (menuUpper.equals("WORK")){
+                // sim.work();
+            } else if (menuUpper.equals("CHANGE JOB")){
+                // sim.newJob();
             } else {
                 System.out.println("Perintah tidak valid");
             }

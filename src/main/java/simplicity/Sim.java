@@ -1,4 +1,5 @@
 package simplicity;
+import java.util.*;
 
 public class Sim {
     private String fullName;
@@ -8,14 +9,19 @@ public class Sim {
     private Motive motive;
     private String status;
     private Location simLoc;
+    private Time currentTime;
+    private int workTime = 0;
+    private int paidTime = 0;
+    private int dayChangeJob = 0;
 
-    public Sim(String fullName) {
+    public Sim(String fullName, Time currentTime) {
         this.motive = new Motive(); //inisiasi di class motive
         this.money = 100;
         this.occupation = new Occupation(); //inisiasi di class occupation
         this.fullName = fullName;
         this.inventory = new Inventory(); //inisiasi di class inventory
         //this.simLoc = new Location(null, null, null); //inisiasi di class location
+        this.time = currentTime;
     }
 
     public String getFullName() {
@@ -70,9 +76,64 @@ public class Sim {
         this.status = status;
     }
 
-    // public void work() {
+    public void work(int time) {
+        // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
+        if (currentTime.getDay() > dayChangeJob){
+            // validasi time kelipatan 120
+            boolean done = false;
+            Scanner scanner = new Scanner(System.in);
+            while (!done){
+                if (time % 120 != 0){
+                    System.out.println("Durasi bekerja harus kelipatan 120");
+                    System.out.print("Masukkan durasi kerja (dalam detik): ");
+                    time = scanner.nextLine();
+                } else {
+                    done = true;
+                }
+            }
+            scanner.close();
 
-    // }
+            // ini ngabisin waktu kerja nunggu ato lgsg keskip??
+
+            // efek -10 kekenyangan/30 dtk, -10 mood/30 dtk
+            minusPoints = -10 * (time/30);
+            motive.changeHunger(minusPoints);
+            motive.changeMood(minusPoints);
+
+            workTime += time;
+            // anggap pokoknya harus 4 menit (240 dtk) baru digaji, ga liat harinya
+            int notPaid = workTime - paidTime;
+            if (notPaid > 240){
+                int payday = workTime / 240;
+                money += payday * occupation.getDailySalary();
+                paidTime += payday * 240; // kalo ada time sisa yg belum dibayar
+            }
+        } else {
+            System.out.println("Pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan");
+        }
+    }
+
+    public void newJob(){
+        // harus > 12 menit bekerja
+        // asumsi: 12 menit di pekerjaan lama
+        if(workTime >= 720){
+            Occupation oldJob = occupation;
+            occupation.changeJob();
+            // harus bayar 1/2 dari gaji harian pekerjaan baru
+            int payChangeJob = 0.5 * occupation.getDailySalary();
+            if (money < payChangeJob){
+                System.out.println("Uang tidak mencukupi untuk pindah pekerjaan");
+                occupation.setJobName(oldJob.getJobName());
+                occupation.setDailySalary(oldJob.getDailySalary());
+            } else {
+                money -= payChangeJob;
+                dayChangeJob = currentTime.getDay();
+            }
+        } else {
+            System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit");
+        }
+    }
+
     // public void exercise() {
 
     // }
