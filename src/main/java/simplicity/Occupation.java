@@ -30,17 +30,26 @@ public class Occupation {
     }
 
     public void changeJob(){
-        Random random = new Random();
+        System.out.println("Daftar pekerjaan yang tersedia: ");
+        for (int i = 0; i < keys.size(); i++){
+            System.out.println(i + ". " + keys.get(i));
+        }
+
+        Scanner scanner = new Scanner(System.in);
         boolean done = false;
         String oldJobName = jobName;
         while (!done){
-            jobName = keys.get(random.nextInt(keys.size()));
-            if(!jobName.equals(oldJobName)){
+            System.out.print("Masukkan nama pekerjaan baru: ");
+            jobName = scanner.nextLine();
+            if (!jobName.equals(oldJobName)){
                 done = true;
+            } else {
+                System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama");
             }
         }
 
-        dailySalary = listJob.get(jobName); 
+        dailySalary = listJob.get(jobName);
+        scanner.close();
     }
     
     public String getJobName(){
