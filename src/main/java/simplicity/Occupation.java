@@ -5,8 +5,8 @@ import java.util.*;
 public class Occupation {
     private String jobName;
     private int dailySalary;
-    private Map<String, Integer> listJob = new HashMap<>();
-    private List<String> keys;
+    private static Map<String, Integer> listJob = new HashMap<>();
+    private static List<String> keys;
 
     public Occupation(){
         fillListJob();
@@ -32,7 +32,7 @@ public class Occupation {
     public void changeJob(){
         System.out.println("Daftar pekerjaan yang tersedia: ");
         for (int i = 0; i < keys.size(); i++){
-            System.out.println(i + ". " + keys.get(i));
+            System.out.println(i+1 + ". " + keys.get(i));
         }
 
         Scanner scanner = new Scanner(System.in);

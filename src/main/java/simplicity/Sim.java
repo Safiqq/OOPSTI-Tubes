@@ -14,14 +14,13 @@ public class Sim {
     private int paidTime = 0;
     private int dayChangeJob = 0;
 
-    public Sim(String fullName, Time currentTime) {
+    public Sim(String fullName) {
         this.motive = new Motive(); //inisiasi di class motive
         this.money = 100;
         this.occupation = new Occupation(); //inisiasi di class occupation
         this.fullName = fullName;
         this.inventory = new Inventory(); //inisiasi di class inventory
         //this.simLoc = new Location(null, null, null); //inisiasi di class location
-        this.time = currentTime;
     }
 
     public String getFullName() {
@@ -76,6 +75,10 @@ public class Sim {
         this.status = status;
     }
 
+    public void setCurrentTime(Time time){
+        this.currentTime = time;
+    }
+
     public void work(int time) {
         // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
         if (currentTime.getDay() > dayChangeJob){
@@ -96,6 +99,7 @@ public class Sim {
             // ini ngabisin waktu kerja nunggu ato lgsg keskip??
 
             // efek -10 kekenyangan/30 dtk, -10 mood/30 dtk
+            // pake list Effect?
             minusPoints = -10 * (time/30);
             motive.changeHunger(minusPoints);
             motive.changeMood(minusPoints);
