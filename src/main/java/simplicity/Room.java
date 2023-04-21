@@ -149,16 +149,16 @@ public class Room {
     }
 
     public void addListObject(NonFood objek) throws Exception{
-        try{
+        // try{
             if (isSpaceEmpty(objek.getStartPoint(),objek.getEndPoint())){
                 listObjek.add(objek);
             }
             else{
                 throw new Exception("Area ruangan yang dipilih tidak kosong. Silahkan Pilih area lain.");
             }
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-        } 
+        // }
+        // catch(Exception e){
+        //     System.out.println(e.getMessage());
+        // } 
     }
 }

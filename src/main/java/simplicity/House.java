@@ -56,7 +56,7 @@ public class House {
 
     public void addListRoom(Room room) throws Exception{
         // check apakah area sekitar untuk menambah room kosong atau enggak
-        try{
+        // try{
             if((room.getUpperSide() == null)&&(room.getBottomSide() == null)&&(room.getLeftSide() == null)&&(room.getRightSide() == null)){
                 throw new Exception("Ruangan harus bersebelahan dengan ruangan lain");
             }
@@ -83,10 +83,10 @@ public class House {
             else{
                 listRoom.add(room);
             }
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+        // }
+        // catch (Exception e){
+        //     System.out.println(e.getMessage());
+        // }
         
     }
 }
