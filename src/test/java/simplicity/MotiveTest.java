@@ -7,32 +7,33 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 
 public class MotiveTest {
-    private static Motive motive;
+    private static Motive motive1, motive2;
 
     @BeforeClass
     public static void setUp() throws Exception {
-        motive = new Motive();
+        motive1 = new Motive();
+        motive2 = new Motive();
     }
 
     @Test
-    public void testMotiveConstructor(){
-        assertEquals("mood not equal", motive.getMood(), 100);
-        assertEquals("hunger not equal", motive.getHunger(), 100);
-        assertEquals("health not equal", motive.getHealth(), 100);
+    public void testMotiveConstructor() {
+        assertEquals("mood not equal", motive1.getMood(), 100);
+        assertEquals("hunger not equal", motive1.getHunger(), 100);
+        assertEquals("health not equal", motive1.getHealth(), 100);
     }
 
     @Test
-    public void testMotiveTest(){
-        // motive.changeMood(-20);
-        // motive.changeHunger(30);
-        // assertEquals("mood not equal", motive.getMood(), 80);
-        // assertEquals("hunger not equal", motive.getHunger(), 100);
-        // assertThrows(IllegalArgumentException.class, () -> motive.changeHealth(-120));
+    public void testMotiveTest() {
+        motive2.changeMood(-20);
+        motive2.changeHunger(30);
+        assertEquals("mood not equal", motive2.getMood(), 80);
+        assertEquals("hunger not equal", motive2.getHunger(), 100);
+        assertThrows(IllegalArgumentException.class, () -> motive2.changeHealth(-120));
 
-        // motive.setMood(30);
-        // motive.setHealth(10);
-        // assertEquals("mood not equal", motive.getMood(), 30);
-        // assertThrows(IllegalArgumentException.class, () -> motive.setHunger(-10));
-        // assertEquals("health not equal", motive.getHealth(), 10);
+        motive2.setMood(30);
+        motive2.setHealth(10);
+        assertEquals("mood not equal", motive2.getMood(), 30);
+        assertThrows(IllegalArgumentException.class, () -> motive2.setHunger(-10));
+        assertEquals("health not equal", motive2.getHealth(), 10);
     }
 }

@@ -12,45 +12,45 @@ public class Motive {
     }
     
     public void changeMood(int points) throws IllegalArgumentException {
-        try {
+        // try {
             mood += points;
             if (mood > 100){
                 mood = 100;
             } else if (mood <= 0){
                 throw new IllegalArgumentException("Mood Sim mencapai 0, Sim mati karena depresi");
             }
-        } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            // System.exit(0);
-        }
+        // } catch (IllegalArgumentException e){
+        //     System.out.println(e.getMessage());
+        //     // System.exit(0);
+        // }
     }
 
     public void changeHunger(int points) throws IllegalArgumentException {
-        try {
+        // try {
             hunger += points;
             if (hunger > 100){
                 hunger = 100;
             } else if (hunger <= 0){
                 throw new IllegalArgumentException("Kekenyangan Sim mencapai 0, Sim mati karena kelaparan");
             }
-        } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            // System.exit(0);
-        }
+        // } catch (IllegalArgumentException e){
+        //     System.out.println(e.getMessage());
+        //     // System.exit(0);
+        // }
     }
 
     public void changeHealth(int points){
-        try {
+        // try {
             health += points;
             if (health > 100){
                 health = 100;
             } else if (health <= 0){
                 throw new IllegalArgumentException("Kesehatan Sim mencapai 0, Sim mati karena sakit");
             }
-        } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            // System.exit(0);
-        }
+        // } catch (IllegalArgumentException e){
+        //     System.out.println(e.getMessage());
+        //     // System.exit(0);
+        // }
     }
 
     public int getMood(){
@@ -66,7 +66,7 @@ public class Motive {
     }
 
     public void setMood(int mood) throws IllegalArgumentException {
-        try {
+        // try {
             if (mood > 100){
                 mood = 100;
             }
@@ -75,14 +75,14 @@ public class Motive {
             if (mood <= 0){
                 throw new IllegalArgumentException("Mood Sim mencapai 0, Sim mati karena depresi");
             }
-        } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            // System.exit(0);
-        }
+        // } catch (IllegalArgumentException e){
+        //     System.out.println(e.getMessage());
+        //     // System.exit(0);
+        // }
     }
 
     public void setHunger(int hunger) throws IllegalArgumentException {
-        try {
+        // try {
             if (hunger > 100){
                 hunger = 100;
             }
@@ -91,14 +91,14 @@ public class Motive {
             if (hunger <= 0){
                 throw new IllegalArgumentException("Kekenyangan Sim mencapai 0, Sim mati karena kelaparan");
             }
-        } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            // System.exit(0);
-        }
+        // } catch (IllegalArgumentException e){
+        //     System.out.println(e.getMessage());
+        //     // System.exit(0);
+        // }
     }
 
     public void setHealth(int health) throws IllegalArgumentException {
-        try {
+        // try {
             if (health > 100){
                 health = 100;
             }
@@ -107,9 +107,9 @@ public class Motive {
             if (health <= 0){
                 throw new IllegalArgumentException("Kesehatan Sim mencapai 0, Sim mati karena sakit");
             }
-        } catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-            // System.exit(0);
-        }
+        // } catch (IllegalArgumentException e){
+        //     System.out.println(e.getMessage());
+        //     // System.exit(0);
+        // }
     }
 }
