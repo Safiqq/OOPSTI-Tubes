@@ -8,6 +8,7 @@ public class Main {
 
     private static List<Sim> listSim = new ArrayList<>();
     private Sim currentSim = null;
+    private int dayAddSim = 0;
 
     public static class cobaJavaSwing {
         public static void start() {
@@ -33,7 +34,6 @@ public class Main {
     public void showMenu() {
         StringBuilder menu = new StringBuilder();
         menu.append("Menu Game:\n");
-        // menu.append("1. Start Game\n");
         menu.append("1. Help\n");
         menu.append("2. Exit\n");
         menu.append("3. View Sim Info\n");
@@ -47,9 +47,27 @@ public class Main {
         menu.append("11. List Object\n");
         menu.append("12. Go to Object\n");
         menu.append("13. Action\n");
-        menu.append("14. Work")
-        menu.append("15. Change Job");
         System.out.println(menu);
+    }
+
+    public void showAction(){
+        StringBuilder actionMenu = new StringBuilder();
+        actionMenu.append("Aksi yang dapat dipilih: \n");
+        actionMenu.append("1. Work\n");
+        // actionMenu.append("2. Change Job\n"); -> masuk action ato ngga
+        actionMenu.append("3. Exercise\n");
+        actionMenu.append("4. Sleep\n");
+        actionMenu.append("5. Eat\n");
+        actionMenu.append("6. Cook\n");
+        actionMenu.append("7. Visit\n");
+        actionMenu.append("8. Pee\n");
+        actionMenu.append("9. Upgrade House\n");
+        actionMenu.append("10. Buy Item\n");
+        actionMenu.append("11. Move Room\n");
+        actionMenu.append("12. View Inventory\n");
+        actionMenu.append("13. Install Item\n");
+        actionMenu.append("14. Check Time\n");
+        System.out.println(actionMenu);
     }
 
     public static void main(String[] args) {
@@ -81,7 +99,7 @@ public class Main {
             }
         }
 
-        // pilih Sim dulu berartii?
+        // pilih Sim
         if (listSim.size() == 0){
             System.out.println("Tidak ada Sim yang tersedia, silahkan daftarkan Sim anda terlebih dahulu");
             System.out.print("Masukkan nama Sim anda: ");
@@ -89,6 +107,7 @@ public class Main {
             currentSim = new Sim(simName);
             currentSim.setCurrentTime(time);
             listSim.add(currentSim);
+            System.out.println("Selamat bermain!");
         } else {
             System.out.print("Apakah anda ingin membuat Sim baru? (ya/tidak) ");
             String ans = scanner.nextLine();
@@ -98,6 +117,7 @@ public class Main {
                 currentSim = new Sim(simName);
                 currentSim.setCurrentTime(time);
                 listSim.add(currentSim);
+                System.out.println("Selamat bermain!");
             } else { // jawaban selain ya dan tidak dianggap tidak
                 System.out.println("Daftar Sim yang dapat dimainkan: ");
                 int i = 1;
@@ -120,10 +140,13 @@ public class Main {
 
                     if (currentSim != null){
                         done = true;
+                        currentSim.setCurrentTime(time);
                     } else {
                         System.out.println("Sim tidak ditemukan di list Sim");
                     }
                 }
+
+                System.out.println("Selamat bermain!");
             }   
         }
 
@@ -141,9 +164,17 @@ public class Main {
                 System.out.println("Bye...");
                 System.exit(0);
             } else if (menuUpper.equals("VIEW SIM INFO")){
-                
+                System.out.println("Nama Sim: " + currentSim.getFullName());
+                System.out.println("Pekerjaan Sim: " + currentSim.getOccupation().getJobName());
+                System.out.println("Kesehatan Sim: " + currentSim.getMotive().getHealth());
+                System.out.println("Kekenyangan Sim: " + currentSim.getMotive().getHunger());
+                System.out.println("Mood Sim: " + currentSim.getMotive().getMood());
+                System.out.println("Uang Sim: " + currentSim.getMoney());
             } else if (menuUpper.equals("VIEW CURRENT LOCATION")){
-
+                System.out.println("Lokasi Sim: ");
+                // menunjukkan lokasi dari nama?
+                System.out.println("Rumah milik: " + currentSim.getSimLoc().getHouse().getOwner());
+                System.out.println("Nama ruangan: " + currentSim.getSimLoc().getRoom().getRoomName());
             } else if (menuUpper.equals("VIEW INVENTORY")){
 
             } else if (menuUpper.equals("UPGRADE HOUSE")){
@@ -153,21 +184,101 @@ public class Main {
             } else if (menuUpper.equals("EDIT ROOM")){
 
             } else if (menuUpper.equals("ADD SIM")){
-
+                // hanya dapat dilakukan 1 hari sekali
+                if (time.getDay() > dayAddSim){
+                    System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
+                    String simName = scanner.nextLine();
+                    System.out.println("Masukkan titik untuk mendirikna rumah: ");
+                    System.out.print("X: ");
+                    int x = scanner.nextInt();
+                    System.out.print("Y: ");
+                    int y = scanner.nextInt();
+                    Point pointSim = new Point(x, y);
+                    // cek di World ada ga yg nempatin -> addAble
+                    boolean addAble = false;
+                    if (addAble){
+                        Sim newSim = new Sim(simName);
+                        listSim.add(currentSim);
+                        dayAddSim = time.getDay();
+                    } else {
+                        System.out.println("Tidak memungkinkan untuk membuat rumah baru");
+                    }
+                } else {
+                    System.out.println("Menambah sim baru hanya dapat dilakukan 1 hari sekali");
+                }
             } else if (menuUpper.equals("CHANGE SIM")){
+                Sim oldSim = currentSim;
+                System.out.println("Daftar Sim yang dapat dimainkan: ");
+                int i = 1;
+                for (Sim sim : listSim){
+                    System.out.println(i + ". " + sim.getFullName());
+                    i++;
+                }
+
+                boolean done = false;
+                while (!done){
+                    System.out.print("Masukkan nama sim yang ingin dimainkan: ");
+                    String simName = scanner.nextLine();
+                    for (Sim sim : listSim){
+                        if (sim.getFullName().equals(simName)){
+                            currentSim = sim;
+                            break;
+                        }
+                    }
+
+                    if (!currentSim.equals(oldSim)){
+                        done = true;
+                        currentSim.setCurrentTime(time);
+                    } else {
+                        System.out.println("Sim tidak ditemukan di list Sim");
+                    }
+                }
+
+                System.out.println("Sim berhasil diganti. Selamat bermain!");
 
             } else if (menuUpper.equals("LIST OBJECT")){
 
             } else if (menuUpper.equals("GO TO OBJECT")){
 
             } else if (menuUpper.equals("ACTION")){
+                main.showAction();
+                System.out.print("Masukkan aksi yang ingin dijalankan: ");
+                String act = scanner.nextLine();
+                String actUpper = act.toUpperCase();
+                if (actUpper.equals("WORK")){
+                    System.out.print("Masukkan durasi Sim bekerja: ");
+                    int simWorkTime = scanner.nextInt();
+                    currentSim.work(simWorkTime);
+                } else if (actUpper.equals("CHANGE JOB")){ // action ato taruh di work?
+                    currentSim.newJob();
+                } else if (actUpper.equals("EXCERCISE")){
 
-            } else if (menuUpper.equals("WORK")){
-                System.out.print("Masukkan durasi Sim bekerja: ");
-                int simWorkTime = scanner.nextInt();
-                currentSim.work(simWorkTime);
-            } else if (menuUpper.equals("CHANGE JOB")){
-                currentSim.newJob();
+                } else if (actUpper.equals("SLEEP")){
+
+                } else if (actUpper.equals("EAT")){
+
+                } else if (actUpper.equals("COOK")){
+
+                } else if (actUpper.equals("VISIT")){
+
+                } else if (actUpper.equals("PEE")){
+
+                } else if (actUpper.equals("UPGRADE HOUSE")){
+
+                } else if (actUpper.equals("BUY ITEM")){
+
+                } else if (actUpper.equals("MOVE ROOM")){
+
+                } else if (actUpper.equals("VIEW INVENTORY")){
+
+                } else if (actUpper.equals("INSTALL ITEM")){
+
+                } else if (actUpper.equals("CHECK TIME")){
+                    System.out.println("Waktu yang tersisa di- " + time.getTime());
+                    // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
+                } else {
+                    System.out.println("Aksi tidak valid");
+                }
             } else {
                 System.out.println("Perintah tidak valid");
             }
