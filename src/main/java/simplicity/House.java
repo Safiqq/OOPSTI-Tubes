@@ -1,5 +1,4 @@
 package simplicity;
-import java.io.EOFException;
 import java.util.ArrayList;
 
 
