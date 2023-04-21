@@ -86,6 +86,52 @@ public class Time {
         }
     }
 
+    public void addSecond(){
+        second++;
+
+        if (second == 60){
+            second = 0;
+            minute++;
+        }
+
+        if (minute == 60){
+            minute = 0;
+            hour++;
+        }
+
+        if (hour == 24){
+            hour = 0;
+            day++;
+        }
+
+        if (day == getMaxDay(month, year)+1){
+            day = 1;
+            month++;
+        }
+
+        if (month == 13){
+            month = 1;
+            year++;
+        }
+    }
+
+    public void runTime(){
+        Thread thread = new Thread(new Runnable(){
+            public void run(){
+                while (true){
+                    try {
+                        Thread.sleep(1000); // 1 detik
+                    } catch (InterruptedException e){
+                        
+                    }
+                    addSecond();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    // getter
     public int getYear() {
         return year;
     }
@@ -114,6 +160,7 @@ public class Time {
         return day + "/" + month + "/" + year + " - " + hour + ":" + minute + ":" + second;
     }
 
+    // setter
     public void setYear(int year) throws IllegalArgumentException {
         // try {
         if (year < 1) {
@@ -193,8 +240,7 @@ public class Time {
         // }
     }
 
-    public void setTime(int day, int month, int year, int hour, int minute, int second)
-            throws IllegalArgumentException {
+    public void setTime(int day, int month, int year, int hour, int minute, int second) throws IllegalArgumentException {
         // try {
         if (!isValid(day, month, year, hour, minute, second)) {
             throw new IllegalArgumentException("Tanggal yang dimasukkan tidak valid");
