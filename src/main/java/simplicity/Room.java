@@ -11,16 +11,23 @@ public class Room {
     private Room bottomSide;
     private Room leftSide;
     private Room rightSide;
-    private ArrayList<Objek> listObjek;
+    private ArrayList<NonFood> listObjek;
+    // new  atribute
+    private boolean[][] emptyRoom;
 
-    //constructor
     public Room(String roomName){
         this.roomName = roomName;
         this.upperSide = null;
         this.bottomSide = null;
         this.leftSide = null;
         this.rightSide = null;
-        listObjek = new ArrayList<Objek>();
+        listObjek = new ArrayList<NonFood>();
+
+        for(int i = 0 ; i < roomLength ; i++){
+            for(int j = 0 ; j < roomWidth ; j++){
+                emptyRoom[i][j] = true;
+            }
+        }
     }
 
     public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide){
@@ -29,16 +36,42 @@ public class Room {
         this.bottomSide = bottomSide;
         this.leftSide = leftSide;
         this.rightSide = rightSide;
-        listObjek = new ArrayList<Objek>();
+        listObjek = new ArrayList<NonFood>();
+
+        for(int i = 0 ; i < roomLength ; i++){
+            for(int j = 0 ; j < roomWidth ; j++){
+                emptyRoom[i][j] = true;
+            }
+        }
     }
 
-    public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide, ArrayList<Objek> listObjek){
+    public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide, ArrayList<NonFood> listObjek){
         this.roomName = roomName;
         this.upperSide = upperSide;
         this.bottomSide = bottomSide;
         this.leftSide = leftSide;
         this.rightSide = rightSide;
         this.listObjek = listObjek;
+
+        for(NonFood objek : listObjek){
+            int startX = objek.getStartPoint().getX();
+            int startY = objek.getStartPoint().getY();
+            int endX = objek.getEndPoint().getX();
+            int endY = objek.getEndPoint().getY();
+            //buat room jadi not empty sesuai dengan ukuran NonFood
+            for(int i = 0 ; i < roomLength ; i++){
+                for(int j = 0 ; j < roomWidth ; j++){
+                    if ((i >= startX && i <= endX) && (j >= startY && j <= endY)){
+                        emptyRoom[i][j] = false;
+                    }
+                    else{
+                        emptyRoom[i][j] = true;
+                    }
+                    
+                }
+            }
+
+        }
     }
 
     //methods getter
@@ -70,7 +103,7 @@ public class Room {
         return this.rightSide;
     }
 
-    public ArrayList<Objek> getListObjek(){
+    public ArrayList<NonFood> getListObjek(){
         return this.listObjek;
     }
 
@@ -91,12 +124,41 @@ public class Room {
         this.rightSide = room;
     }
 
-    public void setListObjek(ArrayList<Objek> listObjek){
+    public void setListObjek(ArrayList<NonFood> listObjek){
         this.listObjek = listObjek;
     }
 
     //other methods
-    public void addListObject(Objek objek){
-        this.listObjek.add(objek);
+    // new methods to check apakah space di ruangan kosong atau tidak
+    public boolean isSpaceEmpty(Point startPoint, Point endPoint){
+        int startX = startPoint.getX();
+        int startY = startPoint.getY();
+        int endX = endPoint.getX();
+        int endY = endPoint.getY();
+
+        boolean status = true;
+        for(int i = startX ; i <= endX; i++){
+            for(int j = startY ; j <= endY ; j++){
+                if (emptyRoom[i][j] != true){
+                    status = false;
+                    break;
+                }
+            }
+        }
+        return status;
+    }
+
+    public void addListObject(NonFood objek) throws Exception{
+        try{
+            if (isSpaceEmpty(objek.getStartPoint(),objek.getEndPoint())){
+                listObjek.add(objek);
+            }
+            else{
+                throw new Exception("Area ruangan yang dipilih tidak kosong. Silahkan Pilih area lain.");
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        } 
     }
 }

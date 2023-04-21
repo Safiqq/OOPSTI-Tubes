@@ -35,12 +35,11 @@ public class World {
     }
 
     //other methods
-
-    public void addHouse(House house, Point point) throws Exception{
+    public void addHouse(House house, Point houseLoc) throws Exception{
     //add house ke world
         try{
-            if (matrixHouse[point.getX()][point.getY()] != null){
-                matrixHouse[point.getX()][point.getY()] = house;
+            if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null){
+                matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
             }
             else{
                 throw new Exception("Sudah ada rumah Sim lain");
