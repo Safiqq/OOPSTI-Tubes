@@ -38,3 +38,8 @@ test {
     // useTestNG()
     include '**simplicity/*'
 }
+
+
+run {
+    standardInput = System.in
+}
