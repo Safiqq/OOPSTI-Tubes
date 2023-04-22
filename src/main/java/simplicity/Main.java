@@ -71,6 +71,72 @@ public class Main {
         System.out.println(actionMenu);
     }
 
+    public void printListSim(){
+        System.out.println("Daftar Sim yang dapat dimainkan: ");
+        int i = 1;
+        for (Sim sim : listSim){
+            System.out.println(i + ". " + sim.getFullName());
+            i++;
+        }
+        System.out.println("");
+    }
+
+    public Sim addSim(){
+        boolean done = false;
+        String simName = null;
+        // validasi nama Sim
+        while (!done){
+            System.out.print("Masukkan nama Sim baru: ");
+            simName = scanner.nextLine();
+            // nama Sim tidak boleh sama
+            boolean same = false;
+            for (Sim sim : listSim){
+                if (simName.equals(sim.getFullName)){
+                    System.out.println("Sim tidak boleh memiliki nama yang sama");
+                    same = true;
+                    break;
+                }
+            }
+
+            if (!same){
+                done = true;
+            } else {
+                printListSim();
+            }
+        }
+
+        Sim newSim = new Sim(simName);
+        listSim.add(newSim);
+        return newSim;
+    }
+
+    public void playSim(String oldSimName, Time time){
+        printListSim();
+        boolean done = false;
+        while (!done){
+            System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
+            String simName = scanner.nextLine();
+            if (simName.equals(oldSimName)){
+                System.out.println("Nama Sim sama dengan yang sedang anda mainkan");
+            } else {
+                // ambil Sim di list
+                for (Sim sim : listSim){
+                    if (sim.getFullName().equals(simName)){
+                        currentSim = sim;
+                        break;
+                    }
+                }
+
+                if (!currentSim.getFullName().equals(oldSimName)){
+                    done = true;
+                } else {
+                    System.out.println("Sim tidak ditemukan di list Sim");
+                }
+            }
+        }
+        currentSim.setCurrentTime(time);
+    }
+
     public static void main(String[] args) {
         // cobaJavaSwing.start();
         // ini time sm world jadiin atribut kelas Main ato taruh sini aja?
@@ -106,50 +172,21 @@ public class Main {
         // pilih Sim
         if (main.listSim.size() == 0) {
             System.out.println("Tidak ada Sim yang tersedia, silahkan daftarkan Sim anda terlebih dahulu");
-            System.out.print("Masukkan nama Sim anda: ");
-            String simName = scanner.nextLine();
-            main.currentSim = new Sim(simName);
+            main.currentSim = main.addSim();
             main.currentSim.setCurrentTime(time);
-            main.listSim.add(main.currentSim);
             System.out.println("Selamat bermain!");
+
         } else {
             System.out.print("Apakah anda ingin membuat Sim baru? (ya/tidak) ");
             String ans = scanner.nextLine();
+
             if (ans.equals("ya")) {
-                System.out.print("Masukkan nama Sim anda: ");
-                String simName = scanner.nextLine();
-                main.currentSim = new Sim(simName);
+                main.currentSim = main.addSim();
                 main.currentSim.setCurrentTime(time);
-                main.listSim.add(main.currentSim);
                 System.out.println("Selamat bermain!");
+
             } else { // jawaban selain ya dan tidak dianggap tidak
-                System.out.println("Daftar Sim yang dapat dimainkan: ");
-                int i = 1;
-                for (Sim sim : main.listSim) {
-                    System.out.println(i + ". " + sim.getFullName());
-                    i++;
-                }
-
-                boolean done = false;
-                while (!done) {
-                    System.out.print("Masukkan nama sim yang ingin dimainkan: ");
-                    String simName = scanner.nextLine();
-                    // ambil Sim di list
-                    for (Sim sim : main.listSim) {
-                        if (sim.getFullName().equals(simName)) {
-                            main.currentSim = sim;
-                            break;
-                        }
-                    }
-
-                    if (main.currentSim != null) {
-                        done = true;
-                        main.currentSim.setCurrentTime(time);
-                    } else {
-                        System.out.println("Sim tidak ditemukan di list Sim");
-                    }
-                }
-
+                main.playSim(null, time);
                 System.out.println("Selamat bermain!");
             }
         }
@@ -168,17 +205,13 @@ public class Main {
                 System.out.println("Bye...");
                 System.exit(0);
             } else if (menuUpper.equals("VIEW SIM INFO")) {
-                System.out.println("Nama Sim: " + main.currentSim.getFullName());
-                System.out.println("Pekerjaan Sim: " + main.currentSim.getOccupation().getJobName());
-                System.out.println("Kesehatan Sim: " + main.currentSim.getMotive().getHealth());
-                System.out.println("Kekenyangan Sim: " + main.currentSim.getMotive().getHunger());
-                System.out.println("Mood Sim: " + main.currentSim.getMotive().getMood());
-                System.out.println("Uang Sim: " + main.currentSim.getMoney());
+                main.currentSim.viewSimInfo();
+
             } else if (menuUpper.equals("VIEW CURRENT LOCATION")) {
-                System.out.println("Lokasi Sim: " + main);
-                System.out.println("Rumah milik: " + main.currentSim.getSimLoc().getHouse().getOwner());
-                System.out.println("Nama ruangan: " + main.currentSim.getSimLoc().getRoom().getRoomName());
+                main.currentSim.viewSimLoc();
+
             } else if (menuUpper.equals("VIEW INVENTORY")) {
+                main.currentSim.viewSimInventory();
 
             } else if (menuUpper.equals("UPGRADE HOUSE")) {
 
@@ -225,36 +258,7 @@ public class Main {
                     System.out.println("Ketik 'ADD SIM' untuk menambah Sim baru");
                 } else {
                     Sim oldSim = main.currentSim;
-                    System.out.println("Daftar Sim yang dapat dimainkan: ");
-                    int i = 1;
-                    for (Sim sim : main.listSim) {
-                        System.out.println(i + ". " + sim.getFullName());
-                        i++;
-                    }
-
-                    boolean done = false;
-                    while (!done) {
-                        System.out.print("Masukkan nama sim yang ingin dimainkan: ");
-                        String simName = scanner.nextLine();
-                        if (simName.equals(oldSim.getFullName())){
-                            System.out.println("Nama Sim sama dengan yang sedang anda mainkan.");
-                        } else {
-                            for (Sim sim : main.listSim) {
-                                if (sim.getFullName().equals(simName)) {
-                                    main.currentSim = sim;
-                                    break;
-                                }
-                            }
-
-                            if (!main.currentSim.equals(oldSim)) {
-                                done = true;
-                                main.currentSim.setCurrentTime(time);
-                            } else {
-                                System.out.println("Sim tidak ditemukan di list Sim");
-                            }
-                        }
-                    }
-
+                    main.playSim();
                     System.out.println("Sim berhasil diganti. Selamat bermain!");
                 }
 
