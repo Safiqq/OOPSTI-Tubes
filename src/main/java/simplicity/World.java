@@ -40,14 +40,29 @@ public class World {
     }
 
     // other methods
-    public void addHouse(House house, Point houseLoc) throws Exception {
-        // add house ke world
-        // try{
-        if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null) {
-            matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
+    public boolean isWorldAvail(Point houseLoc){
+        if(matrixHouse[houseLoc.getX()][houseLoc.getY()] == null){
+            return true;
         } else {
-            throw new Exception("Sudah ada rumah Sim lain");
+            return false;
         }
+    }
+
+    public void addHouse(House house) {
+        // add house ke world
+        if (isWorldAvail(house.getHouseLoc())){
+            matrixHouse[house.getHouseLoc().getX()][house.getHouseLoc().getY()] = house;
+        } else {
+            System.out.println("Sudah ada rumah Sim lain");
+        }
+
+        // try{
+        // if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null) {
+        //     matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
+        // } else {
+        //     System.out.println("Sudah ada rumah Sim lain");
+        //     // throw new Exception("Sudah ada rumah Sim lain");
+        // }
         // }
         // catch(Exception e){
         // System.out.println(e.getMessage());

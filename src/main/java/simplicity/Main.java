@@ -72,6 +72,8 @@ public class Main {
 
     public static void main(String[] args) {
         // cobaJavaSwing.start();
+        // ini time sm world jadiin atribut kelas Main ato taruh sini aja?
+        World world = new World();
         Time time = new Time();
         time.runTime();
         System.out.println("Waktu yang tersisa di " + time.getTime());
@@ -172,7 +174,6 @@ public class Main {
                 System.out.println("Uang Sim: " + main.currentSim.getMoney());
             } else if (menuUpper.equals("VIEW CURRENT LOCATION")) {
                 System.out.println("Lokasi Sim: " + main);
-                // menunjukkan lokasi dari nama?
                 System.out.println("Rumah milik: " + main.currentSim.getSimLoc().getHouse().getOwner());
                 System.out.println("Nama ruangan: " + main.currentSim.getSimLoc().getRoom().getRoomName());
             } else if (menuUpper.equals("VIEW INVENTORY")) {
@@ -193,10 +194,8 @@ public class Main {
                     int x = scanner.nextInt();
                     System.out.print("Y: ");
                     int y = scanner.nextInt();
-                    Point pointSim = new Point(x, y);
-                    // cek di World ada ga yg nempatin -> addAble
-                    boolean addAble = false;
-                    if (addAble) {
+                    Point houseLoc = new Point(x, y);
+                    if (world.isWorldAvail(houseLoc)) {
                         Sim newSim = new Sim(simName);
                         main.listSim.add(main.currentSim);
                         main.dayAddSim = time.getDay();
@@ -274,6 +273,7 @@ public class Main {
                 } else if (actUpper.equals("INSTALL ITEM")) {
 
                 } else if (actUpper.equals("CHECK TIME")) {
+                    // pake harus ngehampirin objek jam dulu
                     System.out.println("Waktu yang tersisa di- " + time.getTime());
                     // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
                 } else {
