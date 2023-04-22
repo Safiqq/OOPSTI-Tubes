@@ -83,6 +83,7 @@ public class Main {
 
     public Sim addSim(){
         boolean done = false;
+        Scanner scanner = new Scanner(System.in);
         String simName = null;
         // validasi nama Sim
         while (!done){
@@ -91,7 +92,7 @@ public class Main {
             // nama Sim tidak boleh sama
             boolean same = false;
             for (Sim sim : listSim){
-                if (simName.equals(sim.getFullName)){
+                if (simName.equals(sim.getFullName())){
                     System.out.println("Sim tidak boleh memiliki nama yang sama");
                     same = true;
                     break;
@@ -107,11 +108,13 @@ public class Main {
 
         Sim newSim = new Sim(simName);
         listSim.add(newSim);
+        scanner.close();
         return newSim;
     }
 
     public void playSim(String oldSimName, Time time){
         printListSim();
+        Scanner scanner = new Scanner(System.in);
         boolean done = false;
         while (!done){
             System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
@@ -135,6 +138,7 @@ public class Main {
             }
         }
         currentSim.setCurrentTime(time);
+        scanner.close();
     }
 
     public static void main(String[] args) {
@@ -258,7 +262,7 @@ public class Main {
                     System.out.println("Ketik 'ADD SIM' untuk menambah Sim baru");
                 } else {
                     Sim oldSim = main.currentSim;
-                    main.playSim();
+                    main.playSim(oldSim.getFullName(), time);
                     System.out.println("Sim berhasil diganti. Selamat bermain!");
                 }
 
