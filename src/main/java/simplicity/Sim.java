@@ -138,6 +138,16 @@ public class Sim {
         this.status = status;
     }
 
+    public void moveRoom(String roomName){
+        ArrayList<Room> listRoom = simLoc.getHouse().getListRoom();
+        for (Room room : listRoom){
+            if (roomName.equals(room.getRoomName())){
+                simLoc.setRoom(room);
+                break;
+            }
+        }
+    }
+
     public void setCurrentTime(Time time) {
         this.currentTime = time;
     }
