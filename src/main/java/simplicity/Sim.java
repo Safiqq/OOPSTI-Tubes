@@ -138,14 +138,44 @@ public class Sim {
         this.status = status;
     }
 
-    public void moveRoom(String roomName){
+    public void moveRoom(){
+        Scanner scanner = new Scanner(System.in);
         ArrayList<Room> listRoom = simLoc.getHouse().getListRoom();
+        System.out.println("Daftar ruangan yang terdapat di dalam rumah: ");
+        int i = 1;
         for (Room room : listRoom){
-            if (roomName.equals(room.getRoomName())){
-                simLoc.setRoom(room);
-                break;
+            System.out.println(i + ". " + room.getRoomName());
+            i++;
+        }
+
+        String oldRoom = simLoc.getRoom().getRoomName();
+
+        boolean done = false;
+        while (!done){
+            System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
+            String roomName = scanner.nextLine();
+            if (oldRoom.equals(roomName)){
+                System.out.println("Nama ruangan sama dengan tempat Sim berada ");
+                System.out.println("Sim berada di ruangan " + oldRoom);
+                System.out.println("");
+            } else {
+                for (Room room : listRoom){
+                    if (roomName.equals(room.getRoomName())){
+                        simLoc.setRoom(room);
+                        // point di location diganti jd apa?
+                        done = true;
+                        break;
+                    }
+                }
+
+                if (!done){
+                    System.out.println("Tidak ditemukan ruangan bernama " + roomName);
+                    System.out.println("");
+                } 
             }
         }
+
+        scanner.close();
     }
 
     public void setCurrentTime(Time time) {

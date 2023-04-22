@@ -55,7 +55,7 @@ public class Main {
         StringBuilder actionMenu = new StringBuilder();
         actionMenu.append("Aksi yang dapat dipilih: \n");
         actionMenu.append("1. Work\n");
-        // actionMenu.append("2. Change Job\n"); -> masuk action ato ngga
+        actionMenu.append("2. Change Job\n"); // masuk action ato ngga
         actionMenu.append("3. Exercise\n");
         actionMenu.append("4. Sleep\n");
         actionMenu.append("5. Eat\n");
@@ -220,42 +220,7 @@ public class Main {
             } else if (menuUpper.equals("UPGRADE HOUSE")) {
 
             } else if (menuUpper.equals("MOVE ROOM")) {
-                ArrayList<Room> listRoom = main.currentSim.getSimLoc().getHouse().getListRoom();
-                System.out.println("Daftar ruangan yang terdapat di dalam rumah: ");
-                int i = 1;
-                for (Room room : listRoom){
-                    System.out.println(i + ". " + room.getRoomName());
-                }
-
-                String oldRoom = main.currentSim.getSimLoc().getRoom().getRoomName();
-
-                boolean done = false;
-                while (!done){
-                    System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
-                    String roomName = scanner.nextLine();
-                    if (oldRoom.equals(roomName)){
-                        System.out.println("Nama ruangan sama dengan tempat Sim berada");
-                        System.out.println("Sim berada di ruangan " + oldRoom);
-                        System.out.println("");
-                    } else {
-                        boolean found = false;
-                        for (Room room : listRoom){
-                            if (roomName.equals(room.getRoomName())){
-                                found = true;
-                                break;
-                            }
-                        }
-
-                        if (!found){
-                            System.out.println("Tidak ditemukan ruangan bernama " + roomName);
-                            System.out.println("");
-                        } else {
-                            main.currentSim.moveRoom(roomName);
-                            done = true;
-                        }
-                    }
-                }
-
+                main.currentSim.moveRoom();
 
             } else if (menuUpper.equals("EDIT ROOM")) {
 
@@ -342,8 +307,10 @@ public class Main {
                 } else if (actUpper.equals("BUY ITEM")) {
 
                 } else if (actUpper.equals("MOVE ROOM")) {
+                    main.currentSim.moveRoom();
 
                 } else if (actUpper.equals("VIEW INVENTORY")) {
+                    main.currentSim.viewSimInventory();
 
                 } else if (actUpper.equals("INSTALL ITEM")) {
 
