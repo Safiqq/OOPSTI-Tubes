@@ -223,6 +223,21 @@ public class Main {
                 main.currentSim.moveRoom();
 
             } else if (menuUpper.equals("EDIT ROOM")) {
+                boolean done = false;
+                while (!done){
+                    System.out.print("Apakah anda ingin membeli barang baru atau memindahkan barang? (beli/pindah)");
+                    String ans = scanner.nextLine();
+                    String ansUpper = ans.toUpperCase();
+                    if (ansUpper.equals("BELI")){
+ 
+                        done = true;
+                    } else if (ansUpper.equals("PINDAH")){
+
+                        done = true;
+                    } else {
+                        System.out.println("Perintah tidak valid");
+                    }
+                }
 
             } else if (menuUpper.equals("ADD SIM")) {
                 // hanya dapat dilakukan 1 hari sekali

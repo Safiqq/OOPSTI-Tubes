@@ -236,6 +236,7 @@ public class Sim {
             } else {
                 money -= payChangeJob;
                 dayChangeJob = currentTime.getDay();
+                workTime = 0;
             }
         } else {
             System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit");
