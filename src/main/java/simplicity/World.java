@@ -48,6 +48,20 @@ public class World {
         }
     }
 
+    public boolean isHouseBuildAble(){
+        // true jika ada spot kosong untuk membangun rumah
+        // false jika tidak ada
+        for(int i = 0; i < 64; i++){
+            for (int j = 0; j < 64; j++){
+                if (matrixHouse[i][j] == null){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
     public void addHouse(House house) {
         // add house ke world
         if (isWorldAvail(house.getHouseLoc())){

@@ -82,6 +82,34 @@ public class Main {
         System.out.println("");
     }
 
+    public Sim chooseSim(){
+        Scanner scanner = new Scanner(System.in);
+        printListSim();
+        boolean done = false;
+        String simName = null;
+        while (!done){
+            System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
+            simName = scanner.nextLine();
+            if (!isNotRegistered(simName)){
+                System.out.println("Sim tidak ditemukan di list Sim");
+                printListSim();
+            } else {
+                String nameUpper = simName.toUpperCase();
+                // ambil Sim di list
+                for (Sim sim : listSim){
+                    if (sim.getFullName().equals(nameUpper)){
+                        return sim;
+                    }
+                }
+                
+                done = true;
+            }
+        }
+
+        scanner.close();
+        return null;
+    }
+
     public boolean isNotRegistered(String simName){
         String nameUpper = simName.toUpperCase();
         for (Sim sim : listSim){
@@ -91,6 +119,55 @@ public class Main {
         }
 
         return true;
+    }
+
+    public Sim menuAddSim(){
+        Scanner scanner = new Scanner(System.in);
+        // validasi nama Sim
+        boolean found = true;
+        String simName = null;
+        while (found){
+            System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
+            simName = scanner.nextLine();
+            if (isNotRegistered(simName)){
+               found = false; 
+            } else {
+                System.out.println("Nama Sim telah terdaftar. Silahkan menggunakan nama lain");
+                printListSim();
+            }
+        }
+
+        // validasi lokasi rumah Sim
+        System.out.println("Masukkan titik untuk mendirikan rumah: ");
+        boolean done = false;
+        int x = 0, y = 0;
+        while (!done){
+            System.out.print("X: ");
+            x = scanner.nextInt();
+            System.out.print("Y: ");
+            y = scanner.nextInt();
+            if ((x < 0 || x > 64) || (y < 0 || y > 64)){
+                System.out.println("Titik tidak valid. World berukuran 64x64");
+            } else {
+                done = true;
+            }
+        }
+
+        scanner.close();
+
+        Point houseLoc = new Point(x, y);
+        // cek fungsi isWorldAvail
+        if (world.isWorldAvail(houseLoc)) {
+            String nameUpper = simName.toUpperCase();
+            Sim newSim = new Sim(nameUpper);
+            listSim.add(newSim);
+            System.out.println("Sim berhasil didaftarkan");
+            return newSim;
+        } else {
+            System.out.println("Tidak memungkinkan untuk membuat rumah baru di lokasi tersebut");
+            System.out.println("Pendaftaran Sim baru gagal");
+            return null;
+        }
     }
 
     public static void main(String[] args) {
@@ -121,15 +198,15 @@ public class Main {
         }
 
         System.out.println(time.getTime());
-        // pilih Sim // tambahin cek uppercase in semua
+        // pilih Sim
         if (main.listSim.size() == 0) {
             System.out.println("Tidak ada Sim yang tersedia, silahkan daftarkan Sim anda terlebih dahulu");
             System.out.print("Masukkan nama Sim anda: ");
             String simName = scanner.nextLine();
             String nameUpper = simName.toUpperCase();
-            main.currentSim = new Sim(nameUpper);
-            // main.currentSim.setCurrentTime(time);
-            main.listSim.add(main.currentSim);
+            Sim newSim = new Sim(nameUpper);
+            main.listSim.add(newSim);
+            main.currentSim = newSim;
             System.out.println("Selamat bermain!");
 
         } else {
@@ -138,50 +215,29 @@ public class Main {
             String ansUpper = ans.toUpperCase();
 
             if (ans.equals("YA")) {
-                boolean done = false;
-                String simName = null;
-                while (!done){
-                    System.out.print("Masukkan nama Sim anda: ");
-                    simName = scanner.nextLine();
-                    if (!main.isNotRegistered(simName)){
-                        System.out.println("Nama Sim sudah terdaftar. Silahkan masukkan nama yang berbeda");
-                        main.printListSim();
-                    } else {
-                        done = true;
+                // cek masi ada spot kosong di world ato ngga
+                if (main.world.isHouseBuildAble()){
+                    boolean done = false;
+                    Sim newSim = null;
+                    while (!done){
+                        newSim = main.menuAddSim();
+                        if (newSim != null){
+                            main.currentSim = newSim;
+                            System.out.println("Selamat bermain!");
+                            done = true;
+                        } else {
+                            System.out.println("Silahkan mencoba mendaftarkan Sim baru di lokasi yang berbeda");
+                        }
                     }
+                } else {
+                    System.out.println("World penuh, tidak memungkinkan membuat Sim baru");
+                    System.out.println("Silahkan memilih Sim yang sudah ada");
+                    main.currentSim = main.chooseSim();
+                    System.out.println("Selamat bermain!");
                 }
-
-                String nameUpper = simName.toUpperCase();
-                main.currentSim = new Sim(nameUpper);
-                // main.currentSim.setCurrentTime(time);
-                main.listSim.add(main.currentSim);
-                System.out.println("Selamat bermain!");
 
             } else { // jawaban selain ya dan tidak dianggap tidak
-                main.printListSim();
-
-                boolean done = false;
-                while (!done) {
-                    System.out.print("Masukkan nama sim yang ingin dimainkan: ");
-                    String simName = scanner.nextLine();
-                    if (!main.isNotRegistered(simName)){
-                        System.out.println("Sim tidak ditemukan di list Sim.");
-                        main.printListSim();
-                    } else {
-                        String nameUpper = simName.toUpperCase();
-                        // ambil Sim di list
-                        for (Sim sim : main.listSim){
-                            if (sim.getFullName().equals(nameUpper)){
-                                main.currentSim = sim;
-                                // main.currentSim.setCurrentTime(time);
-                                break;
-                            }
-                        }
-
-                        done = true;
-                    }
-                }
-
+                main.currentSim = main.chooseSim();
                 System.out.println("Selamat bermain!");
             }
         }
@@ -238,45 +294,23 @@ public class Main {
             } else if (menuUpper.equals("ADD SIM")) {
                 // hanya dapat dilakukan 1 hari sekali
                 if (time.getDay() > main.dayAddSim) {
-                    boolean found = true;
-                    String simName = null;
-                    while (found){
-                        System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
-                        simName = scanner.nextLine();
-                        if (main.isNotRegistered(simName)){
-                            found = false;
-                        } else {
-                            System.out.println("Nama telah terdaftar. Silahkan menggunakan nama lain");
-                            main.printListSim();
+                    // cek masi ada spot kosong di world ato ngga
+                    if (main.world.isHouseBuildAble()){
+                        boolean done = false;
+                        Sim newSim = null;
+                        while (!done){
+                            newSim = main.menuAddSim();
+                            if (newSim != null){
+                                main.dayAddSim = time.getDay(); // hanya dapat dilakukan 1 hari sekali
+                                done = true;
+                            } else {
+                                System.out.println("Silahkan mencoba mendaftarkan Sim baru di lokasi yang berbeda");
+                            }
                         }
-                    }
-
-                    System.out.println("Masukkan titik untuk mendirikan rumah: ");
-                    boolean done = false;
-                    int x = 0, y = 0;
-                    while (!done){
-                        System.out.print("X: ");
-                        x = scanner.nextInt();
-                        System.out.print("Y: ");
-                        y = scanner.nextInt();
-                        if ((x < 0 || x > 64) || (y < 0 || y > 64)){
-                            System.out.println("Titik tidak valid. World berukuran 64x64");
-                        } else {
-                            done = true;
-                        }
-                    }
-
-                    Point houseLoc = new Point(x, y);
-                    // cek fungsi isWorldAvail
-                    if (world.isWorldAvail(houseLoc)) {
-                        String nameUpper = simName.toUpperCase();
-                        Sim newSim = new Sim(nameUpper);
-                        main.listSim.add(newSim);
-                        main.dayAddSim = time.getDay();
-                        System.out.println("Sim berhasil ditambahkan");
                     } else {
-                        System.out.println("Tidak memungkinkan untuk membuat rumah baru");
+                        System.out.println("World penuh, tidak memungkinkan membuat Sim baru");
                     }
+
                 } else {
                     System.out.println("Menu 'ADD SIM' hanya dapat dijalankan 1 hari sekali");
                 }
@@ -288,32 +322,19 @@ public class Main {
                     System.out.println("Ketik 'ADD SIM' untuk menambah Sim baru");
                 } else {
                     Sim oldSim = main.currentSim;
-                    main.printListSim();
-
                     boolean done = false;
-                    while (!done) {
-                        System.out.print("Masukkan nama sim yang ingin dimainkan: ");
-                        String simName = scanner.nextLine();
-                        String nameUpper = simName.toUpperCase();
-                        if (nameUpper.equals(oldSim.getFullName())){
-                            System.out.println("Nama Sim sama dengan yang sedang anda mainkan.");
+                    Sim newSim = null;
+                    while (!done){
+                        newSim = main.chooseSim();
+                        if (newSim.getFullName().equals(oldSim.getFullName())){
+                            System.out.println("Nama Sim sama dengan yang sedang anda mainkan");
+                            System.out.println("Masukkan nama Sim yang berbeda");
                         } else {
-                            for (Sim sim : main.listSim) {
-                                if (sim.getFullName().equals(nameUpper)) {
-                                    main.currentSim = sim;
-                                    break;
-                                }
-                            }
-
-                            if (!main.currentSim.equals(oldSim)) {
-                                done = true;
-                                main.currentSim.setCurrentTime(time);
-                            } else {
-                                System.out.println("Sim tidak ditemukan di list Sim");
-                            }
+                            done = true;
                         }
                     }
 
+                    main.currentSim = newSim;
                     System.out.println("Sim berhasil diganti. Selamat bermain!");
                 }
 
