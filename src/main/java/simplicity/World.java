@@ -62,10 +62,10 @@ public class World {
         return false;
     }
 
-    public void addHouse(String owner, Point houseLoc) {
+    public void addHouse(Sim sim, Point houseLoc) {
         // add house ke world
         if (isWorldAvail(houseLoc)){
-            matrixHouse[houseLoc.getX()][houseLoc.getY()] = new House(owner, houseLoc);
+            matrixHouse[houseLoc.getX()][houseLoc.getY()] = new House(sim.getFullName(), houseLoc);
         } else {
             System.out.println("Sudah ada rumah Sim lain");
         }
@@ -95,9 +95,15 @@ public class World {
 
     public void printMatrixHouse() {
         // menampilkan world
+        System.out.println();
         for (int i = 0; i < worldWidth; i++) {
             for (int j = 0; j < worldLength; j++) {
-                System.out.print(matrixHouse[i][j].getOwner());
+                if (matrixHouse[i][j] == null){
+                    System.out.print("O");
+                }
+                else{
+                    System.out.print("X"); 
+                }
                 System.out.print(" ");
             }
             System.out.println();
