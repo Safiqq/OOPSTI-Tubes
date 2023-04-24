@@ -5,18 +5,18 @@ import java.util.ArrayList;
 public class House {
     // Attribute
     private String owner;
-    private ArrayList<Room> listRoom;
+    private ArrayList<Room> listRoom = new ArrayList<>();
     private Point houseLoc;
     // masi bingung ini gmn
     private Room defaultRoom;
 
     // constructor
-    public House(String owner) {
-        this.owner = owner;
-        this.houseLoc = new Point(0, 0);
-        defaultRoom = new Room("Ruang Utama");
-        listRoom.add(defaultRoom);
-    }
+    // public House(String owner) {
+    //     this.owner = owner;
+    //     this.houseLoc = new Point(0, 0);
+    //     defaultRoom = new Room("Ruang Utama");
+    //     listRoom.add(defaultRoom);
+    // }
 
     public House(String owner, Point houseLoc) {
         this.owner = owner;

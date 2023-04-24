@@ -62,10 +62,10 @@ public class World {
         return false;
     }
 
-    public void addHouse(Sim sim, Point houseLoc) {
+    public void addHouse(String owner, Point houseLoc) {
         // add house ke world
         if (isWorldAvail(houseLoc)) {
-            matrixHouse[houseLoc.getX()][houseLoc.getY()] = new House(sim.getFullName(), houseLoc);
+            matrixHouse[houseLoc.getX()][houseLoc.getY()] = new House(owner, houseLoc);
         } else {
             System.out.println("Sudah ada rumah Sim lain");
         }

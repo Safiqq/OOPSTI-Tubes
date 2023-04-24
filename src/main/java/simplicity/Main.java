@@ -160,8 +160,10 @@ public class Main {
         if (world.isWorldAvail(houseLoc)) {
             String nameUpper = simName.toUpperCase();
             Sim newSim = new Sim(nameUpper);
+            world.addHouse(newSim.getFullName(), houseLoc);
             listSim.add(newSim);
             System.out.println("Sim berhasil didaftarkan");
+            world.printMatrixHouse();
             return newSim;
         } else {
             System.out.println("Tidak memungkinkan untuk membuat rumah baru di lokasi tersebut");
@@ -207,9 +209,13 @@ public class Main {
             String simName = scanner.nextLine();
             String nameUpper = simName.toUpperCase();
             Sim newSim = new Sim(nameUpper);
+            // bikin rumah di default point (0,0)
+            Point defaultPoint = new Point(0,0);
+            world.addHouse(newSim.getFullName(), defaultPoint);
             main.listSim.add(newSim);
             main.currentSim = newSim;
             System.out.println("Selamat bermain!");
+            world.printMatrixHouse();
 
         } else {
             System.out.print("Apakah anda ingin membuat Sim baru? (ya/tidak) ");
@@ -309,6 +315,7 @@ public class Main {
                                 System.out.println("Silahkan mencoba mendaftarkan Sim baru di lokasi yang berbeda");
                             }
                         }
+                        
                     } else {
                         System.out.println("World penuh, tidak memungkinkan membuat Sim baru");
                     }
