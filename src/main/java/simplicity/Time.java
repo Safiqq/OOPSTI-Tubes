@@ -4,6 +4,7 @@ public class Time {
     private int day;
     private int minute;
     private int second;
+    private boolean isNotIdle = false;
 
     public Time() {
         day = 1;
@@ -52,7 +53,7 @@ public class Time {
     public void runTime() {
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                while (true) {
+                while (isNotIdle) {
                     try {
                         Thread.sleep(1000); // 1 detik
                     } catch (InterruptedException e) {
@@ -119,5 +120,9 @@ public class Time {
         this.day = day;
         this.minute = minute;
         this.second = second;
+    }
+
+    public void setIsNotIdle(boolean isNotIdle){
+        this.isNotIdle = isNotIdle;
     }
 }
