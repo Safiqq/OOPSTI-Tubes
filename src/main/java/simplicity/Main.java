@@ -197,6 +197,8 @@ public class Main {
             }
         }
 
+        main.world.printMatrixHouse();
+
         System.out.println(time.getTime());
         // pilih Sim
         if (main.listSim.size() == 0) {
