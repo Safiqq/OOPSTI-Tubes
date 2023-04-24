@@ -72,36 +72,36 @@ public class Main {
         System.out.println(actionMenu);
     }
 
-    public void printListSim(){
+    public void printListSim() {
         System.out.println("Daftar Sim yang dapat dimainkan: ");
         int i = 1;
-        for (Sim sim : listSim){
+        for (Sim sim : listSim) {
             System.out.println(i + ". " + sim.getFullName());
             i++;
         }
         System.out.println("");
     }
 
-    public Sim chooseSim(){
+    public Sim chooseSim() {
         Scanner scanner = new Scanner(System.in);
         printListSim();
         boolean done = false;
         String simName = null;
-        while (!done){
+        while (!done) {
             System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
             simName = scanner.nextLine();
-            if (!isNotRegistered(simName)){
+            if (!isNotRegistered(simName)) {
                 System.out.println("Sim tidak ditemukan di list Sim");
                 printListSim();
             } else {
                 String nameUpper = simName.toUpperCase();
                 // ambil Sim di list
-                for (Sim sim : listSim){
-                    if (sim.getFullName().equals(nameUpper)){
+                for (Sim sim : listSim) {
+                    if (sim.getFullName().equals(nameUpper)) {
                         return sim;
                     }
                 }
-                
+
                 done = true;
             }
         }
@@ -110,10 +110,10 @@ public class Main {
         return null;
     }
 
-    public boolean isNotRegistered(String simName){
+    public boolean isNotRegistered(String simName) {
         String nameUpper = simName.toUpperCase();
-        for (Sim sim : listSim){
-            if (nameUpper.equals(sim.getFullName())){
+        for (Sim sim : listSim) {
+            if (nameUpper.equals(sim.getFullName())) {
                 return false;
             }
         }
@@ -121,16 +121,16 @@ public class Main {
         return true;
     }
 
-    public Sim menuAddSim(){
+    public Sim menuAddSim() {
         Scanner scanner = new Scanner(System.in);
         // validasi nama Sim
         boolean found = true;
         String simName = null;
-        while (found){
+        while (found) {
             System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
             simName = scanner.nextLine();
-            if (isNotRegistered(simName)){
-               found = false; 
+            if (isNotRegistered(simName)) {
+                found = false;
             } else {
                 System.out.println("Nama Sim telah terdaftar. Silahkan menggunakan nama lain");
                 printListSim();
@@ -141,12 +141,12 @@ public class Main {
         System.out.println("Masukkan titik untuk mendirikan rumah: ");
         boolean done = false;
         int x = 0, y = 0;
-        while (!done){
+        while (!done) {
             System.out.print("X: ");
             x = scanner.nextInt();
             System.out.print("Y: ");
             y = scanner.nextInt();
-            if ((x < 0 || x > 64) || (y < 0 || y > 64)){
+            if ((x < 0 || x > 64) || (y < 0 || y > 64)) {
                 System.out.println("Titik tidak valid. World berukuran 64x64");
             } else {
                 done = true;
@@ -197,7 +197,7 @@ public class Main {
             }
         }
 
-        main.world.printMatrixHouse();
+        world.printMatrixHouse();
 
         System.out.println(time.getTime());
         // pilih Sim
@@ -218,12 +218,12 @@ public class Main {
 
             if (ans.equals("YA")) {
                 // cek masi ada spot kosong di world ato ngga
-                if (main.world.isHouseBuildAble()){
+                if (world.isHouseBuildAble()) {
                     boolean done = false;
                     Sim newSim = null;
-                    while (!done){
+                    while (!done) {
                         newSim = main.menuAddSim();
-                        if (newSim != null){
+                        if (newSim != null) {
                             main.currentSim = newSim;
                             System.out.println("Selamat bermain!");
                             done = true;
@@ -278,14 +278,14 @@ public class Main {
 
             } else if (menuUpper.equals("EDIT ROOM")) {
                 boolean done = false;
-                while (!done){
+                while (!done) {
                     System.out.print("Apakah anda ingin membeli barang baru atau memindahkan barang? (beli/pindah)");
                     String ans = scanner.nextLine();
                     String ansUpper = ans.toUpperCase();
-                    if (ansUpper.equals("BELI")){
- 
+                    if (ansUpper.equals("BELI")) {
+
                         done = true;
-                    } else if (ansUpper.equals("PINDAH")){
+                    } else if (ansUpper.equals("PINDAH")) {
 
                         done = true;
                     } else {
@@ -297,12 +297,12 @@ public class Main {
                 // hanya dapat dilakukan 1 hari sekali
                 if (time.getDay() > main.dayAddSim) {
                     // cek masi ada spot kosong di world ato ngga
-                    if (main.world.isHouseBuildAble()){
+                    if (world.isHouseBuildAble()) {
                         boolean done = false;
                         Sim newSim = null;
-                        while (!done){
+                        while (!done) {
                             newSim = main.menuAddSim();
-                            if (newSim != null){
+                            if (newSim != null) {
                                 main.dayAddSim = time.getDay(); // hanya dapat dilakukan 1 hari sekali
                                 done = true;
                             } else {
@@ -319,16 +319,16 @@ public class Main {
 
             } else if (menuUpper.equals("CHANGE SIM")) {
                 // di listSim hanya ada 1 sim
-                if (main.listSim.size() == 1){
+                if (main.listSim.size() == 1) {
                     System.out.println("Tidak bisa dilakukan pergantian Sim. Hanya terdapat 1 Sim yang terdaftar.");
                     System.out.println("Ketik 'ADD SIM' untuk menambah Sim baru");
                 } else {
                     Sim oldSim = main.currentSim;
                     boolean done = false;
                     Sim newSim = null;
-                    while (!done){
+                    while (!done) {
                         newSim = main.chooseSim();
-                        if (newSim.getFullName().equals(oldSim.getFullName())){
+                        if (newSim.getFullName().equals(oldSim.getFullName())) {
                             System.out.println("Nama Sim sama dengan yang sedang anda mainkan");
                             System.out.println("Masukkan nama Sim yang berbeda");
                         } else {
@@ -342,10 +342,11 @@ public class Main {
 
             } else if (menuUpper.equals("LIST OBJECT")) {
                 // menampilkan daftar objek dalam sebuah ruangan
-                // asumsi: sim harus berada di dalam ruangan untuk melihat daftar objek dalam ruangan tsb
+                // asumsi: sim harus berada di dalam ruangan untuk melihat daftar objek dalam
+                // ruangan tsb
                 ArrayList<NonFood> listObjek = main.currentSim.getSimLoc().getRoom().getListObjek();
                 int i = 1;
-                for (NonFood nonFood : listObjek){
+                for (NonFood nonFood : listObjek) {
                     System.out.println(i + ". " + nonFood);
                     i++;
                 }

@@ -24,7 +24,7 @@ public class Sim {
         // this.simLoc = new Location(null, null, null); //inisiasi di class location
     }
 
-    public void viewSimInfo(){
+    public void viewSimInfo() {
         System.out.println("Nama Sim: " + fullName);
         System.out.println("Pekerjaan Sim: " + occupation.getJobName());
         System.out.println("Kesehatan Sim: " + motive.getHealth());
@@ -33,41 +33,47 @@ public class Sim {
         System.out.println("Uang Sim: " + money);
     }
 
-    public void viewSimLoc(){
+    public void viewSimLoc() {
         System.out.println("Lokasi Sim: ");
         System.out.println("Rumah milik: " + simLoc.getHouse().getOwner());
         System.out.println("Nama ruangan: " + simLoc.getRoom().getRoomName());
     }
 
-    public void viewSimInventory(){
-        // System.out.println("Berikut merupakan inventory yang dimiliki oleh Sim " + fullName);
+    public void viewSimInventory() {
+        // System.out.println("Berikut merupakan inventory yang dimiliki oleh Sim " +
+        // fullName);
         // System.out.println(" ");
-        
+
         // // objek non makanan
         // T typeNonFood = inventory.getBoxNonFood().getType();
         // Map<typeNonFood, Integer> nonFood = inventory.getBoxNonFood().getMapT();
         // if (nonFood.size() == 0){
-        //     System.out.println("Sim " + fullName + " tidak memiliki objek non-makanan dalam inventory");
+        // System.out.println("Sim " + fullName + " tidak memiliki objek non-makanan
+        // dalam inventory");
         // } else {
-        //     int i = 1;
-        //     for (Map.Entry<typeNonFood, Integer> elmt : nonFood.entrySet()){
-        //         System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " + elmt.getValue());
-        //         i++;
-        //     }
+        // int i = 1;
+        // for (Map.Entry<typeNonFood, Integer> elmt : nonFood.entrySet()){
+        // System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " +
+        // elmt.getValue());
+        // i++;
+        // }
         // }
         // System.out.println(" ");
 
         // // objek bahan makanan
         // T typeGroceries = inventory.getBoxGroceries().getType();
-        // Map<typeGroceries, Integer> groceries = inventory.getBoxGroceries().getMapT();
+        // Map<typeGroceries, Integer> groceries =
+        // inventory.getBoxGroceries().getMapT();
         // if (groceries.size() == 0){
-        //     System.out.println("Sim " + fullName + " tidak memiliki objek bahan makanan dalam inventory");
+        // System.out.println("Sim " + fullName + " tidak memiliki objek bahan makanan
+        // dalam inventory");
         // } else {
-        //     int i = 1;
-        //     for (Map.Entry<typeGroceries, Integer> elmt : groceries.entrySet()){
-        //         System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " + elmt.getValue());
-        //         i++;
-        //     }
+        // int i = 1;
+        // for (Map.Entry<typeGroceries, Integer> elmt : groceries.entrySet()){
+        // System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " +
+        // elmt.getValue());
+        // i++;
+        // }
         // }
         // System.out.println(" ");
 
@@ -75,13 +81,15 @@ public class Sim {
         // T typeFood = inventory.getBoxFood().getType();
         // Map<typeFood, Integer> food = inventory.getBoxFood().getMapT();
         // if (food.size() == 0){
-        //     System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam inventory");
+        // System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam
+        // inventory");
         // } else {
-        //     int i = 1;
-        //     for (Map.Entry<typeFood, Integer> elmt : food.entrySet()){
-        //         System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " + elmt.getValue());
-        //         i++;
-        //     }
+        // int i = 1;
+        // for (Map.Entry<typeFood, Integer> elmt : food.entrySet()){
+        // System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " +
+        // elmt.getValue());
+        // i++;
+        // }
         // }
         // System.out.println(" ");
     }
@@ -138,12 +146,12 @@ public class Sim {
         this.status = status;
     }
 
-    public void moveRoom(){
+    public void moveRoom() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Room> listRoom = simLoc.getHouse().getListRoom();
         System.out.println("Daftar ruangan yang terdapat di dalam rumah: ");
         int i = 1;
-        for (Room room : listRoom){
+        for (Room room : listRoom) {
             System.out.println(i + ". " + room.getRoomName());
             i++;
         }
@@ -151,16 +159,16 @@ public class Sim {
         String oldRoom = simLoc.getRoom().getRoomName();
 
         boolean done = false;
-        while (!done){
+        while (!done) {
             System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
             String roomName = scanner.nextLine();
-            if (oldRoom.equals(roomName)){
+            if (oldRoom.equals(roomName)) {
                 System.out.println("Nama ruangan sama dengan tempat Sim berada ");
                 System.out.println("Sim berada di ruangan " + oldRoom);
                 System.out.println("");
             } else {
-                for (Room room : listRoom){
-                    if (roomName.equals(room.getRoomName())){
+                for (Room room : listRoom) {
+                    if (roomName.equals(room.getRoomName())) {
                         simLoc.setRoom(room);
                         // point di location diganti jd apa?
                         done = true;
@@ -168,10 +176,10 @@ public class Sim {
                     }
                 }
 
-                if (!done){
+                if (!done) {
                     System.out.println("Tidak ditemukan ruangan bernama " + roomName);
                     System.out.println("");
-                } 
+                }
             }
         }
 
