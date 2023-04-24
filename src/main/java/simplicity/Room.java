@@ -13,7 +13,7 @@ public class Room {
     private Room rightSide;
     private ArrayList<NonFood> listObjek;
     // new atribute
-    private boolean[][] emptyRoom;
+    private boolean[][] emptyRoom = new boolean[roomLength][roomWidth];
 
     public Room(String roomName) {
         this.roomName = roomName;

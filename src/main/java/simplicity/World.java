@@ -3,8 +3,8 @@ package simplicity;
 public class World {
     // attribute
     private static World world = new World();
-    private final int worldLength = 64;
-    private final int worldWidth = 64;
+    private final int worldLength = 65;
+    private final int worldWidth = 65;
     private House[][] matrixHouse;
 
     // constructor
