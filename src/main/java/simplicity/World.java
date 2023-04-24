@@ -97,7 +97,7 @@ public class World {
         // menampilkan world
         for (int i = 0; i < worldWidth; i++) {
             for (int j = 0; j < worldLength; j++) {
-                System.out.print(matrixHouse[i][j]);
+                System.out.print(matrixHouse[i][j].getOwner());
                 System.out.print(" ");
             }
             System.out.println();
