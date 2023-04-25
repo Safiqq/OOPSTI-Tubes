@@ -88,6 +88,18 @@ public class World {
         // }
     }
 
+    public Point searchHouse(String owner){
+        for (int i = 0; i < worldWidth; i++){
+            for (int j = 0; j < worldLength; j++){
+                if (matrixHouse[i][j].getOwner().equals(owner)){
+                    return new Point(i, j);
+                }
+            }
+        }
+        
+        return null;
+    }
+
     public void printMatrixHouse() {
         // menampilkan world
         System.out.println();

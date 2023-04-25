@@ -446,15 +446,28 @@ public class Main {
                 String act = scanner.nextLine();
                 if (equals(act, "WORK")) {
                     // time.setIsNotIdle(true);
-                    System.out.print("Masukkan durasi Sim bekerja: ");
+                    System.out.print("Masukkan durasi kerja (dalam detik): ");
                     int simWorkTime = scanner.nextInt();
                     main.currentSim.work(simWorkTime);
+
                 } else if (equals(act, "CHANGE JOB")) { // action ato taruh di work?
                     // time.setIsNotIdle(true);
                     main.currentSim.newJob();
-                } else if (equals(act, "EXCERCISE")) {
+
+                } else if (equals(act, "EXERCISE")) {
+                    System.out.print("Masukkan durasi olahraga (dalam detik): ");
+                    int simExerciseTime = scanner.nextInt();
+                    main.currentSim.exercise(simExerciseTime);
 
                 } else if (equals(act, "SLEEP")) {
+                    // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
+                    // efek tidak tidur -> -5 kesehatan dan -5 mood setelah 10 mnt tanpa tidur
+                    // apakah harus 3 menit langsung atau boleh dicicil?
+                    // penambahan efek tidur apakah akumulasi dalam hari tersebut atau langsung dibagi tiap tidur
+
+                    System.out.print("Masukkan durasi tidur (dalam detik): ");
+                    int simSleepTime = scanner.nextInt();
+                    main.currentSim.sleep(simSleepTime);
 
                 } else if (equals(act, "EAT")) {
 
@@ -462,6 +475,20 @@ public class Main {
                     main.showCookingMenu();
 
                 } else if (equals(act, "VISIT")) {
+                    // mau masukin visit rumah orang pake nama owner?
+                    boolean done = false;
+                    Point houseLoc = null;
+                    while (!done){
+                        System.out.print("Masukkan nama pemilik rumah yang ingin dikunjungi: ");
+                        String ownerHouse = scanner.nextLine();
+                        houseLoc = world.searchHouse(ownerHouse);
+                        if (houseLoc == null){
+                            System.out.println("Tidak ada rumah yang dimiliki ")
+                        }
+                    }
+
+                    System.out.print("Masukkan durasi berkunjung (dalam detik): ");
+                    int simVisitTime = scanner.nextInt();
 
                 } else if (equals(act, "PEE")) {
                     System.out.println("AAAAHHHHHHHHHHH~");

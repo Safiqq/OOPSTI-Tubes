@@ -1,6 +1,7 @@
 package simplicity;
 
 import java.util.*;
+import java.lang.Math;
 
 public class Sim {
     private String fullName;
@@ -230,13 +231,45 @@ public class Sim {
         }
     }
 
-    // public void exercise() {
+    public void exercise(int time) {
+        // validasi time kelipatan 20
+        boolean done = false;
+        Scanner scanner = new Scanner(System.in);
+        while (!done) {
+            if (time % 20 != 0) {
+                System.out.println("Durasi olahraga harus kelipatan 20");
+                System.out.print("Masukkan durasi olahraga (dalam detik): ");
+                time = scanner.nextInt();
+            } else {
+                done = true;
+            }
+        }
+        scanner.close();
 
-    // }
+        // efek +5 kesehatan/20 dtk, -5 kekenyangan/20 dtk, +10 mood/20 dtk
+        // pake list Effect?
+        int plusHealth = 5 * (time / 20);
+        int minusHunger = -5 * (time / 20);
+        int plusMood = 10 * (time / 20);
+        motive.changeHealth(plusHealth);
+        motive.changeHunger(minusHunger);
+        motive.changeMood(plusMood);
 
-    // public void sleep(int timeMillis) {
+        // waktunya gmn
 
-    // }
+    }
+
+    public void sleep(int time) {
+        // efek tidur
+        // +30 mood/240 dtk, +20 kesehatan/240 dtk
+        int plusMood = 30 * (time / 240);
+        int plusHealth = 20 * (time / 240);
+        motive.changeMood(plusMood);
+        motive.changeHealth(plusHealth);
+
+        // waktunya gmn
+
+    }
 
     // public void eat(Food food) {
 
@@ -246,9 +279,35 @@ public class Sim {
 
     // }
 
-    // public void visit(Point point) {
+    public void visit(Point point, Time time) {
+        // waktu yang diperlukan untuk berkunjung ke rumah
+        // perhitungan/pemilihan titik rumah dari SIM yang ingin dikunjungi dibebaskan -> belum ditentuin
+        int x = Math.pow(point.getX()-simLoc.getPoint().getX(), 2);
+        int y = Math.pow(point.getY()-simLoc.getPoint().getY(), 2);
+        int time = Math.sqrt(x+y);
+        
+        // pemain diminta memasukkan waktu durasi kelipatan 30 detik
+        boolean done = false;
+        Scanner scanner = new Scanner(System.in);
+        while (!done) {
+            if (time % 30 != 0){
+                System.out.println("Durasi berkunjung harus kelipatan 30");
+                System.out.print("Masukkan durasi berkunjung (dalam detik): ");
+                time = scanner.nextInt();
+            } else {
+                done = true;
+            }
+        }
 
-    // }
+        scanner.close();
+
+        // +10 mood/30 dtk, -10 kekenyangan/30 dtk
+        int plusMood = 10 * (time / 30);
+        int minusHunger = -10 * (time / 30);
+        motive.changeMood(plusMood);
+        motive.changeHunger(minusHunger);
+
+    }
 
     // public void pee() {
 
