@@ -484,9 +484,13 @@ public class Main {
                     int buynumber = scanner.nextInt();
 
                     if(buynumber == 1){
-                        if(main.isMoneyEnough(kasurSingle.getObjPrice(),main.currentSim.getMoney())){
+                        if(main.isMoneyEnough(kasurSingle.getObjPrice(),main.currentSim.getMoney()) && main.currentSim.getInventory().getBoxNonFood().length < 8){
                             main.currentSim.setMoney(main.currentSim.getMoney()-kasurSingle.getObjPrice());
+                            main.currentSim.getInventory().getBoxNonFood().add(kasurSingle);
                             System.out.println("Berhasil Membeli Barang!");
+                        }
+                        else if(main.currentSim.getInventory().getBoxNonFood().length == 8){
+                            System.out.println("Inventorymu penuh wei!");
                         }
                         else{
                             System.out.println("Uang-mu kurang :( ");
