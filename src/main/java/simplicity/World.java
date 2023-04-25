@@ -63,34 +63,30 @@ public class World {
     }
 
     public void addHouse(String owner, Point houseLoc) {
+        House house = new House(owner, houseLoc);
+        addHouse(house);
+    }
+
+    public void addHouse(House house) {
         // add house ke world
-        if (isWorldAvail(houseLoc)) {
-            matrixHouse[houseLoc.getX()][houseLoc.getY()] = new House(owner, houseLoc);
+        if (isWorldAvail(house.getHouseLoc())) {
+            matrixHouse[house.getHouseLoc().getX()][house.getHouseLoc().getY()] = house;
         } else {
             System.out.println("Sudah ada rumah Sim lain");
         }
+
+        // try{
+        // if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null) {
+        // matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
+        // } else {
+        // System.out.println("Sudah ada rumah Sim lain");
+        // // throw new Exception("Sudah ada rumah Sim lain");
+        // }
+        // }
+        // catch(Exception e){
+        // System.out.println(e.getMessage());
+        // }
     }
-
-    // public void addHouse(House house) {
-    // // add house ke world
-    // if (isWorldAvail(house.getHouseLoc())){
-    // matrixHouse[house.getHouseLoc().getX()][house.getHouseLoc().getY()] = house;
-    // } else {
-    // System.out.println("Sudah ada rumah Sim lain");
-    // }
-
-    // // try{
-    // // if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null) {
-    // // matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
-    // // } else {
-    // // System.out.println("Sudah ada rumah Sim lain");
-    // // // throw new Exception("Sudah ada rumah Sim lain");
-    // // }
-    // // }
-    // // catch(Exception e){
-    // // System.out.println(e.getMessage());
-    // // }
-    // }
 
     public void printMatrixHouse() {
         // menampilkan world

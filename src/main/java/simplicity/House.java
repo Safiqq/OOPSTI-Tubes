@@ -1,6 +1,7 @@
 package simplicity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class House {
     // Attribute
@@ -11,12 +12,16 @@ public class House {
     private Room defaultRoom;
 
     // constructor
-    // public House(String owner) {
-    //     this.owner = owner;
-    //     this.houseLoc = new Point(0, 0);
-    //     defaultRoom = new Room("Ruang Utama");
-    //     listRoom.add(defaultRoom);
-    // }
+    public House(String owner) {
+        Random random = new Random();
+        Point point = new Point(random.nextInt(World.getWorld().getWorldLength()),
+                random.nextInt(World.getWorld().getWorldWidth()));
+
+        this.owner = owner;
+        houseLoc = point;
+        defaultRoom = new Room("Ruang Utama");
+        listRoom.add(defaultRoom);
+    }
 
     public House(String owner, Point houseLoc) {
         this.owner = owner;

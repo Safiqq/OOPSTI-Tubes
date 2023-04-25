@@ -24,6 +24,18 @@ public class Main {
         }
     }
 
+    public void clearScreen() {
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows"))
+                Runtime.getRuntime().exec("cls");
+            else
+                Runtime.getRuntime().exec("clear");
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showMenuBegin() {
         StringBuilder menu1 = new StringBuilder();
         menu1.append("Menu game yang tersedia:\n");
@@ -209,9 +221,9 @@ public class Main {
             String simName = scanner.nextLine();
             String nameUpper = simName.toUpperCase();
             Sim newSim = new Sim(nameUpper);
-            // bikin rumah di default point (0,0)
-            Point defaultPoint = new Point(0,0);
-            world.addHouse(newSim.getFullName(), defaultPoint);
+            // bikin rumah di random point
+            House house = new House(newSim.getFullName());
+            world.addHouse(house);
             main.listSim.add(newSim);
             main.currentSim = newSim;
             System.out.println("Selamat bermain!");
@@ -315,7 +327,7 @@ public class Main {
                                 System.out.println("Silahkan mencoba mendaftarkan Sim baru di lokasi yang berbeda");
                             }
                         }
-                        
+
                     } else {
                         System.out.println("World penuh, tidak memungkinkan membuat Sim baru");
                     }
