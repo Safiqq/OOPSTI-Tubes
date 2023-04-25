@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Box<T> {
-    T type;
-    Map<T, Integer> mapT;
+    private T type;
+    private Map<T, Integer> mapT;
+    public int length = 0;
 
     public Box() {
         mapT = new HashMap<T, Integer>();
@@ -34,15 +35,17 @@ public class Box<T> {
     public void add(T t) {
         if (mapT.containsKey(t)) {
             mapT.put(t, mapT.get(t) + 1);
+            length++;
         } else
             mapT.put(t, 1);
     }
 
     public void delete(T t) {
         if (mapT.containsKey(t))
-            if (mapT.get(t) == 1)
+            if (mapT.get(t) == 1) {
                 mapT.remove(t);
-            else
+                length--;
+            } else
                 mapT.put(t, mapT.get(t) - 1);
     }
 }

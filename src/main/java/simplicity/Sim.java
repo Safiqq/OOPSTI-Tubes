@@ -40,58 +40,37 @@ public class Sim {
     }
 
     public void viewSimInventory() {
-        // System.out.println("Berikut merupakan inventory yang dimiliki oleh Sim " +
-        // fullName);
-        // System.out.println(" ");
+        System.out.println("Berikut merupakan inventory yang dimiliki oleh Sim " + fullName);
+        System.out.println(" ");
 
-        // // objek non makanan
-        // T typeNonFood = inventory.getBoxNonFood().getType();
-        // Map<typeNonFood, Integer> nonFood = inventory.getBoxNonFood().getMapT();
-        // if (nonFood.size() == 0){
-        // System.out.println("Sim " + fullName + " tidak memiliki objek non-makanan
-        // dalam inventory");
-        // } else {
-        // int i = 1;
-        // for (Map.Entry<typeNonFood, Integer> elmt : nonFood.entrySet()){
-        // System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " +
-        // elmt.getValue());
-        // i++;
-        // }
-        // }
-        // System.out.println(" ");
+        // objek non makanan
+        if (inventory.getBoxNonFood().length == 0) {
+            System.out.println("Sim " + fullName + " tidak memiliki objek non-makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (IdentityHashMap.Entry<NonFood, Integer> entry : inventory.getBoxNonFood().getMapT().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
 
-        // // objek bahan makanan
-        // T typeGroceries = inventory.getBoxGroceries().getType();
-        // Map<typeGroceries, Integer> groceries =
-        // inventory.getBoxGroceries().getMapT();
-        // if (groceries.size() == 0){
-        // System.out.println("Sim " + fullName + " tidak memiliki objek bahan makanan
-        // dalam inventory");
-        // } else {
-        // int i = 1;
-        // for (Map.Entry<typeGroceries, Integer> elmt : groceries.entrySet()){
-        // System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " +
-        // elmt.getValue());
-        // i++;
-        // }
-        // }
-        // System.out.println(" ");
-
-        // // objek makanan
-        // T typeFood = inventory.getBoxFood().getType();
-        // Map<typeFood, Integer> food = inventory.getBoxFood().getMapT();
-        // if (food.size() == 0){
-        // System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam
-        // inventory");
-        // } else {
-        // int i = 1;
-        // for (Map.Entry<typeFood, Integer> elmt : food.entrySet()){
-        // System.out.println(i + ". Objek: " + elmt.getKey() + ", Jumlah: " +
-        // elmt.getValue());
-        // i++;
-        // }
-        // }
-        // System.out.println(" ");
+        // objek bahan makanan
+        if (inventory.getBoxGroceries().length == 0) {
+            System.out.println("Sim " + fullName + " tidak memiliki objek bahan makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (IdentityHashMap.Entry<Groceries, Integer> entry : inventory.getBoxGroceries().getMapT().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
+        // objek makanan
+        if (inventory.getBoxFood().length == 0) {
+            System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (IdentityHashMap.Entry<Food, Integer> entry : inventory.getBoxFood().getMapT().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
     }
 
     public String getFullName() {
