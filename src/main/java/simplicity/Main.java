@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Main {
 
+    private static Scanner scanner = new Scanner(System.in);
     private static World world = World.getWorld();
     private static Time time;
     private List<Sim> listSim = new ArrayList<>();
@@ -178,18 +179,16 @@ public class Main {
         printListSim();
         boolean done = false;
         String simName = null;
-        Scanner scanner = new Scanner(System.in);
         while (!done) {
             System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
             simName = scanner.nextLine();
-            if (!isNotRegistered(simName)) {
+            if (isNotRegistered(simName)) {
                 System.out.println("Sim tidak ditemukan di list Sim");
                 printListSim();
             } else {
                 // ambil Sim di list
                 for (Sim sim : listSim) {
                     if (equals(simName, sim.getFullName())) {
-                        scanner.close();
                         return sim;
                     }
                 }
@@ -198,7 +197,6 @@ public class Main {
             }
         }
 
-        scanner.close();
         return null;
     }
 
@@ -213,7 +211,6 @@ public class Main {
     }
 
     public Sim menuAddSim() {
-        Scanner scanner = new Scanner(System.in);
         // validasi nama Sim
         boolean found = true;
         String simName = null;
@@ -244,8 +241,6 @@ public class Main {
             }
         }
 
-        scanner.close();
-
         Point houseLoc = new Point(x, y);
         // cek fungsi isWorldAvail
         if (world.isWorldAvail(houseLoc)) {
@@ -264,7 +259,6 @@ public class Main {
 
     public static void main(String[] args) {
         // cobaJavaSwing.start();
-        Scanner scanner = new Scanner(System.in);
         Main main = new Main();
         time = new Time();
         // time.runTime();
