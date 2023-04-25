@@ -12,6 +12,36 @@ public class Main {
     private Sim currentSim = null;
     private int dayAddSim = 0;
 
+    //////////////////////////////////////////////////////////
+
+    //Objek Non-Food
+    private static NonFood kasurSingle = new NonFood("Kasur Single", 4, 1,50);
+    private static NonFood kasurQueen = new NonFood("Kasur Queen Size", 4, 2, 100);
+    private static NonFood kasurKing = new NonFood("Kasur King Size",5,2,150);
+    private static NonFood toilet = new NonFood("Toilet", 1,1,50);
+    private static NonFood komporGas = new NonFood("Kompor Gas",2,1,100);
+    private static NonFood komporListrik = new NonFood("Kompor Listrik",1,1,200);
+    private static NonFood mejakursi = new NonFood("Meja",3,3,50);
+    private static NonFood jam = new NonFood("Jam",1,1,10);
+
+    //Objek Bahan Makanan
+    private static Groceries nasi = new Groceries("Nasi", 5, 5);
+    private static Groceries kentang = new Groceries("Kentang", 3, 4);
+    private static Groceries ayam = new Groceries("Ayam", 10, 8);
+    private static Groceries sapi = new Groceries("Sapi", 12, 15);
+    private static Groceries wortel = new Groceries("Wortel", 3, 2);
+    private static Groceries bayam = new Groceries("Bayam", 3, 2);
+    private static Groceries kacang = new Groceries("Kacang", 2, 2);
+    private static Groceries susu = new Groceries("Susu", 2, 1);
+
+    //Objek Makanan (Masakan)
+    private static Food nasiayam = new Food("Nasi Ayam", 16);
+    private static Food nasikari = new Food("Nasi Kari",30);
+    private static Food susukacang = new Food("Susu Kacang",5);
+    private static Food tumissayur = new Food("Tumis Sayur",5);
+    private static Food bistik = new Food("Bistik",22);
+    
+    //////////////////////////////////////////////////////////
     public static class cobaJavaSwing {
         public static void start() {
             JFrame f = new JFrame("Sim-Plicity");
@@ -87,6 +117,52 @@ public class Main {
         actionMenu.append("14. Check Time\n");
         System.out.println(actionMenu);
     }
+
+    //////////////////////////////////////////////////////////
+    public void showCookingMenu(){
+        StringBuilder cookingMenu = new StringBuilder();
+        cookingMenu.append("Mau masak apa hari ini? \n");
+        cookingMenu.append("1. Nasi Ayam (Kekenyangan : 16, Bahan : Nasi,Ayam) \n");
+        cookingMenu.append("2. Nasi Kari (Kekenyangan : 30, Bahan : Nasi,Kentang,Wortel,Sapi) \n");
+        cookingMenu.append("3. Susu Kacang (Kekenyangan : 5, Bahan : Susu,Kacang) \n");
+        cookingMenu.append("4. Tumis Sayur (Kekenyangan : 5, Bahan : Wortel,Bayam) \n");
+        cookingMenu.append("5. Bistik (Kekenyangan : 22, Bahan : Kentang,Sapi) \n");
+
+    }
+    public void showBuyObjectMenu(){
+        StringBuilder buyobjectMenu = new StringBuilder();
+        buyobjectMenu.append("Berikut list object non makanan yang dapat dibeli: \n");
+        buyobjectMenu.append("1. Kasur Single (Dimensi : 4 x 1, Harga : 50) \n");
+        buyobjectMenu.append("2. Kasur Queen Size (Dimensi : 4 x 2, Harga : 100) \n");
+        buyobjectMenu.append("3. Kasur King Size (Dimensi : 5 x 2, Harga : 150) \n");
+        buyobjectMenu.append("4. Toilet (Dimensi : 1 x 1, Harga : 50) \n");
+        buyobjectMenu.append("5. Kompor Gas (Dimensi : 2 x 1, Harga : 100) \n");
+        buyobjectMenu.append("6. Kompor Listrik (Dimensi : 1 x 1, Harga : 200) \n");
+        buyobjectMenu.append("7. Meja dan Kursi (Dimensi : 3 x 3, Harga : 50) \n");
+        buyobjectMenu.append("8. Jam (Dimensi : 1 x 1, Harga : 10) \n");
+        buyobjectMenu.append("\n");
+        buyobjectMenu.append("Berikut list object bahan makanan yang dapat dibeli: \n");
+        buyobjectMenu.append("9. Nasi (Kekenyangan : 5, Harga 5)\n");
+        buyobjectMenu.append("10. Kentang (Kekenyangan : 4, Harga 3)\n");
+        buyobjectMenu.append("11. Ayam (Kekenyangan : 8, Harga 10)\n");
+        buyobjectMenu.append("12. Sapi (Kekenyangan : 15, Harga 12)\n");
+        buyobjectMenu.append("13. Wortel (Kekenyangan : 2, Harga 3)\n");
+        buyobjectMenu.append("14. Bayam (Kekenyangan : 2, Harga 3)\n");
+        buyobjectMenu.append("15. Kacang (Kekenyangan : 2, Harga 2)\n");
+        buyobjectMenu.append("16. Susu (Kekenyangan : 1, Harga 2)\n");
+        System.out.println(buyobjectMenu);
+    }
+    
+    public boolean isMoneyEnough(int hargaobjek, int duitSim){
+        if(hargaobjek > duitSim){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    //////////////////////////////////////////////////////////
 
     public void printListSim() {
         System.out.println("Daftar Sim yang dapat dimainkan: ");
@@ -389,14 +465,35 @@ public class Main {
                 } else if (equals(act, "EAT")) {
 
                 } else if (equals(act, "COOK")) {
+                    main.showCookingMenu();
 
                 } else if (equals(act, "VISIT")) {
 
                 } else if (equals(act, "PEE")) {
+                    System.out.println("AAAAHHHHHHHHHHH~");
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
 
-                } else if (equals(act, "BUY ITEM")) {
+                } 
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                else if (equals(act, "BUY ITEM")) {
+                
+                    main.showBuyObjectMenu();
+                    System.out.println("Mau beli nomor berapa?");
+                    System.out.print("Nomor : ");
+                    int buynumber = scanner.nextInt();
+
+                    if(buynumber == 1){
+                        if(main.isMoneyEnough(kasurSingle.getObjPrice(),main.currentSim.getMoney())){
+                            main.currentSim.setMoney(main.currentSim.getMoney()-kasurSingle.getObjPrice());
+                            System.out.println("Berhasil Membeli Barang!");
+                        }
+                        else{
+                            System.out.println("Uang-mu kurang :( ");
+                        }
+                    }
+                ///////////////////////////////////////////////////////////////////////////////////////////
+
 
                 } else if (equals(act, "MOVE ROOM")) {
                     main.currentSim.moveRoom();

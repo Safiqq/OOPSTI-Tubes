@@ -16,6 +16,11 @@ public class Food extends Objek {
         this.listGroceries = listofGroceries;
     }
 
+    public Food(String objekName,int foodHunger) {
+        super(objekName);
+        this.foodHunger = foodHunger;
+    }
+
     public Food(String objekName) {
         super(objekName);
     }
