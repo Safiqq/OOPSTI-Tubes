@@ -1,28 +1,34 @@
 package simplicity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Room {
-    // attribute
-    private String roomName;
     private final int roomLength = 6;
     private final int roomWidth = 6;
+    // attribute
+    private final String roomName;
+    // new atribute
+    private final boolean[][] emptyRoom = new boolean[roomLength][roomWidth];
+    private final NonFood[][] matrixBarang = new NonFood[roomLength][roomWidth];
     private Room upperSide;
     private Room bottomSide;
     private Room leftSide;
     private Room rightSide;
     private ArrayList<NonFood> listObjek;
-    // new atribute
-    private boolean[][] emptyRoom = new boolean[roomLength][roomWidth];
 
     // default room
     public Room() {
         this("Ruang Utama");
-        NonFood kasursingle = new NonFood("Kasur single", new Point(), new Point(3, 0));
-        NonFood komporgas = new NonFood("Kompor gas", new Point(5, 2), new Point(5, 3));
-        NonFood mejadankursi = new NonFood("Meja dan kursi", new Point(1, 2), new Point(3, 4));
-        NonFood jam = new NonFood("Jam", new Point(5, 0));
-        
+        NonFood kasurSingle = new NonFood("Kasur single", new Point(), new Point(0, 3));
+        NonFood komporGas = new NonFood("Kompor gas", new Point(2, 5), new Point(3, 5));
+        NonFood mejaDanKursi = new NonFood("Meja dan kursi", new Point(2, 1), new Point(4, 3));
+        NonFood jam = new NonFood("Jam", new Point(0, 5));
+
+        insertBarang(kasurSingle);
+        insertBarang(komporGas);
+        insertBarang(mejaDanKursi);
+        insertBarang(jam);
     }
 
     public Room(String roomName) {
@@ -56,7 +62,7 @@ public class Room {
     }
 
     public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide,
-            ArrayList<NonFood> listObjek) {
+                ArrayList<NonFood> listObjek) {
         this.roomName = roomName;
         this.upperSide = upperSide;
         this.bottomSide = bottomSide;
@@ -72,15 +78,24 @@ public class Room {
             // buat room jadi not empty sesuai dengan ukuran NonFood
             for (int i = 0; i < roomLength; i++) {
                 for (int j = 0; j < roomWidth; j++) {
-                    if ((i >= startX && i <= endX) && (j >= startY && j <= endY)) {
-                        emptyRoom[i][j] = false;
-                    } else {
-                        emptyRoom[i][j] = true;
-                    }
+                    emptyRoom[i][j] = (i < startX || i > endX) || (j < startY || j > endY);
 
                 }
             }
 
+        }
+    }
+
+    public void insertBarang(NonFood barang) {
+        if (isSpaceEmpty(barang.getStartPoint(), barang.getEndPoint())) {
+            for (int i = barang.getStartPoint().getY(); i <= barang.getEndPoint().getY(); i++) {
+                for (int j = barang.getStartPoint().getX(); j <= barang.getEndPoint().getX(); j++) {
+                    matrixBarang[i][j] = barang;
+                }
+            }
+            addListObjek(barang);
+//        } else {
+////            throw new Exception("Area ruangan yang dipilih tidak kosong. Silahkan pilih area lain.");
         }
     }
 
@@ -101,37 +116,37 @@ public class Room {
         return this.upperSide;
     }
 
-    public Room getBottomSide() {
-        return this.bottomSide;
-    }
-
-    public Room getLeftSide() {
-        return this.leftSide;
-    }
-
-    public Room getRightSide() {
-        return this.rightSide;
-    }
-
-    public ArrayList<NonFood> getListObjek() {
-        return this.listObjek;
-    }
-
     // methods setter
     public void setUpperSide(Room room) {
         this.upperSide = room;
+    }
+
+    public Room getBottomSide() {
+        return this.bottomSide;
     }
 
     public void setBottomSide(Room room) {
         this.bottomSide = room;
     }
 
+    public Room getLeftSide() {
+        return this.leftSide;
+    }
+
     public void setLeftSide(Room room) {
         this.leftSide = room;
     }
 
+    public Room getRightSide() {
+        return this.rightSide;
+    }
+
     public void setRightSide(Room room) {
         this.rightSide = room;
+    }
+
+    public ArrayList<NonFood> getListObjek() {
+        return this.listObjek;
     }
 
     public void setListObjek(ArrayList<NonFood> listObjek) {
@@ -141,30 +156,17 @@ public class Room {
     // other methods
     // new methods to check apakah space di ruangan kosong atau tidak
     public boolean isSpaceEmpty(Point startPoint, Point endPoint) {
-        int startX = startPoint.getX();
-        int startY = startPoint.getY();
-        int endX = endPoint.getX();
-        int endY = endPoint.getY();
-
-        boolean status = true;
-        for (int i = startX; i <= endX; i++) {
-            for (int j = startY; j <= endY; j++) {
-                if (emptyRoom[i][j] != true) {
-                    status = false;
-                    break;
-                }
+        for (int i = startPoint.getY(); i <= endPoint.getY(); i++) {
+            for (int j = startPoint.getX(); j <= endPoint.getX(); j++) {
+                if (Objects.nonNull(matrixBarang[i][j])) return false;
             }
         }
-        return status;
+        return true;
     }
 
-    public void addListObject(NonFood objek) throws Exception {
+    public void addListObjek(NonFood objek) {
         // try{
-        if (isSpaceEmpty(objek.getStartPoint(), objek.getEndPoint())) {
-            listObjek.add(objek);
-        } else {
-            throw new Exception("Area ruangan yang dipilih tidak kosong. Silahkan Pilih area lain.");
-        }
+        listObjek.add(objek);
         // }
         // catch(Exception e){
         // System.out.println(e.getMessage());

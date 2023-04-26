@@ -127,8 +127,8 @@ public class NonFood extends Objek {
         return startPoint;
     }
 
-    public void setStartPoint(Point starPoint) {
-        this.startPoint = starPoint;
+    public void setStartPoint(Point startPoint) {
+        this.startPoint = startPoint;
     }
 
     public Point getEndPoint() {

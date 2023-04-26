@@ -5,11 +5,11 @@ import java.util.Random;
 
 public class House {
     // Attribute
-    private String owner;
-    private ArrayList<Room> listRoom = new ArrayList<>();
-    private Point houseLoc;
+    private final String owner;
+    private final ArrayList<Room> listRoom = new ArrayList<>();
+    private final Point houseLoc;
     // masi bingung ini gmn
-    private Room defaultRoom;
+    private final Room defaultRoom;
 
     // constructor
     public House(String owner) {
@@ -19,7 +19,7 @@ public class House {
 
         this.owner = owner;
         houseLoc = point;
-        defaultRoom = new Room("Ruang Utama");
+        defaultRoom = new Room();
         listRoom.add(defaultRoom);
     }
 

@@ -24,6 +24,7 @@ public class Main {
     public static void main(String[] args) {
         // cobaJavaSwing.start();
         Main main = new Main();
+        Action.fillListAction();
         time = new Time();
         // time.runTime();
         // time.setIsNotIdle(true);
@@ -55,9 +56,6 @@ public class Main {
             System.out.print("Masukkan nama Sim anda: ");
             String simName = scanner.nextLine();
             Sim newSim = new Sim(simName);
-            // bikin rumah di random point
-            House house = new House(newSim.getFullName());
-            world.addHouse(house);
             main.listSim.add(newSim);
             main.currentSim = newSim;
             System.out.println("Selamat bermain!");
@@ -195,10 +193,14 @@ public class Main {
                 // asumsi: sim harus berada di dalam ruangan untuk melihat daftar objek dalam
                 // ruangan tsb
                 ArrayList<NonFood> listObjek = main.currentSim.getSimLoc().getRoom().getListObjek();
-                int i = 1;
-                for (NonFood nonFood : listObjek) {
-                    System.out.println(i + ". " + nonFood);
-                    i++;
+                if (listObjek.size() > 0) {
+                    int i = 1;
+                    for (NonFood nonFood : listObjek) {
+                        System.out.println(i + ". " + nonFood.getObjekName());
+                        i++;
+                    }
+                } else {
+                    System.out.println("Tidak ada daftar objek dalam ruangan " + main.currentSim.getSimLoc().getRoom().getRoomName() + ".");
                 }
 
             } else if (equals(menu, "GO TO OBJECT")) {
@@ -328,25 +330,25 @@ public class Main {
     }
 
     public void showMenuBegin() {
-        System.out.println("Menu game yang tersedia:\n");
+        System.out.println("Menu game yang tersedia:");
         printMenu(new int[]{0, 1, 2});
     }
 
     public void showMenu() {
-        System.out.println("Menu Game:\n");
+        System.out.println("Menu Game:");
         printMenu(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
     }
 
     public void showAction() {
-        System.out.println("Aksi yang dapat dipilih: \n");
+        System.out.println("Aksi yang dapat dipilih:");
 //        Change Job gatau masuk action ato ngga
         int i = 1;
         List<Action> listAction = Action.getListAction();
         for (int j = 0; j < Action.getListAction().size(); j++) {
-            if (!equals(listAction.get(j).getActionName(), "Tidak buang air")) {
-                System.out.println(i + ". " + listAction.get(j));
-                i++;
-            }
+//            if (!equals(listAction.get(j).getActionName(), "Tidak buang air")) {
+            System.out.println(i + ". " + listAction.get(j).getActionName());
+            i++;
+//            }
         }
     }
 

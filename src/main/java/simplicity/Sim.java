@@ -1,16 +1,17 @@
 package simplicity;
 
-import java.util.*;
-import java.lang.Math;
+import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.Scanner;
 
 public class Sim {
+    private final Location simLoc;
     private String fullName;
     private Occupation occupation;
     private int money;
     private Inventory inventory;
     private Motive motive;
     private String status;
-    private Location simLoc;
     private Time currentTime;
     private int workTime = 0;
     private int paidTime = 0;
@@ -22,7 +23,8 @@ public class Sim {
         this.occupation = new Occupation(); // inisiasi di class occupation
         this.fullName = fullName;
         this.inventory = new Inventory(); // inisiasi di class inventory
-        // this.simLoc = new Location(null, null, null); //inisiasi di class location
+        House house = new House(fullName);
+        this.simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
     }
 
     public void viewSimInfo() {
@@ -38,6 +40,7 @@ public class Sim {
         System.out.println("Lokasi Sim: ");
         System.out.println("Rumah milik: " + simLoc.getHouse().getOwner());
         System.out.println("Nama ruangan: " + simLoc.getRoom().getRoomName());
+        System.out.println("X: " + simLoc.getPoint().getX() + ", Y: " + simLoc.getPoint().getY());
     }
 
     public void viewSimInventory() {
@@ -78,12 +81,24 @@ public class Sim {
         return this.fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public Occupation getOccupation() {
         return this.occupation;
     }
 
+    public void setOccupation(Occupation occupation) {
+        this.occupation = occupation;
+    }
+
     public int getMoney() {
         return this.money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     public Inventory getInventory() {
@@ -94,36 +109,24 @@ public class Sim {
         return this.motive;
     }
 
+    public void setMotive(Motive motive) {
+        this.motive = motive;
+    }
+
     public String getStatus() {
         return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Location getSimLoc() {
         return this.simLoc;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setOccupation(Occupation occupation) {
-        this.occupation = occupation;
-    }
-
-    public void setMoney(int money) {
-        this.money = money;
-    }
-
     public void setListInventory(Inventory inventory) {
         this.inventory = inventory;
-    }
-
-    public void setMotive(Motive motive) {
-        this.motive = motive;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public void moveRoom() {
@@ -145,7 +148,7 @@ public class Sim {
             if (oldRoom.equals(roomName)) {
                 System.out.println("Nama ruangan sama dengan tempat Sim berada ");
                 System.out.println("Sim berada di ruangan " + oldRoom);
-                System.out.println("");
+                System.out.println();
             } else {
                 for (Room room : listRoom) {
                     if (roomName.equals(room.getRoomName())) {
@@ -158,7 +161,7 @@ public class Sim {
 
                 if (!done) {
                     System.out.println("Tidak ditemukan ruangan bernama " + roomName);
-                    System.out.println("");
+                    System.out.println();
                 }
             }
         }
