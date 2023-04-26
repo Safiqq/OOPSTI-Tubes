@@ -370,9 +370,9 @@ public class Sim {
     // }
 
     public void moveRoom(Room room) {
-        Point defaultPoint = new Point(3,3);
         simLoc.setRoom(room);
-        simLoc.setPoint(defaultPoint);
+        simLoc.getPoint().setX(3);
+        simLoc.getPoint().setY(3);
     }
 
     // public void installItem(NonFood nonFood) {
