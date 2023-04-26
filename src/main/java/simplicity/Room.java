@@ -15,12 +15,22 @@ public class Room {
     // new atribute
     private boolean[][] emptyRoom = new boolean[roomLength][roomWidth];
 
+    // default room
+    public Room() {
+        this("Ruang Utama");
+        NonFood kasursingle = new NonFood("Kasur single", new Point(), new Point(3, 0));
+        NonFood komporgas = new NonFood("Kompor gas", new Point(5, 2), new Point(5, 3));
+        NonFood mejadankursi = new NonFood("Meja dan kursi", new Point(1, 2), new Point(3, 4));
+        NonFood jam = new NonFood("Jam", new Point(5, 0));
+        
+    }
+
     public Room(String roomName) {
         this.roomName = roomName;
-        this.upperSide = null;
-        this.bottomSide = null;
-        this.leftSide = null;
-        this.rightSide = null;
+        upperSide = null;
+        bottomSide = null;
+        leftSide = null;
+        rightSide = null;
         listObjek = new ArrayList<NonFood>();
 
         for (int i = 0; i < roomLength; i++) {

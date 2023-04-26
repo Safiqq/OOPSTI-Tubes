@@ -1,260 +1,24 @@
 package simplicity;
 
-import javax.swing.*;
+import com.google.common.primitives.Ints;
 
-import java.util.*;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
-    private static Scanner scanner = new Scanner(System.in);
-    private static World world = World.getWorld();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final World world = World.getWorld();
     private static Time time;
-    private List<Sim> listSim = new ArrayList<>();
+    private final List<Sim> listSim = new ArrayList<>();
+    private final String[] menu = {"Start Game", "Help", "Exit", "View Sim Info", "View Current Location", "View Inventory", "Upgrade House", "Move Room", "Edit Room", "Add Sim", "Change Sim", "List Object", "Go to Object", "Action"};
     private Sim currentSim = null;
     private int dayAddSim = 0;
 
-    //////////////////////////////////////////////////////////
-
-    //Objek Non-Food
-    private static NonFood kasurSingle = new NonFood("Kasur Single", 4, 1,50);
-    private static NonFood kasurQueen = new NonFood("Kasur Queen Size", 4, 2, 100);
-    private static NonFood kasurKing = new NonFood("Kasur King Size",5,2,150);
-    private static NonFood toilet = new NonFood("Toilet", 1,1,50);
-    private static NonFood komporGas = new NonFood("Kompor Gas",2,1,100);
-    private static NonFood komporListrik = new NonFood("Kompor Listrik",1,1,200);
-    private static NonFood mejakursi = new NonFood("Meja",3,3,50);
-    private static NonFood jam = new NonFood("Jam",1,1,10);
-
-    //Objek Bahan Makanan
-    private static Groceries nasi = new Groceries("Nasi", 5, 5);
-    private static Groceries kentang = new Groceries("Kentang", 3, 4);
-    private static Groceries ayam = new Groceries("Ayam", 10, 8);
-    private static Groceries sapi = new Groceries("Sapi", 12, 15);
-    private static Groceries wortel = new Groceries("Wortel", 3, 2);
-    private static Groceries bayam = new Groceries("Bayam", 3, 2);
-    private static Groceries kacang = new Groceries("Kacang", 2, 2);
-    private static Groceries susu = new Groceries("Susu", 2, 1);
-
-    //Objek Makanan (Masakan)
-    private static Food nasiayam = new Food("Nasi Ayam", 16);
-    private static Food nasikari = new Food("Nasi Kari",30);
-    private static Food susukacang = new Food("Susu Kacang",5);
-    private static Food tumissayur = new Food("Tumis Sayur",5);
-    private static Food bistik = new Food("Bistik",22);
-    
-    //////////////////////////////////////////////////////////
-    public static class cobaJavaSwing {
-        public static void start() {
-            JFrame f = new JFrame("Sim-Plicity");
-            JButton b = new JButton("Start");
-            b.setBounds(130, 100, 100, 40);
-            f.add(b);
-            f.setSize(400, 500);
-            f.setLayout(null);// using no layout managers
-            f.setVisible(true);// making the frame visible
-        }
-    }
-
-    public void clearScreen() {
-        try {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows"))
-                Runtime.getRuntime().exec("cls");
-            else
-                Runtime.getRuntime().exec("clear");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static boolean equals(String str1, String str2) {
-        return str1.toUpperCase().equals(str2.toUpperCase());
-    }
-
-    public void showMenuBegin() {
-        StringBuilder menu1 = new StringBuilder();
-        menu1.append("Menu game yang tersedia:\n");
-        menu1.append("1. Start Game\n");
-        menu1.append("2. Help\n");
-        menu1.append("3. Exit\n");
-        System.out.println(menu1);
-    }
-
-    public void showMenu() {
-        StringBuilder menu = new StringBuilder();
-        menu.append("Menu Game:\n");
-        menu.append("1. Help\n");
-        menu.append("2. Exit\n");
-        menu.append("3. View Sim Info\n");
-        menu.append("4. View Current Location\n");
-        menu.append("5. View Inventory\n");
-        menu.append("6. Upgrade House\n");
-        menu.append("7. Move Room\n");
-        menu.append("8. Edit Room\n");
-        menu.append("9. Add Sim\n");
-        menu.append("10. Change Sim\n");
-        menu.append("11. List Object\n");
-        menu.append("12. Go to Object\n");
-        menu.append("13. Action\n");
-        System.out.println(menu);
-    }
-
-    public void showAction() {
-        StringBuilder actionMenu = new StringBuilder();
-        actionMenu.append("Aksi yang dapat dipilih: \n");
-        actionMenu.append("1. Work\n");
-        actionMenu.append("2. Change Job\n"); // masuk action ato ngga
-        actionMenu.append("3. Exercise\n");
-        actionMenu.append("4. Sleep\n");
-        actionMenu.append("5. Eat\n");
-        actionMenu.append("6. Cook\n");
-        actionMenu.append("7. Visit\n");
-        actionMenu.append("8. Pee\n");
-        actionMenu.append("9. Upgrade House\n");
-        actionMenu.append("10. Buy Item\n");
-        actionMenu.append("11. Move Room\n");
-        actionMenu.append("12. View Inventory\n");
-        actionMenu.append("13. Install Item\n");
-        actionMenu.append("14. Check Time\n");
-        System.out.println(actionMenu);
-    }
-
-    //////////////////////////////////////////////////////////
-    public void showCookingMenu(){
-        StringBuilder cookingMenu = new StringBuilder();
-        cookingMenu.append("Mau masak apa hari ini? \n");
-        cookingMenu.append("1. Nasi Ayam (Kekenyangan : 16, Bahan : Nasi,Ayam) \n");
-        cookingMenu.append("2. Nasi Kari (Kekenyangan : 30, Bahan : Nasi,Kentang,Wortel,Sapi) \n");
-        cookingMenu.append("3. Susu Kacang (Kekenyangan : 5, Bahan : Susu,Kacang) \n");
-        cookingMenu.append("4. Tumis Sayur (Kekenyangan : 5, Bahan : Wortel,Bayam) \n");
-        cookingMenu.append("5. Bistik (Kekenyangan : 22, Bahan : Kentang,Sapi) \n");
-
-    }
-    public void showBuyObjectMenu(){
-        StringBuilder buyobjectMenu = new StringBuilder();
-        buyobjectMenu.append("Berikut list object non makanan yang dapat dibeli: \n");
-        buyobjectMenu.append("1. Kasur Single (Dimensi : 4 x 1, Harga : 50) \n");
-        buyobjectMenu.append("2. Kasur Queen Size (Dimensi : 4 x 2, Harga : 100) \n");
-        buyobjectMenu.append("3. Kasur King Size (Dimensi : 5 x 2, Harga : 150) \n");
-        buyobjectMenu.append("4. Toilet (Dimensi : 1 x 1, Harga : 50) \n");
-        buyobjectMenu.append("5. Kompor Gas (Dimensi : 2 x 1, Harga : 100) \n");
-        buyobjectMenu.append("6. Kompor Listrik (Dimensi : 1 x 1, Harga : 200) \n");
-        buyobjectMenu.append("7. Meja dan Kursi (Dimensi : 3 x 3, Harga : 50) \n");
-        buyobjectMenu.append("8. Jam (Dimensi : 1 x 1, Harga : 10) \n");
-        buyobjectMenu.append("\n");
-        buyobjectMenu.append("Berikut list object bahan makanan yang dapat dibeli: \n");
-        buyobjectMenu.append("9. Nasi (Kekenyangan : 5, Harga 5)\n");
-        buyobjectMenu.append("10. Kentang (Kekenyangan : 4, Harga 3)\n");
-        buyobjectMenu.append("11. Ayam (Kekenyangan : 8, Harga 10)\n");
-        buyobjectMenu.append("12. Sapi (Kekenyangan : 15, Harga 12)\n");
-        buyobjectMenu.append("13. Wortel (Kekenyangan : 2, Harga 3)\n");
-        buyobjectMenu.append("14. Bayam (Kekenyangan : 2, Harga 3)\n");
-        buyobjectMenu.append("15. Kacang (Kekenyangan : 2, Harga 2)\n");
-        buyobjectMenu.append("16. Susu (Kekenyangan : 1, Harga 2)\n");
-        System.out.println(buyobjectMenu);
-    }
-    
-    public boolean isMoneyEnough(int hargaobjek, int duitSim){
-        if(hargaobjek > duitSim){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    //////////////////////////////////////////////////////////
-
-    public void printListSim() {
-        System.out.println("Daftar Sim yang dapat dimainkan: ");
-        int i = 1;
-        for (Sim sim : listSim) {
-            System.out.println(i + ". " + sim.getFullName());
-            i++;
-        }
-        System.out.println("");
-    }
-
-    public Sim chooseSim() {
-        printListSim();
-        boolean done = false;
-        String simName = null;
-        while (!done) {
-            System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
-            simName = scanner.nextLine();
-            if (isNotRegistered(simName)) {
-                System.out.println("Sim tidak ditemukan di list Sim");
-                printListSim();
-            } else {
-                // ambil Sim di list
-                for (Sim sim : listSim) {
-                    if (equals(simName, sim.getFullName())) {
-                        return sim;
-                    }
-                }
-
-                done = true;
-            }
-        }
-
-        return null;
-    }
-
-    public boolean isNotRegistered(String simName) {
-        for (Sim sim : listSim) {
-            if (equals(simName, sim.getFullName())) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public Sim menuAddSim() {
-        // validasi nama Sim
-        boolean found = true;
-        String simName = null;
-        while (found) {
-            System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
-            simName = scanner.nextLine();
-            if (isNotRegistered(simName)) {
-                found = false;
-            } else {
-                System.out.println("Nama Sim telah terdaftar. Silahkan menggunakan nama lain");
-                printListSim();
-            }
-        }
-
-        // validasi lokasi rumah Sim
-        System.out.println("Masukkan titik untuk mendirikan rumah: ");
-        boolean done = false;
-        int x = 0, y = 0;
-        while (!done) {
-            System.out.print("X: ");
-            x = scanner.nextInt();
-            System.out.print("Y: ");
-            y = scanner.nextInt();
-            if ((x < 0 || x > 64) || (y < 0 || y > 64)) {
-                System.out.println("Titik tidak valid. World berukuran 64x64");
-            } else {
-                done = true;
-            }
-        }
-
-        Point houseLoc = new Point(x, y);
-        // cek fungsi isWorldAvail
-        if (world.isWorldAvail(houseLoc)) {
-            Sim newSim = new Sim(simName);
-            world.addHouse(newSim.getFullName(), houseLoc);
-            listSim.add(newSim);
-            System.out.println("Sim berhasil didaftarkan");
-            world.printMatrixHouse();
-            return newSim;
-        } else {
-            System.out.println("Tidak memungkinkan untuk membuat rumah baru di lokasi tersebut");
-            System.out.println("Pendaftaran Sim baru gagal");
-            return null;
-        }
+        return str1.equalsIgnoreCase(str2);
     }
 
     public static void main(String[] args) {
@@ -307,7 +71,7 @@ public class Main {
                 // cek masi ada spot kosong di world ato ngga
                 if (world.isHouseBuildAble()) {
                     boolean done = false;
-                    Sim newSim = null;
+                    Sim newSim;
                     while (!done) {
                         newSim = main.menuAddSim();
                         if (newSim != null) {
@@ -463,7 +227,8 @@ public class Main {
                     // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
                     // efek tidak tidur -> -5 kesehatan dan -5 mood setelah 10 mnt tanpa tidur
                     // apakah harus 3 menit langsung atau boleh dicicil?
-                    // penambahan efek tidur apakah akumulasi dalam hari tersebut atau langsung dibagi tiap tidur
+                    // penambahan efek tidur apakah akumulasi dalam hari tersebut atau langsung
+                    // dibagi tiap tidur
 
                     System.out.print("Masukkan durasi tidur (dalam detik): ");
                     int simSleepTime = scanner.nextInt();
@@ -478,11 +243,11 @@ public class Main {
                     // mau masukin visit rumah orang pake nama owner?
                     boolean done = false;
                     Point houseLoc = null;
-                    while (!done){
+                    while (!done) {
                         System.out.print("Masukkan nama pemilik rumah yang ingin dikunjungi: ");
                         String ownerHouse = scanner.nextLine();
                         houseLoc = world.searchHouse(ownerHouse);
-                        if (houseLoc == null){
+                        if (houseLoc == null) {
                             System.out.println("Tidak ada rumah yang dimiliki ");
                         }
                     }
@@ -495,30 +260,27 @@ public class Main {
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
 
-                } 
+                }
                 ///////////////////////////////////////////////////////////////////////////////////////////
                 else if (equals(act, "BUY ITEM")) {
-                
+
                     main.showBuyObjectMenu();
                     System.out.println("Mau beli nomor berapa?");
                     System.out.print("Nomor : ");
                     int buynumber = scanner.nextInt();
 
-                    if(buynumber == 1){
-                        if(main.isMoneyEnough(kasurSingle.getObjPrice(),main.currentSim.getMoney()) && main.currentSim.getInventory().getBoxNonFood().length < 8){
-                            main.currentSim.setMoney(main.currentSim.getMoney()-kasurSingle.getObjPrice());
-                            main.currentSim.getInventory().getBoxNonFood().add(kasurSingle);
-                            System.out.println("Berhasil Membeli Barang!");
-                        }
-                        else if(main.currentSim.getInventory().getBoxNonFood().length == 8){
-                            System.out.println("Inventorymu penuh wei!");
-                        }
-                        else{
-                            System.out.println("Uang-mu kurang :( ");
-                        }
+                    if (buynumber == 1) {
+//                        if (main.isMoneyEnough(kasurSingle.getObjPrice(), main.currentSim.getMoney()) && main.currentSim.getInventory().getBoxNonFood().length < 8) {
+//                            main.currentSim.setMoney(main.currentSim.getMoney() - kasurSingle.getObjPrice());
+//                            main.currentSim.getInventory().getBoxNonFood().add(kasurSingle);
+//                            System.out.println("Berhasil Membeli Barang!");
+//                        } else if (main.currentSim.getInventory().getBoxNonFood().length == 8) {
+//                            System.out.println("Inventorymu penuh wei!");
+//                        } else {
+//                            System.out.println("Uang-mu kurang :( ");
+//                        }
                     }
-                ///////////////////////////////////////////////////////////////////////////////////////////
-
+                    ///////////////////////////////////////////////////////////////////////////////////////////
 
                 } else if (equals(act, "MOVE ROOM")) {
                     main.currentSim.moveRoom();
@@ -543,5 +305,193 @@ public class Main {
         }
 
         scanner.close();
+    }
+
+    public void clearScreen() {
+        try {
+            final String os = System.getProperty("os.name");
+            if (os.contains("Windows")) Runtime.getRuntime().exec("cls");
+            else Runtime.getRuntime().exec("clear");
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printMenu(int[] numbers) {
+        int i = 1;
+        for (int j = 0; j < menu.length; j++) {
+            if (Ints.contains(numbers, j)) {
+                System.out.println(i + ". " + menu[j]);
+                i++;
+            }
+        }
+    }
+
+    public void showMenuBegin() {
+        System.out.println("Menu game yang tersedia:\n");
+        printMenu(new int[]{0, 1, 2});
+    }
+
+    public void showMenu() {
+        System.out.println("Menu Game:\n");
+        printMenu(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
+    }
+
+    public void showAction() {
+        System.out.println("Aksi yang dapat dipilih: \n");
+//        Change Job gatau masuk action ato ngga
+        int i = 1;
+        List<Action> listAction = Action.getListAction();
+        for (int j = 0; j < Action.getListAction().size(); j++) {
+            if (!equals(listAction.get(j).getActionName(), "Tidak buang air")) {
+                System.out.println(i + ". " + listAction.get(j));
+                i++;
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////////////
+    public void showCookingMenu() {
+        StringBuilder cookingMenu = new StringBuilder();
+        cookingMenu.append("Mau masak apa hari ini? \n");
+        cookingMenu.append("1. Nasi Ayam (Kekenyangan : 16, Bahan : Nasi,Ayam) \n");
+        cookingMenu.append("2. Nasi Kari (Kekenyangan : 30, Bahan : Nasi,Kentang,Wortel,Sapi) \n");
+        cookingMenu.append("3. Susu Kacang (Kekenyangan : 5, Bahan : Susu,Kacang) \n");
+        cookingMenu.append("4. Tumis Sayur (Kekenyangan : 5, Bahan : Wortel,Bayam) \n");
+        cookingMenu.append("5. Bistik (Kekenyangan : 22, Bahan : Kentang,Sapi) \n");
+
+    }
+
+    public void showBuyObjectMenu() {
+        String buyobjectMenu = "Berikut list object non makanan yang dapat dibeli: \n" +
+                "1. Kasur Single (Dimensi : 4 x 1, Harga : 50) \n" +
+                "2. Kasur Queen Size (Dimensi : 4 x 2, Harga : 100) \n" +
+                "3. Kasur King Size (Dimensi : 5 x 2, Harga : 150) \n" +
+                "4. Toilet (Dimensi : 1 x 1, Harga : 50) \n" +
+                "5. Kompor Gas (Dimensi : 2 x 1, Harga : 100) \n" +
+                "6. Kompor Listrik (Dimensi : 1 x 1, Harga : 200) \n" +
+                "7. Meja dan Kursi (Dimensi : 3 x 3, Harga : 50) \n" +
+                "8. Jam (Dimensi : 1 x 1, Harga : 10) \n" +
+                "\n" +
+                "Berikut list object bahan makanan yang dapat dibeli: \n" +
+                "9. Nasi (Kekenyangan : 5, Harga 5)\n" +
+                "10. Kentang (Kekenyangan : 4, Harga 3)\n" +
+                "11. Ayam (Kekenyangan : 8, Harga 10)\n" +
+                "12. Sapi (Kekenyangan : 15, Harga 12)\n" +
+                "13. Wortel (Kekenyangan : 2, Harga 3)\n" +
+                "14. Bayam (Kekenyangan : 2, Harga 3)\n" +
+                "15. Kacang (Kekenyangan : 2, Harga 2)\n" +
+                "16. Susu (Kekenyangan : 1, Harga 2)\n";
+        System.out.println(buyobjectMenu);
+    }
+
+    public boolean isMoneyEnough(int hargaobjek, int duitSim) {
+        return hargaobjek <= duitSim;
+    }
+
+    //////////////////////////////////////////////////////////
+
+    public void printListSim() {
+        System.out.println("Daftar Sim yang dapat dimainkan: ");
+        int i = 1;
+        for (Sim sim : listSim) {
+            System.out.println(i + ". " + sim.getFullName());
+            i++;
+        }
+        System.out.println();
+    }
+
+    public Sim chooseSim() {
+        printListSim();
+        boolean done = false;
+        String simName = null;
+        while (!done) {
+            System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
+            simName = scanner.nextLine();
+            if (isNotRegistered(simName)) {
+                System.out.println("Sim tidak ditemukan di list Sim");
+                printListSim();
+            } else {
+                // ambil Sim di list
+                for (Sim sim : listSim) {
+                    if (equals(simName, sim.getFullName())) {
+                        return sim;
+                    }
+                }
+
+                done = true;
+            }
+        }
+
+        return null;
+    }
+
+    public boolean isNotRegistered(String simName) {
+        for (Sim sim : listSim) {
+            if (equals(simName, sim.getFullName())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public Sim menuAddSim() {
+        // validasi nama Sim
+        boolean found = true;
+        String simName = null;
+        while (found) {
+            System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
+            simName = scanner.nextLine();
+            if (isNotRegistered(simName)) {
+                found = false;
+            } else {
+                System.out.println("Nama Sim telah terdaftar. Silahkan menggunakan nama lain");
+                printListSim();
+            }
+        }
+
+        // validasi lokasi rumah Sim
+        System.out.println("Masukkan titik untuk mendirikan rumah: ");
+        boolean done = false;
+        int x = 0, y = 0;
+        while (!done) {
+            System.out.print("X: ");
+            x = scanner.nextInt();
+            System.out.print("Y: ");
+            y = scanner.nextInt();
+            if ((x < 0 || x > 64) || (y < 0 || y > 64)) {
+                System.out.println("Titik tidak valid. World berukuran 64x64");
+            } else {
+                done = true;
+            }
+        }
+
+        Point houseLoc = new Point(x, y);
+        // cek fungsi isWorldAvail
+        if (world.isWorldAvail(houseLoc)) {
+            Sim newSim = new Sim(simName);
+            world.addHouse(newSim.getFullName(), houseLoc);
+            listSim.add(newSim);
+            System.out.println("Sim berhasil didaftarkan");
+            world.printMatrixHouse();
+            return newSim;
+        } else {
+            System.out.println("Tidak memungkinkan untuk membuat rumah baru di lokasi tersebut");
+            System.out.println("Pendaftaran Sim baru gagal");
+            return null;
+        }
+    }
+
+    public static class cobaJavaSwing {
+        public static void start() {
+            JFrame f = new JFrame("Sim-Plicity");
+            JButton b = new JButton("Start");
+            b.setBounds(130, 100, 100, 40);
+            f.add(b);
+            f.setSize(400, 500);
+            f.setLayout(null);// using no layout managers
+            f.setVisible(true);// making the frame visible
+        }
     }
 }

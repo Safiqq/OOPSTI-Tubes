@@ -285,7 +285,7 @@ public class Sim {
         // double x = Math.pow(point.getX()-simLoc.getPoint().getX(), 2);
         // double y = Math.pow(point.getY()-simLoc.getPoint().getY(), 2);
         // double time = Math.sqrt(x+y);
-        
+
         // // pemain diminta memasukkan waktu durasi kelipatan 30 detik
         // boolean done = false;
         // Scanner scanner = new Scanner(System.in);

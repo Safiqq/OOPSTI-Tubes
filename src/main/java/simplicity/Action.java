@@ -12,9 +12,7 @@ public class Action {
     private static List<Action> listAction = new ArrayList<Action>();
 
     public Action(String actionName, String description) {
-        this.actionName = actionName;
-        this.description = description;
-        this.listEffect = new ArrayList<Effect>();
+        this(actionName, description, new ArrayList<Effect>());
     }
 
     public Action(String actionName, String description, List<Effect> listEffect) {
@@ -22,6 +20,18 @@ public class Action {
         this.description = description;
         this.listEffect = listEffect;
     }
+
+    public static List<Action> getListAction() {
+        return listAction;
+    }
+
+    // public static void printListAction() {
+    //     int i = 1;
+    //     for (Action action: listAction) {
+    //         System.out.println(i + ". " + action.getActionName());
+    //         i++;
+    //     }
+    // }
 
     private void fillListAction() {
         // kerja
@@ -112,6 +122,15 @@ public class Action {
         // melihat waktu
         listAction.add(new Action("Melihat waktu",
                 "Tindakan ini membutuhkan objek Jam, dan akan menunjukkan sisa waktu pada hari tersebut beserta sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal."));
+    }
+
+    public static Action get(String actionName) {
+        for (Action action : listAction) {
+            if (Main.equals(action.getActionName(), actionName)) {
+                return action;
+            }
+        }
+        return null;
     }
 
     public String getActionName() {
