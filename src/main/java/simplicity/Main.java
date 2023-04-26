@@ -250,16 +250,24 @@ public class Main {
                         String ownerHouse = scanner.nextLine();
                         houseLoc = world.searchHouse(ownerHouse);
                         if (houseLoc == null) {
-                            System.out.println("Tidak ada rumah yang dimiliki ");
+                            System.out.println("Tidak ada rumah yang dimiliki oleh " + ownerHouse);
+                            main.printListSim();
+                        } else {
+                            done = true;
                         }
                     }
 
                     System.out.print("Masukkan durasi berkunjung (dalam detik): ");
                     int simVisitTime = scanner.nextInt();
 
-                } else if (equals(act, "PEE")) {
-                    System.out.println("AAAAHHHHHHHHHHH~");
+                    main.currentSim.visit(houseLoc, simVisitTime);
 
+                } else if (equals(act, "PEE")) {
+                    // sim minimal buang air 1 kali tiap habis makan
+                    // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa buang air -> gimana
+
+                    main.currentSim.pee();
+                    
                 } else if (equals(act, "UPGRADE HOUSE")) {
 
                 }
