@@ -483,7 +483,7 @@ public class Main {
                         String ownerHouse = scanner.nextLine();
                         houseLoc = world.searchHouse(ownerHouse);
                         if (houseLoc == null){
-                            System.out.println("Tidak ada rumah yang dimiliki ")
+                            System.out.println("Tidak ada rumah yang dimiliki ");
                         }
                     }
 
