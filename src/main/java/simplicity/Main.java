@@ -13,7 +13,7 @@ public class Main {
     private static final World world = World.getWorld();
     private static Time time;
     private final List<Sim> listSim = new ArrayList<>();
-    private final String[] menu = {"Start Game", "Help", "Exit", "View Sim Info", "View Current Location", "View Inventory", "Upgrade House", "Move Room", "Edit Room", "Add Sim", "Change Sim", "List Object", "Go to Object", "Action"};
+    private final String[] menu = {"Start Game - Memulai permainan", "Help - Melihat menu game yang tersedia", "Exit - Keluar dari permainan", "View Sim Info - Menampilkan informasi setiap atribut dari Sim", "View Current Location - Menampilkan lokasi dari Sim", "View Inventory - Menampilkan isi inventory yang dimiliki Sim", "Upgrade House - Melakukan penambahan ruangan dalam rumah", "Move Room - Perpindahan lokasi ke ruang lain yang ada pada rumah yang sedang ditempati Sim", "Edit Room - Melakukan perubahan pada ruangan", "Add Sim - Menambahkan sebuah Sim dalam world", "Change Sim - Mengganti ke Sim lain untuk dimainkan", "List Object - Menampilkan daftar objek dalam sebuah ruangan", "Go to Object - Sim berjalan menuju suatu objek", "Action - Melakukan sebuah aksi pada suatu objek"};
     private Sim currentSim = null;
     private int dayAddSim = 0;
 
