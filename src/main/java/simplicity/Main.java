@@ -260,13 +260,13 @@ public class Main {
                     System.out.print("Masukkan durasi berkunjung (dalam detik): ");
                     int simVisitTime = scanner.nextInt();
 
-                    main.currentSim.visit(houseLoc, simVisitTime);
+                    // main.currentSim.visit(houseLoc, simVisitTime);
 
                 } else if (equals(act, "PEE")) {
                     // sim minimal buang air 1 kali tiap habis makan
                     // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa buang air -> gimana
 
-                    main.currentSim.pee();
+                    // main.currentSim.pee();
                     
                 } else if (equals(act, "UPGRADE HOUSE")) {
 
@@ -280,15 +280,16 @@ public class Main {
                     int buynumber = scanner.nextInt();
 
                     if (buynumber == 1) {
-//                        if (main.isMoneyEnough(kasurSingle.getObjPrice(), main.currentSim.getMoney()) && main.currentSim.getInventory().getBoxNonFood().length < 8) {
-//                            main.currentSim.setMoney(main.currentSim.getMoney() - kasurSingle.getObjPrice());
-//                            main.currentSim.getInventory().getBoxNonFood().add(kasurSingle);
-//                            System.out.println("Berhasil Membeli Barang!");
-//                        } else if (main.currentSim.getInventory().getBoxNonFood().length == 8) {
-//                            System.out.println("Inventorymu penuh wei!");
-//                        } else {
-//                            System.out.println("Uang-mu kurang :( ");
-//                        }
+                        NonFood kasurSingle = new NonFood("Kasur single");
+                        if (main.isMoneyEnough(kasurSingle.getObjPrice(), main.currentSim.getMoney()) && main.currentSim.getInventory().getBoxNonFood().length < 8) {
+                           main.currentSim.setMoney(main.currentSim.getMoney() - kasurSingle.getObjPrice());
+                           main.currentSim.getInventory().getBoxNonFood().add(kasurSingle);
+                           System.out.println("Berhasil Membeli Barang!");
+                       } else if (main.currentSim.getInventory().getBoxNonFood().length == 8) {
+                           System.out.println("Inventorymu penuh wei!");
+                       } else {
+                           System.out.println("Uang-mu kurang :( ");
+                       }
                     }
                     ///////////////////////////////////////////////////////////////////////////////////////////
 

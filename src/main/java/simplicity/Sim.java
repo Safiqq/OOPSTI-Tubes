@@ -154,8 +154,8 @@ public class Sim {
                     if (roomName.equals(room.getRoomName())) {
                         simLoc.setRoom(room);
                         // Sim teleportasi di point 3,3 dalam ruangan
-                        simLoc.setPoint().setX(3);
-                        simLoc.setPoint().setY(3);
+                        simLoc.getPoint().setX(3);
+                        simLoc.getPoint().setY(3);
                         done = true;
                         break;
                     }
@@ -351,7 +351,7 @@ public class Sim {
                         inputValid = true;
                     }
                     else{
-                        System.out.println("Lokasi tidak valid.")
+                        System.out.println("Lokasi tidak valid.");
                     }
                 }
                 money = money-1500;
