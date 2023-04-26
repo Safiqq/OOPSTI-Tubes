@@ -282,52 +282,98 @@ public class Sim {
 
     // }
 
-    public void visit(Point point, int time) {
+    public void visit(Point point, Time time) {
         // waktu yang diperlukan untuk berkunjung ke rumah
         // perhitungan/pemilihan titik rumah dari SIM yang ingin dikunjungi dibebaskan -> belum ditentuin
-        double x = Math.pow(point.getX()-simLoc.getPoint().getX(), 2);
-        double y = Math.pow(point.getY()-simLoc.getPoint().getY(), 2);
-        double walkTime = Math.sqrt(x+y);
+        // double x = Math.pow(point.getX()-simLoc.getPoint().getX(), 2);
+        // double y = Math.pow(point.getY()-simLoc.getPoint().getY(), 2);
+        // double time = Math.sqrt(x+y);
 
-        // pemain diminta memasukkan waktu durasi kelipatan 30 detik
-        boolean done = false;
-        Scanner scanner = new Scanner(System.in);
-        while (!done) {
-            if (time % 30 != 0){
-                System.out.println("Durasi berkunjung harus kelipatan 30");
-                System.out.print("Masukkan durasi berkunjung (dalam detik): ");
-                time = scanner.nextInt();
-            } else {
-                done = true;
-            }
-        }
+        // // pemain diminta memasukkan waktu durasi kelipatan 30 detik
+        // boolean done = false;
+        // Scanner scanner = new Scanner(System.in);
+        // while (!done) {
+        //     if (time % 30 != 0){
+        //         System.out.println("Durasi berkunjung harus kelipatan 30");
+        //         System.out.print("Masukkan durasi berkunjung (dalam detik): ");
+        //         time = scanner.nextInt();
+        //     } else {
+        //         done = true;
+        //     }
+        // }
 
-        scanner.close();
+        // scanner.close();
 
-        // +10 mood/30 dtk, -10 kekenyangan/30 dtk
-        int plusMood = 10 * (time / 30);
-        int minusHunger = -10 * (time / 30);
-        motive.changeMood(plusMood);
-        motive.changeHunger(minusHunger);
+        // // +10 mood/30 dtk, -10 kekenyangan/30 dtk
+        // int plusMood = 10 * (time / 30);
+        // int minusHunger = -10 * (time / 30);
+        // motive.changeMood(plusMood);
+        // motive.changeHunger(minusHunger);
 
     }
 
-    public void pee() {
-        // efek buang air: -20 kekenyangan/1 siklus (10 detik), +10 mood/1 siklus (10 detik)
-        // waktu pasti 10 detik tiap 1 siklus
-        int minusHunger = -20;
-        int plusMood = 10;
-        motive.changeHunger(minusHunger);
-        motive.changeMood(plusMood);
-    }
-
-    // public void upgradeHouse() {
+    // public void pee() {
 
     // }
+
+    public void upgradeHouse(House house) {
+        Scanner scan = new Scanner(System.in);
+        if (money >= 1500){
+            if (house.getListRoom().size()==1){
+                Room currentRoom = house.getDefaultRoom();
+                System.out.print("Masukkan nama ruangan baru : ");
+                String newRoomName = scan.nextLine();
+                
+                boolean inputValid = false;
+                while (inputValid){
+                    System.out.printf("Pilih lokasi %d disebelah ruangan utama (kiri/kanan/atas/bawah) : ",newRoomName);
+                    String roomLoc = scan.nextLine();
+                    if (roomLoc.toUpperCase() == "KANAN"){
+                        Room newRoom = new Room(newRoomName,null,null,currentRoom,null);
+                        currentRoom.setRightSide(newRoom);
+                        inputValid = true;
+                    }
+                    else if (roomLoc.toUpperCase() == "KIRI"){
+                        Room newRoom = new Room(newRoomName,null,null,null,currentRoom);
+                        currentRoom.setLeftSide(newRoom);
+                        inputValid = true;
+                    }
+                    else if (roomLoc.toUpperCase() == "ATAS"){
+                        Room newRoom = new Room(newRoomName,null,currentRoom,null,null);
+                        currentRoom.setUpperSide(newRoom);
+                        inputValid = true;
+                    }
+                    else if (roomLoc.toUpperCase() == "BAWAH"){
+                        Room newRoom = new Room(newRoomName,currentRoom,null,null,null);
+                        currentRoom.setBottomSide(newRoom);
+                        inputValid = true;
+                    }
+                    else{
+                        System.out.println("Lokasi tidak valid.")
+                    }
+                }
+                money = money-1500;
+            }
+            else{
+
+            }
+        // ganngerti syncronize waktu nya gmn wkwkwk
+        }
+        else{
+            System.out.println("Uang kamu tidak cukup untuk upgrade rumah");
+        }
+
+    }
 
     // public void buyItem(Objek objek) {
 
     // }
+
+    public void moveRoom(Room room) {
+        Point defaultPoint = new Point(3,3);
+        simLoc.setRoom(room);
+        simLoc.setPoint(defaultPoint);
+    }
 
     // public void installItem(NonFood nonFood) {
 
