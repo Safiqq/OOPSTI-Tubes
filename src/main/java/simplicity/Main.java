@@ -260,13 +260,14 @@ public class Main {
                     System.out.print("Masukkan durasi berkunjung (dalam detik): ");
                     int simVisitTime = scanner.nextInt();
 
-                    // main.currentSim.visit(houseLoc, simVisitTime);
+                    main.currentSim.visit(houseLoc, simVisitTime);
 
                 } else if (equals(act, "PEE")) {
                     // sim minimal buang air 1 kali tiap habis makan
                     // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa buang air -> gimana
 
-                    // main.currentSim.pee();
+                    main.currentSim.pee();
+                    // waktu = 10 dtk
                     
                 } else if (equals(act, "UPGRADE HOUSE")) {
 
