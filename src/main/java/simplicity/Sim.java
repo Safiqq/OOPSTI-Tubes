@@ -53,7 +53,7 @@ public class Sim {
         } else {
             int i = 0;
             for (IdentityHashMap.Entry<NonFood, Integer> entry : inventory.getBoxNonFood().getMapT().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+                System.out.println((++i) + ". Objek: " + entry.getKey().getObjekName() + ", Jumlah: " + entry.getValue());
             }
         }
 
@@ -63,7 +63,7 @@ public class Sim {
         } else {
             int i = 0;
             for (IdentityHashMap.Entry<Groceries, Integer> entry : inventory.getBoxGroceries().getMapT().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+                System.out.println((++i) + ". Objek: " + entry.getKey().getObjekName() + ", Jumlah: " + entry.getValue());
             }
         }
         // objek makanan
@@ -72,7 +72,7 @@ public class Sim {
         } else {
             int i = 0;
             for (IdentityHashMap.Entry<Food, Integer> entry : inventory.getBoxFood().getMapT().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+                System.out.println((++i) + ". Objek: " + entry.getKey().getObjekName() + ", Jumlah: " + entry.getValue());
             }
         }
     }
