@@ -153,7 +153,9 @@ public class Sim {
                 for (Room room : listRoom) {
                     if (roomName.equals(room.getRoomName())) {
                         simLoc.setRoom(room);
-                        // point di location diganti jd apa?
+                        // Sim teleportasi di point 3,3 dalam ruangan
+                        simLoc.setPoint().setX(3);
+                        simLoc.setPoint().setY(3);
                         done = true;
                         break;
                     }
@@ -368,12 +370,7 @@ public class Sim {
     // public void buyItem(Objek objek) {
 
     // }
-
-    public void moveRoom(Room room) {
-        simLoc.setRoom(room);
-        simLoc.getPoint().setX(3);
-        simLoc.getPoint().setY(3);
-    }
+    
 
     // public void installItem(NonFood nonFood) {
 
