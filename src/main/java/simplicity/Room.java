@@ -47,7 +47,7 @@ public class Room {
     }
 
     public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide) {
-        this.roomName = roomName;
+        (this.roomName = roomName).toUpperCase();
         this.upperSide = upperSide;
         this.bottomSide = bottomSide;
         this.leftSide = leftSide;
@@ -63,7 +63,7 @@ public class Room {
 
     public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide,
                 ArrayList<NonFood> listObjek) {
-        this.roomName = roomName;
+        (this.roomName = roomName).toUpperCase();
         this.upperSide = upperSide;
         this.bottomSide = bottomSide;
         this.leftSide = leftSide;
