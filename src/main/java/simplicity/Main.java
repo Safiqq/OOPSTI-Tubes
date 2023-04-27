@@ -244,6 +244,17 @@ public class Main {
 
                 } else if (equals(act, "COOK")) {
                     main.showCookingMenu();
+                    System.out.println("Masukkan nomor masakan yang ingin dibuat : ");
+                    int cooknumber = scanner.nextInt();
+
+                    if(cooknumber == 1){
+                        if(main.checkGroceries("Nasi") && main.checkGroceries("Ayam")){
+                            System.out.println("Berhasil memasak");
+                        }
+                        else{
+                            System.out.println("Bahan makananmu kurang :(");
+                        }
+                    }
 
                 } else if (equals(act, "VISIT")) {
                     // mau masukin visit rumah orang pake nama owner?
@@ -469,6 +480,9 @@ public class Main {
                            System.out.println("Uang-mu kurang :( ");
                        }
                     }
+                    else{
+                        System.out.println("Nomor tidak terindentifikasi, masukkan nomor yang tersedia");
+                    }
                     ///////////////////////////////////////////////////////////////////////////////////////////
 
                 } 
@@ -551,7 +565,7 @@ public class Main {
         cookingMenu.append("3. Susu Kacang (Kekenyangan : 5, Bahan : Susu,Kacang) \n");
         cookingMenu.append("4. Tumis Sayur (Kekenyangan : 5, Bahan : Wortel,Bayam) \n");
         cookingMenu.append("5. Bistik (Kekenyangan : 22, Bahan : Kentang,Sapi) \n");
-
+        System.out.println(cookingMenu);
     }
 
     public void showBuyObjectMenu() {
@@ -673,6 +687,10 @@ public class Main {
             System.out.println("Pendaftaran Sim baru gagal");
             return null;
         }
+    }
+
+    public boolean checkGroceries(String grocName){
+        return currentSim.getInventory().getBoxGroceries().getMapT().containsKey(grocName);
     }
 
     public static class cobaJavaSwing {
