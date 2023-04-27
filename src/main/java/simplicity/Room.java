@@ -19,7 +19,7 @@ public class Room {
 
     // default room
     public Room() {
-        this("Ruang Utama");
+        this("RUANG UTAMA");
         NonFood kasurSingle = new NonFood("Kasur single", new Point(), new Point(0, 3));
         NonFood komporGas = new NonFood("Kompor gas", new Point(2, 5), new Point(3, 5));
         NonFood mejaDanKursi = new NonFood("Meja dan kursi", new Point(2, 1), new Point(4, 3));
@@ -32,7 +32,7 @@ public class Room {
     }
 
     public Room(String roomName) {
-        this.roomName = roomName;
+        (this.roomName = roomName).toUpperCase();
         upperSide = null;
         bottomSide = null;
         leftSide = null;
@@ -83,6 +83,10 @@ public class Room {
                 }
             }
 
+        }
+        // insert barang ke matrixBarang
+        for (NonFood barang : listObjek){
+            insertBarang(barang);
         }
     }
 
