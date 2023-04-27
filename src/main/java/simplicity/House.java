@@ -6,9 +6,8 @@ import java.util.Random;
 public class House {
     // Attribute
     private final String owner;
-    private final ArrayList<Room> listRoom = new ArrayList<>();
+    private ArrayList<Room> listRoom = new ArrayList<>();
     private final Point houseLoc;
-    // masi bingung ini gmn
     private final Room defaultRoom;
 
     // constructor
