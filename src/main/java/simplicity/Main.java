@@ -209,6 +209,7 @@ public class Main {
             else if (equals(menu, "HESOYAM")) {
                 main.currentSim.setMoney(9999999);
                 System.out.println("Selamat! Kamu mendapatkan uang jajan dari Hotman Paris");
+                
             } else if (equals(menu, "ACTION")) {
                 // time.setIsNotIdle(true);
                 main.showAction();
