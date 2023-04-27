@@ -82,11 +82,8 @@ public class Room {
 
                 }
             }
-
-        }
-        // insert barang ke matrixBarang
-        for (NonFood barang : listObjek){
-            insertBarang(barang);
+            // insert barang ke matrixBarang
+            insertBarang(objek);
         }
     }
 
