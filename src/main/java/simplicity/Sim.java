@@ -418,7 +418,7 @@ public class Sim {
                     String pivotRoomName = scan.nextLine();
                     //cek ruangan acuan ada atau tidak
                     for (Room currentRoom : house.getListRoom()) {
-                        if (currentRoom.getRoomName().equals(pivotRoomName.toUpperCase())) {
+                        if (Main.equals(currentRoom.getRoomName(), pivotRoomName)) {
                             System.out.print("Masukkan nama ruangan baru : ");
                             String newRoomName = scan.nextLine();
 
