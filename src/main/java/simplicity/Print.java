@@ -31,7 +31,7 @@ public class Print {
         int i = 1;
         List<Action> listAction = Action.getListAction();
         for (int j = 0; j < Action.getListAction().size(); j++) {
-            if (listAction.get(j).getActionName().contains("Not")) {
+            if (!listAction.get(j).getActionName().contains("Not")) {
                 System.out.println(i + ". " + listAction.get(j).getActionName());
                 i++;
             }
