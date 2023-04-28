@@ -27,7 +27,6 @@ public class Time {
         if (day < 1) {
             return false;
         }
-
         if (minute < 0 || minute > 12) {
             return false;
         } else if (minute == 12) {
@@ -35,18 +34,15 @@ public class Time {
                 return false;
             }
         }
-
         return second >= 0 && second <= 59;
     }
 
     public void countdown() {
         second--;
-
         if (second == -1) {
             second = 59;
             minute--;
         }
-
         if (minute == -1) {
             minute = 11;
             day++;
@@ -54,22 +50,19 @@ public class Time {
     }
 
     public void runTime() {
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                while (isNotIdle) {
-                    try {
-                        Thread.sleep(1000); // 1 detik
-                    } catch (InterruptedException e) {
+        Thread thread = new Thread(() -> {
+            while (isNotIdle) {
+                try {
+                    Thread.sleep(1000); // 1 detik
+                } catch (InterruptedException e) {
 
-                    }
-                    countdown();
                 }
+                countdown();
             }
         });
         thread.start();
     }
 
-    // getter
     public int getDay() {
         return day;
     }
@@ -79,7 +72,6 @@ public class Time {
         if (day < 1) {
             throw new IllegalArgumentException("Hari yang dimasukkan tidak valid");
         }
-
         this.day = day;
     }
 
@@ -95,7 +87,6 @@ public class Time {
                 throw new IllegalArgumentException("Menit yang dimasukkan tidak valid");
             }
         }
-
         this.minute = minute;
     }
 
@@ -107,7 +98,6 @@ public class Time {
         if (second < 0 || second > 59) {
             throw new IllegalArgumentException("Detik yang dimasukkan tidak valid");
         }
-
         this.second = second;
     }
 
@@ -119,7 +109,6 @@ public class Time {
         if (!isValid(day, minute, second)) {
             throw new IllegalArgumentException("Tanggal yang dimasukkan tidak valid");
         }
-
         this.day = day;
         this.minute = minute;
         this.second = second;

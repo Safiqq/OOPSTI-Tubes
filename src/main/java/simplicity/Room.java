@@ -1,6 +1,7 @@
 package simplicity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Room {
@@ -16,6 +17,7 @@ public class Room {
     private Room leftSide;
     private Room rightSide;
     private ArrayList<NonFood> listObjek;
+
     // default room
     public Room() {
         this("RUANG UTAMA");
@@ -29,39 +31,36 @@ public class Room {
         insertBarang(mejaDanKursi);
         insertBarang(jam);
     }
+
     public Room(String roomName) {
-        (this.roomName = roomName).toUpperCase();
+        this.roomName = roomName;
         upperSide = null;
         bottomSide = null;
         leftSide = null;
         rightSide = null;
-        listObjek = new ArrayList<NonFood>();
+        listObjek = new ArrayList<>();
 
         for (int i = 0; i < roomLength; i++) {
-            for (int j = 0; j < roomWidth; j++) {
-                emptyRoom[i][j] = true;
-            }
+            Arrays.fill(emptyRoom[i], true);
         }
     }
 
     public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide) {
-        (this.roomName = roomName).toUpperCase();
+        this.roomName = roomName;
         this.upperSide = upperSide;
         this.bottomSide = bottomSide;
         this.leftSide = leftSide;
         this.rightSide = rightSide;
-        listObjek = new ArrayList<NonFood>();
+        listObjek = new ArrayList<>();
 
         for (int i = 0; i < roomLength; i++) {
-            for (int j = 0; j < roomWidth; j++) {
-                emptyRoom[i][j] = true;
-            }
+            Arrays.fill(emptyRoom[i], true);
         }
     }
 
     public Room(String roomName, Room upperSide, Room bottomSide, Room leftSide, Room rightSide,
                 ArrayList<NonFood> listObjek) {
-        (this.roomName = roomName).toUpperCase();
+        this.roomName = roomName;
         this.upperSide = upperSide;
         this.bottomSide = bottomSide;
         this.leftSide = leftSide;

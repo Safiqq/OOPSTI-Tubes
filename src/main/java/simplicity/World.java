@@ -1,5 +1,7 @@
 package simplicity;
 
+import java.util.Arrays;
+
 public class World {
     private static final World world = new World();
     private final int worldLength = 65;
@@ -9,9 +11,7 @@ public class World {
     private World() {
         matrixHouse = new House[worldLength][worldWidth];
         for (int i = 0; i < worldWidth; i++) {
-            for (int j = 0; j < worldLength; j++) {
-                matrixHouse[i][j] = null;
-            }
+            Arrays.fill(matrixHouse[i], null);
         }
     }
 
@@ -49,7 +49,6 @@ public class World {
                 }
             }
         }
-
         return false;
     }
 
@@ -65,18 +64,6 @@ public class World {
         } else {
             System.out.println("Sudah ada rumah Sim lain");
         }
-
-        // try{
-        // if (matrixHouse[houseLoc.getX()][houseLoc.getY()] != null) {
-        // matrixHouse[houseLoc.getX()][houseLoc.getY()] = house;
-        // } else {
-        // System.out.println("Sudah ada rumah Sim lain");
-        // // throw new Exception("Sudah ada rumah Sim lain");
-        // }
-        // }
-        // catch(Exception e){
-        // System.out.println(e.getMessage());
-        // }
     }
 
     public Point searchHouse(String owner) {
@@ -87,7 +74,6 @@ public class World {
                 }
             }
         }
-
         return null;
     }
 

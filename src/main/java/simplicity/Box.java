@@ -10,13 +10,14 @@ public class Box<T extends Objek> {
     private final List<T> list;
     private T type;
     private int length;
+
     public Box() {
-        this(new ArrayList<T>());
+        this(new ArrayList<>());
     }
 
     public Box(List<T> list) {
         length = 0;
-        map = new HashMap<String, Integer>();
+        map = new HashMap<>();
         this.list = list;
     }
 
@@ -45,10 +46,7 @@ public class Box<T extends Objek> {
     }
 
     public int getCount(String objekName) {
-        if (map.containsKey(objekName))
-            return map.get(objekName);
-        else
-            return 0;
+        return map.getOrDefault(objekName, 0);
     }
 
     public boolean isEmpty(String objekName) {

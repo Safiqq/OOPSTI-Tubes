@@ -6,9 +6,9 @@ public class Inventory {
     private Box<Food> boxFood;
 
     public Inventory() {
-        boxNonFood = new Box<NonFood>();
-        boxGroceries = new Box<Groceries>();
-        boxFood = new Box<Food>();
+        boxNonFood = new Box<>();
+        boxGroceries = new Box<>();
+        boxFood = new Box<>();
     }
 
     public Inventory(Box<NonFood> boxNonFood, Box<Groceries> boxGroceries, Box<Food> boxFood) {

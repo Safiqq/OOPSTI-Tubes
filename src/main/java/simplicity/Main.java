@@ -165,7 +165,7 @@ public class Main {
                     // cek masi ada spot kosong di world ato ngga
                     if (world.isHouseBuildAble()) {
                         boolean done = false;
-                        Sim newSim = null;
+                        Sim newSim;
                         while (!done) {
                             newSim = main.menuAddSim();
                             if (newSim != null) {
@@ -498,7 +498,7 @@ public class Main {
     public Sim chooseSim() {
         Print.printListSim();
         boolean done = false;
-        String simName = null;
+        String simName;
         while (!done) {
             System.out.print("Masukkan nama Sim yang ingin dimainkan: ");
             simName = scanner.nextLine();

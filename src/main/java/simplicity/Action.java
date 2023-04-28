@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Action {
-    private static final List<Action> listAction = new ArrayList<Action>();
+    private static final List<Action> listAction = new ArrayList<>();
     private String actionName;
     private String description;
     private List<Effect> listEffect;
 
     public Action(String actionName, String description) {
-        this(actionName, description, new ArrayList<Effect>());
+        this(actionName, description, new ArrayList<>());
     }
 
     public Action(String actionName, String description, List<Effect> listEffect) {
@@ -184,10 +184,6 @@ public class Action {
     }
 
     public void deleteEffect(String key) {
-        for (Effect effect : listEffect) {
-            if (effect.getMotiveName().equals(key)) {
-                listEffect.remove(effect);
-            }
-        }
+        listEffect.removeIf(effect -> effect.getMotiveName().equals(key));
     }
 }
