@@ -337,9 +337,15 @@ public class Sim {
     public void upgradeHouse(House house) {
         Scanner scan = new Scanner(System.in);
 
+<<<<<<< Updated upstream
         if (money >= 1500) {
             // kalau rumah sekarang cuma ada 1 ruangan
             if (house.getListRoom().size() == 1) {
+=======
+        if (money >= 1500){
+            //kalau rumah sekarang cuma ada 1 ruangan
+            if (house.getListRoom().size()==1){
+>>>>>>> Stashed changes
                 Room currentRoom = house.getDefaultRoom();
                 System.out.print("Masukkan nama ruangan baru : ");
                 String newRoomName = scan.nextLine();
