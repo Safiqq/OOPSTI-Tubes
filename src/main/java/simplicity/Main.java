@@ -256,9 +256,16 @@ public class Main {
                     int cooknumber = scanner.nextInt();
 
                     if (cooknumber == 1) {
-                        // if (main.checkGroceries("Nasi") && main.checkGroceries("Ayam")) {
                         if (main.checkGroceries("Nasi") && main.checkGroceries("Ayam")) {
+                            Food nasiayam = new Food("Nasi Ayam",16);
+                            main.cooking(nasiayam);
+                            main.currentSim.getInventory().getBoxFood().add(nasiayam);
+                            int newSimMood = main.currentSim.getMotive().getMood() + 10;
+                            main.currentSim.getMotive().setMood(newSimMood);
+                            // deleteGroceriesfromInventory("Nasi");
+                            // deleteGroceriesfromInventory("Ayam");
                             System.out.println("Berhasil memasak");
+                            
                         } else {
                             System.out.println("Bahan makananmu kurang :(");
                         }
@@ -583,4 +590,40 @@ public class Main {
     public boolean checkGroceries(String namaGroc){
         return currentSim.getInventory().getBoxGroceries().isNotEmpty(namaGroc);
     }
+
+    // public void deleteGroceriesfromInventory(String namagroc){
+    //     currentSim.getInventory().getBoxGroceries().delete(namagroc);
+    // }
+
+    public void cooking(Food makanan){
+        Thread thread = new Thread(new Runnable(){
+            public void run(){
+                try{
+                    System.out.println("Cooking " + makanan.getObjekName());
+                    int sleeptime = makanan.getFoodHunger()*3/2* 1000;
+                    // for(int k = 0 ; k < ((makanan.getFoodHunger()*1.5)/2); k++){
+                    //     System.out.println("...Please wait...");
+                        
+                    //     Thread.sleep(sleeptime);
+                    // }
+                    System.out.println("Please wait");
+                    Thread.sleep(sleeptime);
+                }
+                catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        thread.start();
+    }
 }
+    //     try{
+    //         thread.join();
+    //     }
+    //     catch (InterruptedException e){
+    //         System.out.println(e.getMessage());
+    //     }
+    // }
+
+
