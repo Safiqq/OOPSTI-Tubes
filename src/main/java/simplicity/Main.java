@@ -55,7 +55,7 @@ public class Main {
             }
         }
 
-        world.printMatrixHouse();
+        // world.printMatrixHouse();
 
         System.out.println(time.getTime());
         // pilih Sim
@@ -100,14 +100,13 @@ public class Main {
             }
         }
 
-        System.out.println("Waktu yang tersisa di " + time.getTime());
+        System.out.println("1Waktu yang tersisa di " + time.getTime());
         main.currentSim.setCurrentTime(time);
 
         System.out.println("Ketik 'HELP' untuk melihat menu game yang tersedia ");
         while (isStarted) {
-            time.runTime();
             // time.setIsNotIdle(true);
-            System.out.println("Waktu yang tersisa di " + time.getTime());
+            System.out.println("2Waktu yang tersisa di " + time.getTime());
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
             if (equals(menu, "HELP")) {
@@ -115,7 +114,7 @@ public class Main {
 
             } else if (equals(menu, "EXIT")) {
                 System.out.println("Anda keluar dari game Simplicity");
-                System.out.println("Waktu yang tersisa di " + time.getTime());
+                System.out.println("3Waktu yang tersisa di " + time.getTime());
                 System.out.println("Bye...");
                 System.exit(0);
 
@@ -297,7 +296,7 @@ public class Main {
                     // buang air -> gimana
 
                     main.currentSim.pee();
-                    // waktu = 10 dtk
+                    time.sleepMain(10);
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
 
@@ -468,7 +467,7 @@ public class Main {
 
                 } else if (equals(act, "CHECK TIME")) {
                     // pake harus ngehampirin objek jam dulu
-                    System.out.println("Waktu yang tersisa di- " + time.getTime());
+                    System.out.println("4Waktu yang tersisa di- " + time.getTime());
                     // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
 
                 } else {

@@ -49,18 +49,31 @@ public class Time {
         }
     }
 
-    public void runTime() {
+    public void sleep(int seconds) {
         Thread thread = new Thread(() -> {
-            while (isNotIdle) {
+            if (isNotIdle) {
                 try {
-                    Thread.sleep(1000); // 1 detik
+                    for (int i = 0; i < seconds; i++) {
+                        countdown();
+                        Thread.sleep(1000);
+                    }
                 } catch (InterruptedException e) {
-
+                    System.out.println(e);
                 }
-                countdown();
             }
         });
         thread.start();
+    }
+
+    public void sleepMain(int seconds) {
+        try {
+            for (int i = 0; i < seconds; i++) {
+                countdown();
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
     }
 
     public int getDay() {
