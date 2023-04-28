@@ -267,6 +267,60 @@ public class Main {
                         }
                     }
 
+                    else if(cooknumber == 2){
+                        if (main.checkGroceries("Nasi") && main.checkGroceries("Kentang") && main.checkGroceries("Wortel") && main.checkGroceries("Sapi") ) {
+                            Food nasikari = new Food("Nasi Kari", 30);
+                            main.cooking(nasikari);
+                            main.deleteGroceriesfromInventory("Nasi");
+                            main.deleteGroceriesfromInventory("Kentang");
+                            main.deleteGroceriesfromInventory("Wortel");
+                            main.deleteGroceriesfromInventory("Sapi");
+                            System.out.println("Berhasil memasak");
+
+                        } else {
+                            System.out.println("Bahan makananmu kurang :(");
+                        }
+                    }
+
+                    else if(cooknumber == 3){
+                        if (main.checkGroceries("Susu") && main.checkGroceries("Kacang")) {
+                            Food susukacang = new Food("Susu Kacang", 5);
+                            main.cooking(susukacang);
+                            main.deleteGroceriesfromInventory("Susu");
+                            main.deleteGroceriesfromInventory("Kacang");
+                            System.out.println("Berhasil memasak");
+
+                        } else {
+                            System.out.println("Bahan makananmu kurang :(");
+                        }
+                    }
+
+                    else if(cooknumber == 4){
+                        if (main.checkGroceries("Wortel") && main.checkGroceries("Bayam")) {
+                            Food tumissayur = new Food("Tumis Sayur", 5);
+                            main.cooking(tumissayur);
+                            main.deleteGroceriesfromInventory("Wortel");
+                            main.deleteGroceriesfromInventory("Bayam");
+                            System.out.println("Berhasil memasak");
+
+                        } else {
+                            System.out.println("Bahan makananmu kurang :(");
+                        }
+                    }
+
+                    else if(cooknumber == 5){
+                        if (main.checkGroceries("Kentang") && main.checkGroceries("Sapi")) {
+                            Food kentangsapi = new Food("Bistik", 22);
+                            main.cooking(kentangsapi);
+                            main.deleteGroceriesfromInventory("Kentang");
+                            main.deleteGroceriesfromInventory("Sapi");
+                            System.out.println("Berhasil memasak");
+
+                        } else {
+                            System.out.println("Bahan makananmu kurang :(");
+                        }
+                    }
+
                 } else if (equals(act, "VISIT")) {
                     // mau masukin visit rumah orang pake nama owner?
                     boolean done = false;
