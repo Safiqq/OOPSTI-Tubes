@@ -31,7 +31,7 @@ public class Print {
         int i = 1;
         List<Action> listAction = Action.getListAction();
         for (int j = 0; j < Action.getListAction().size(); j++) {
-            if (!Main.equals(listAction.get(j).getActionName(), "Tidak buang air")) {
+            if (listAction.get(j).getActionName().contains("Not")) {
                 System.out.println(i + ". " + listAction.get(j).getActionName());
                 i++;
             }

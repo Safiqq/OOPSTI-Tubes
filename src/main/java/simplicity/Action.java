@@ -62,7 +62,7 @@ public class Action {
 
         /* Tidak Tidur */
         Effect[] arrayEffect32 = {new Effect("kesehatan", -5, 0), new Effect("mood", -5, 0)};
-        listAction.add(new Action("Sleep",
+        listAction.add(new Action("Not Sleep",
                 "SIm sebagai manusia harus memiliki waktu tidur minimum 3 menit setiap harinya atau kesehatan dari " +
                         "sim akan berkurang.",
                 Arrays.asList(arrayEffect32)));
