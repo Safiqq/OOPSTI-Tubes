@@ -75,4 +75,24 @@ public class Box<T extends Objek> {
         if (getCount(t.getObjekName()) == 0)
             map.remove(t.getObjekName());
     }
+
+    public T get(String objekName) {
+        for (T t : list) {
+            if (Main.equals(objekName, t.getObjekName())) {
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public void delete(String objekName) {
+        T t = get(objekName);
+        if (t != null) {
+            list.remove(t);
+            map.put(t.getObjekName(), map.get(t.getObjekName()) - 1);
+            length--;
+        }
+        if (getCount(t.getObjekName()) == 0)
+            map.remove(t.getObjekName());
+    }
 }

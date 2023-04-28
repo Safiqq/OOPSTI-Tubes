@@ -257,7 +257,7 @@ public class Main {
 
                     if (cooknumber == 1) {
                         if (main.checkGroceries("Nasi") && main.checkGroceries("Ayam")) {
-                            Food nasiayam = new Food("Nasi Ayam",16);
+                            Food nasiayam = new Food("Nasi Ayam", 16);
                             main.cooking(nasiayam);
                             main.currentSim.getInventory().getBoxFood().add(nasiayam);
                             int newSimMood = main.currentSim.getMotive().getMood() + 10;
@@ -265,7 +265,7 @@ public class Main {
                             // deleteGroceriesfromInventory("Nasi");
                             // deleteGroceriesfromInventory("Ayam");
                             System.out.println("Berhasil memasak");
-                            
+
                         } else {
                             System.out.println("Bahan makananmu kurang :(");
                         }
@@ -307,8 +307,8 @@ public class Main {
                     System.out.print("Nomor : ");
                     int buynumber = scanner.nextInt();
 
-                    
-                    if(buynumber == 1){
+
+                    if (buynumber == 1) {
                         NonFood kasurSingle = new NonFood("Kasur single");
                         if (Sim.isMoneyEnough(kasurSingle.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - kasurSingle.getObjPrice());
@@ -317,8 +317,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 2){
+                    } else if (buynumber == 2) {
                         NonFood kasurQ = new NonFood("Kasur queen size");
                         if (Sim.isMoneyEnough(kasurQ.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - kasurQ.getObjPrice());
@@ -327,8 +326,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 3){
+                    } else if (buynumber == 3) {
                         NonFood kasurK = new NonFood("Kasur king size");
                         if (Sim.isMoneyEnough(kasurK.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - kasurK.getObjPrice());
@@ -337,8 +335,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 4){
+                    } else if (buynumber == 4) {
                         NonFood toilet = new NonFood("Toilet");
                         if (Sim.isMoneyEnough(toilet.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - toilet.getObjPrice());
@@ -347,8 +344,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 5){
+                    } else if (buynumber == 5) {
                         NonFood komgas = new NonFood("Kompor gas");
                         if (Sim.isMoneyEnough(komgas.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - komgas.getObjPrice());
@@ -357,8 +353,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 6){
+                    } else if (buynumber == 6) {
                         NonFood komlistrik = new NonFood("Kompor listrik");
                         if (Sim.isMoneyEnough(komlistrik.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - komlistrik.getObjPrice());
@@ -367,8 +362,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 7){
+                    } else if (buynumber == 7) {
                         NonFood mejakursi = new NonFood("Meja dan kursi");
                         if (Sim.isMoneyEnough(mejakursi.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - mejakursi.getObjPrice());
@@ -377,8 +371,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 8){
+                    } else if (buynumber == 8) {
                         NonFood jam = new NonFood("Jam");
                         if (Sim.isMoneyEnough(jam.getObjPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - jam.getObjPrice());
@@ -387,8 +380,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 9){
+                    } else if (buynumber == 9) {
                         Groceries nasi = new Groceries("Nasi", 5, 5);
                         if (Sim.isMoneyEnough(nasi.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - nasi.getGrocPrice());
@@ -397,8 +389,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 10){
+                    } else if (buynumber == 10) {
                         Groceries kentang = new Groceries("Kentang", 3, 4);
                         if (Sim.isMoneyEnough(kentang.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - kentang.getGrocPrice());
@@ -407,8 +398,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 11){
+                    } else if (buynumber == 11) {
                         Groceries ayam = new Groceries("Ayam", 10, 8);
                         if (Sim.isMoneyEnough(ayam.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - ayam.getGrocPrice());
@@ -417,8 +407,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 12){
+                    } else if (buynumber == 12) {
                         Groceries sapi = new Groceries("Sapi", 12, 15);
                         if (Sim.isMoneyEnough(sapi.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - sapi.getGrocPrice());
@@ -427,8 +416,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 13){
+                    } else if (buynumber == 13) {
                         Groceries wortel = new Groceries("Wortel", 3, 2);
                         if (Sim.isMoneyEnough(wortel.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - wortel.getGrocPrice());
@@ -437,8 +425,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 14){
+                    } else if (buynumber == 14) {
                         Groceries bayam = new Groceries("Bayam", 3, 2);
                         if (Sim.isMoneyEnough(bayam.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - bayam.getGrocPrice());
@@ -447,8 +434,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 15){
+                    } else if (buynumber == 15) {
                         Groceries kacang = new Groceries("Kacang", 2, 2);
                         if (Sim.isMoneyEnough(kacang.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - kacang.getGrocPrice());
@@ -457,8 +443,7 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else if(buynumber == 16){
+                    } else if (buynumber == 16) {
                         Groceries susu = new Groceries("Susu", 2, 1);
                         if (Sim.isMoneyEnough(susu.getGrocPrice(), main.currentSim.getMoney())) {
                             main.currentSim.setMoney(main.currentSim.getMoney() - susu.getGrocPrice());
@@ -467,11 +452,10 @@ public class Main {
                         } else {
                             System.out.println("Uang-mu kurang :( ");
                         }
-                    }
-                    else{
+                    } else {
                         System.out.println("Nomor tidak terindentifikasi, masukkan nomor yang tersedia");
                     }
-                
+
                 } else if (equals(act, "MOVE ROOM")) {
                     main.currentSim.moveRoom();
 
@@ -587,29 +571,28 @@ public class Main {
         }
     }
 
-    public boolean checkGroceries(String namaGroc){
+    public boolean checkGroceries(String namaGroc) {
         return currentSim.getInventory().getBoxGroceries().isNotEmpty(namaGroc);
     }
 
-    // public void deleteGroceriesfromInventory(String namagroc){
-    //     currentSim.getInventory().getBoxGroceries().delete(namagroc);
-    // }
+    public void deleteGroceriesfromInventory(String namagroc) {
+        currentSim.getInventory().getBoxGroceries().delete(namagroc);
+    }
 
-    public void cooking(Food makanan){
-        Thread thread = new Thread(new Runnable(){
-            public void run(){
-                try{
+    public void cooking(Food makanan) {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                try {
                     System.out.println("Cooking " + makanan.getObjekName());
-                    int sleeptime = makanan.getFoodHunger()*3/2* 1000;
+                    int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
                     // for(int k = 0 ; k < ((makanan.getFoodHunger()*1.5)/2); k++){
                     //     System.out.println("...Please wait...");
-                        
+
                     //     Thread.sleep(sleeptime);
                     // }
                     System.out.println("Please wait");
                     Thread.sleep(sleeptime);
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -618,12 +601,12 @@ public class Main {
         thread.start();
     }
 }
-    //     try{
-    //         thread.join();
-    //     }
-    //     catch (InterruptedException e){
-    //         System.out.println(e.getMessage());
-    //     }
-    // }
+//     try{
+//         thread.join();
+//     }
+//     catch (InterruptedException e){
+//         System.out.println(e.getMessage());
+//     }
+// }
 
 
