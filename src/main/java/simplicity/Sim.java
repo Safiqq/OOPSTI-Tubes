@@ -372,7 +372,7 @@ public class Sim {
     public void upgradeHouse(House house) {
         Scanner scan = new Scanner(System.in);
 
-        if (money >= 1500) {
+        if (isMoneyEnough(1500, money)) {
             // kalau rumah sekarang cuma ada 1 ruangan
             if (house.getListRoom().size() == 1) {
                 Room currentRoom = house.getDefaultRoom();
@@ -452,6 +452,7 @@ public class Sim {
                             //decrease money
                             money = money - 1500;
                             pivotValid = true;
+                            break;
                         } else {
                             System.out.println("Ruangan tidak dikenali");
                         }
@@ -460,7 +461,7 @@ public class Sim {
             }
             // ganngerti syncronize waktu nya gmn wkwkwk
         } else {
-            System.out.println("Uang kamu tidak cukup untuk upgrade rumah");
+            System.out.println("Uang sim tidak cukup untuk upgrade rumah");
         }
         scan.close();
 
@@ -470,10 +471,98 @@ public class Sim {
 
     // }
 
+    public void installItem() {
+        Scanner scan = new Scanner(System.in);
+        Box<NonFood> boxNonFood = getInventory().getBoxNonFood();
+        //kalau sim sedang berada di rumah sendiri
+        if(!Main.equals(getFullName(), simLoc.getHouse().getOwner())){
+            boolean barangValid = false;
 
-    // public void installItem(NonFood nonFood) {
+            //looping input nama barang
+            while(!barangValid){
+                System.out.print("Masukkan nama barang yang ingin dipasang : ");
+                String namaBarang = scan.nextLine();
+                System.out.println();
+                //cek barang di inventory
+                for (NonFood barang : boxNonFood.getList()){
+                    //kalau barang ada di inventory
+                    if(Main.equals(namaBarang, barang.getObjekName())){
+                        boolean roomValid = false;
 
-    // }
+                        //looping input nama ruangan
+                        while(!roomValid){
+                            System.out.print("Masukkan nama ruangan : ");
+                            String roomName = scan.nextLine();
+                            System.out.println();
+                            //cek valid ruangan
+                            for (Room room : simLoc.getHouse().getListRoom()){
+                                //kalau nama ruangan valid
+                                if(Main.equals(roomName,room.getRoomName())){
+                                    boolean pointValid =  false;
+                                    while(!pointValid){
+                                        //input lokasi barang di ruangan
+                                        System.out.print("Masukkan lokasi awal sumbu X barang : ");
+                                        int startX = scan.nextInt();
+                                        System.out.println();
+            
+                                        System.out.print("Masukkan lokasi awal sumbu Y barang : ");
+                                        int startY = scan.nextInt();
+                                        System.out.println();
+            
+                                        System.out.print("Masukkan lokasi akhir sumbu X barang : ");
+                                        int endX = scan.nextInt();
+                                        System.out.println();
+            
+                                        System.out.print("Masukkan lokasi akhir sumbu Y barang : ");
+                                        int endY = scan.nextInt();
+                                        System.out.println();
+
+                                        //cek masukan point berada di range 0-5
+                                        if (startX < 0 || startX > 5 || startY < 0 || startY > 5
+                                        || endX < 0 || endX > 5 || endY < 0 || endY > 5) {
+                                            System.out.println("Point tidak valid.");
+                                        } else {
+                                            Point startPoint = new Point(startX, startY);
+                                            Point endPoint = new Point(endX, endY);
+                                            //kalau lokasi yang dipilih tersedia
+                                            if (room.isSpaceEmpty(startPoint, endPoint)){
+                                                room.insertBarang(barang);
+                                                room.addListObjek(barang);
+                                                pointValid =  true;
+                                            }
+                                            //kalau lokasi yang dipilih ga tersedia
+                                            else{
+                                                System.out.println("Area ruangan tidak kosong.");
+                                            }
+                                        }
+                                    }
+                                    roomValid =  true;
+                                    break;
+                                }
+                                //kalau nama ruangan tidak valid
+                                else{
+                                    System.out.println("Ruangan tidak dikenali.");
+                                }
+                            }
+
+                        }
+                        barangValid = true;
+                        break;
+                    }
+                    //kalau barang ga ada di inventory
+                    else{
+                        System.out.println("Barang tidak ada di inventory.");
+                    }
+                }
+
+            }
+        }
+        //kalau sim berada di rumah orang lain
+        else{
+            System.out.println("Sim harus berada di rumah sendiri untuk memasang barang");
+        }
+        scan.close();
+    }
 
     public void goTo() {
         //cuma untuk pindah di satu ruangan
