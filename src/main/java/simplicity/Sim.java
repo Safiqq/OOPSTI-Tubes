@@ -31,10 +31,6 @@ public class Sim {
         listSim.add(this);
     }
 
-    public static boolean isMoneyEnough(int hargaobjek, int duitSim) {
-        return hargaobjek <= duitSim;
-    }
-
     public static List<Sim> getListSim() {return listSim;}
 
     public void viewSimInfo() {
@@ -86,6 +82,10 @@ public class Sim {
                 System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
             }
         }
+    }
+
+    public boolean isMoneyEnough(int hargaobjek) {
+        return hargaobjek <= money;
     }
 
     public String getFullName() {
@@ -372,7 +372,7 @@ public class Sim {
     public void upgradeHouse(House house) {
         Scanner scan = new Scanner(System.in);
 
-        if (isMoneyEnough(1500, money)) {
+        if (isMoneyEnough(1500)) {
             // kalau rumah sekarang cuma ada 1 ruangan
             if (house.getListRoom().size() == 1) {
                 Room currentRoom = house.getDefaultRoom();
@@ -467,9 +467,168 @@ public class Sim {
 
     }
 
-    // public void buyItem(Objek objek) {
+    public void buyItem(){
+        Scanner scanner = new Scanner(System.in);
+        boolean done = false;
+        int buynumber = 0;
+        while (!done){
+            System.out.println("Masukkan nomor item yang ingin dibeli");
+            System.out.print("Nomor : ");
+            buynumber = scanner.nextInt();
+            if (buynumber >= 1 && buynumber <= 16){
+                done = true;
+            } else {
+                System.out.println("Nomor tidak teridentifikasi");
+                System.out.println("Masukkan nomor yang tersedia");
+            }
+        }
 
-    // }
+        if (buynumber == 1) {
+            NonFood kasurSingle = new NonFood("Kasur single");
+            if (isMoneyEnough(kasurSingle.getObjPrice())) {
+                setMoney(getMoney() - kasurSingle.getObjPrice());
+                getInventory().getBoxNonFood().add(kasurSingle);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 2) {
+            NonFood kasurQ = new NonFood("Kasur queen size");
+            if (isMoneyEnough(kasurQ.getObjPrice())) {
+                setMoney(getMoney() - kasurQ.getObjPrice());
+                getInventory().getBoxNonFood().add(kasurQ);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 3) {
+            NonFood kasurK = new NonFood("Kasur king size");
+            if (isMoneyEnough(kasurK.getObjPrice())) {
+                setMoney(getMoney() - kasurK.getObjPrice());
+                getInventory().getBoxNonFood().add(kasurK);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 4) {
+            NonFood toilet = new NonFood("Toilet");
+            if (isMoneyEnough(toilet.getObjPrice())) {
+                setMoney(getMoney() - toilet.getObjPrice());
+                getInventory().getBoxNonFood().add(toilet);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 5) {
+            NonFood komgas = new NonFood("Kompor gas");
+            if (isMoneyEnough(komgas.getObjPrice())) {
+                setMoney(getMoney() - komgas.getObjPrice());
+                getInventory().getBoxNonFood().add(komgas);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 6) {
+            NonFood komlistrik = new NonFood("Kompor listrik");
+            if (isMoneyEnough(komlistrik.getObjPrice())) {
+                setMoney(getMoney() - komlistrik.getObjPrice());
+                getInventory().getBoxNonFood().add(komlistrik);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 7) {
+            NonFood mejakursi = new NonFood("Meja dan kursi");
+            if (isMoneyEnough(mejakursi.getObjPrice())) {
+                setMoney(getMoney() - mejakursi.getObjPrice());
+                getInventory().getBoxNonFood().add(mejakursi);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 8) {
+            NonFood jam = new NonFood("Jam");
+            if (isMoneyEnough(jam.getObjPrice())) {
+                setMoney(getMoney() - jam.getObjPrice());
+                getInventory().getBoxNonFood().add(jam);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 9) {
+            Groceries nasi = new Groceries("Nasi", 5, 5);
+            if (isMoneyEnough(nasi.getGrocPrice())) {
+                setMoney(getMoney() - nasi.getGrocPrice());
+                getInventory().getBoxGroceries().add(nasi);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 10) {
+            Groceries kentang = new Groceries("Kentang", 3, 4);
+            if (isMoneyEnough(kentang.getGrocPrice())) {
+                setMoney(getMoney() - kentang.getGrocPrice());
+                getInventory().getBoxGroceries().add(kentang);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 11) {
+            Groceries ayam = new Groceries("Ayam", 10, 8);
+            if (isMoneyEnough(ayam.getGrocPrice())) {
+                setMoney(getMoney() - ayam.getGrocPrice());
+                getInventory().getBoxGroceries().add(ayam);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 12) {
+            Groceries sapi = new Groceries("Sapi", 12, 15);
+            if (isMoneyEnough(sapi.getGrocPrice())) {
+                setMoney(getMoney() - sapi.getGrocPrice());
+                getInventory().getBoxGroceries().add(sapi);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 13) {
+            Groceries wortel = new Groceries("Wortel", 3, 2);
+            if (isMoneyEnough(wortel.getGrocPrice())) {
+                setMoney(getMoney() - wortel.getGrocPrice());
+                getInventory().getBoxGroceries().add(wortel);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 14) {
+            Groceries bayam = new Groceries("Bayam", 3, 2);
+            if (isMoneyEnough(bayam.getGrocPrice())) {
+                setMoney(getMoney() - bayam.getGrocPrice());
+                getInventory().getBoxGroceries().add(bayam);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else if (buynumber == 15) {
+            Groceries kacang = new Groceries("Kacang", 2, 2);
+            if (isMoneyEnough(kacang.getGrocPrice())) {
+                setMoney(getMoney() - kacang.getGrocPrice());
+                getInventory().getBoxGroceries().add(kacang);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        } else {
+            Groceries susu = new Groceries("Susu", 2, 1);
+            if (isMoneyEnough(susu.getGrocPrice())) {
+                setMoney(getMoney() - susu.getGrocPrice());
+                getInventory().getBoxGroceries().add(susu);
+                System.out.println("Berhasil Membeli Barang!");
+            } else {
+                System.out.println("Uang-mu kurang :( ");
+            }
+        }
+    }
 
     public void installItem() {
         Scanner scan = new Scanner(System.in);
