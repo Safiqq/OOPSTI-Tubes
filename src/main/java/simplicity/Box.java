@@ -1,53 +1,69 @@
 package simplicity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class Box<T> {
+public class Box<T extends Objek> {
     private T type;
-    private Map<T, Integer> mapT;
-    public int length;
+    private int length;
+    private Map<String, Integer> map;
+    private List<T> list;
 
     public Box() {
-        this(new HashMap<T, Integer>());
+        this(new ArrayList<T>());
     }
 
-    public Box(Map<T, Integer> mapT) {
+    public Box(List<T> list) {
         length = 0;
-        this.mapT = mapT;
+        map = new HashMap<String, Integer>();
+        this.list = list;
     }
 
     public T getType() {
         return type;
     }
 
-    public Map<T, Integer> getMapT() {
-        return mapT;
-    }
-
     public void setType(T type) {
         this.type = type;
     }
 
-    public void setMapT(Map<T, Integer> mapT) {
-        this.mapT = mapT;
+    public List<T> getList() {
+        return list;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public Map<String, Integer> getMap() {
+        return map;
+    }
+
+    public int getCount(String objekName) {
+        if (map.containsKey(objekName))
+            return map.get(objekName);
+        else
+            return 0;
     }
 
     public void add(T t) {
-        if (mapT.containsKey(t))
-            mapT.put(t, mapT.get(t) + 1);
+        list.add(t);
+        if (getCount(t.getObjekName()) > 0)
+            map.put(t.getObjekName(), map.get(t.getObjekName()) + 1);
         else
-            mapT.put(t, 1);
+            map.put(t.getObjekName(), 1);
         length++;
     }
 
     public void delete(T t) {
-        if (mapT.containsKey(t)) {
-            if (mapT.get(t) == 1)
-                mapT.remove(t);
-            else
-                mapT.put(t, mapT.get(t) - 1);
+        if (getCount(t.getObjekName()) > 0) {
+            list.remove(t);
+            map.put(t.getObjekName(), map.get(t.getObjekName()) - 1);
             length--;
         }
+        if (getCount(t.getObjekName()) == 0)
+            map.remove(t.getObjekName());
     }
 }

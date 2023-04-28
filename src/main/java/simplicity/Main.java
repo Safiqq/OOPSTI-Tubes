@@ -691,7 +691,7 @@ public class Main {
     }
 
     public boolean checkGroceries(String grocName){
-        return currentSim.getInventory().getBoxGroceries().getMapT().containsKey(grocName);
+        return currentSim.getInventory().getBoxGroceries().getCount(grocName) > 0;
     }
 
     public static class cobaJavaSwing {
