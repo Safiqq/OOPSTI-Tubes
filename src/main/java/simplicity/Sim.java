@@ -1,16 +1,13 @@
 package simplicity;
 
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import javax.sound.sampled.SourceDataLine;
-
-import com.google.common.base.Stopwatch;
-
 public class Sim {
-    private Location simLoc;
+    private static final List<Sim> listSim = new ArrayList<Sim>();
+    private final Location simLoc;
     private String fullName;
     private Occupation occupation;
     private int money;
@@ -30,7 +27,15 @@ public class Sim {
         this.inventory = new Inventory(); // inisiasi di class inventory
         House house = new House(fullName);
         this.simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
+
+        listSim.add(this);
     }
+
+    public static boolean isMoneyEnough(int hargaobjek, int duitSim) {
+        return hargaobjek <= duitSim;
+    }
+
+    public static List<Sim> getListSim() {return listSim;}
 
     public void viewSimInfo() {
         System.out.println("Nama Sim: " + fullName);
@@ -91,6 +96,38 @@ public class Sim {
         this.fullName = fullName;
     }
 
+    public Time getCurrentTime() {
+        return currentTime;
+    }
+
+    public void setCurrentTime(Time time) {
+        this.currentTime = time;
+    }
+
+    public int getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(int workTime) {
+        this.workTime = workTime;
+    }
+
+    public int getPaidTime() {
+        return paidTime;
+    }
+
+    public void setPaidTime(int paidTime) {
+        this.paidTime = paidTime;
+    }
+
+    public int getDayChangeJob() {
+        return dayChangeJob;
+    }
+
+    public void setDayChangeJob(int dayChangeJob) {
+        this.dayChangeJob = dayChangeJob;
+    }
+
     public Occupation getOccupation() {
         return this.occupation;
     }
@@ -109,6 +146,10 @@ public class Sim {
 
     public Inventory getInventory() {
         return this.inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     public Motive getMotive() {
@@ -175,10 +216,6 @@ public class Sim {
         }
 
         scanner.close();
-    }
-
-    public void setCurrentTime(Time time) {
-        this.currentTime = time;
     }
 
     public void work(int time) {
@@ -337,15 +374,9 @@ public class Sim {
     public void upgradeHouse(House house) {
         Scanner scan = new Scanner(System.in);
 
-<<<<<<< Updated upstream
         if (money >= 1500) {
             // kalau rumah sekarang cuma ada 1 ruangan
             if (house.getListRoom().size() == 1) {
-=======
-        if (money >= 1500){
-            //kalau rumah sekarang cuma ada 1 ruangan
-            if (house.getListRoom().size()==1){
->>>>>>> Stashed changes
                 Room currentRoom = house.getDefaultRoom();
                 System.out.print("Masukkan nama ruangan baru : ");
                 String newRoomName = scan.nextLine();

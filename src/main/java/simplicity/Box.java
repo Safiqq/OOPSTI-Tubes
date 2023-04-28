@@ -6,11 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 public class Box<T extends Objek> {
+    private final Map<String, Integer> map;
+    private final List<T> list;
     private T type;
     private int length;
-    private Map<String, Integer> map;
-    private List<T> list;
-
     public Box() {
         this(new ArrayList<T>());
     }
@@ -37,6 +36,10 @@ public class Box<T extends Objek> {
         return length;
     }
 
+    public void setLength(int length) {
+        this.length = length;
+    }
+
     public Map<String, Integer> getMap() {
         return map;
     }
@@ -46,6 +49,10 @@ public class Box<T extends Objek> {
             return map.get(objekName);
         else
             return 0;
+    }
+
+    public boolean isEmpty(String objekName) {
+        return getCount(objekName) > 0;
     }
 
     public void add(T t) {

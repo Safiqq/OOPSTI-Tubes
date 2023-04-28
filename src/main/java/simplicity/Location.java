@@ -15,20 +15,20 @@ public class Location {
         return house;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public Point getPoint() {
-        return point;
-    }
-
     public void setHouse(House house) {
         this.house = house;
     }
 
+    public Room getRoom() {
+        return room;
+    }
+
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public Point getPoint() {
+        return point;
     }
 
     public void setPoint(Point point) {

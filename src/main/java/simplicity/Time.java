@@ -4,16 +4,23 @@ public class Time {
     private int day;
     private int minute;
     private int second;
-    private boolean isNotIdle = false;
+    private boolean isNotIdle;
 
     public Time() {
-        day = 1;
-        minute = 12;
-        second = 0;
+        this(1, 12, 0);
     }
 
     public Time(int day, int minute, int second) {
         setTime(day, minute, second);
+        isNotIdle = false;
+    }
+
+    public boolean isNotIdle() {
+        return isNotIdle;
+    }
+
+    public void setNotIdle(boolean notIdle) {
+        isNotIdle = notIdle;
     }
 
     private boolean isValid(int day, int minute, int second) {
@@ -29,11 +36,7 @@ public class Time {
             }
         }
 
-        if (second < 0 || second > 59) {
-            return false;
-        }
-
-        return true;
+        return second >= 0 && second <= 59;
     }
 
     public void countdown() {
@@ -71,18 +74,6 @@ public class Time {
         return day;
     }
 
-    public int getMinute() {
-        return minute;
-    }
-
-    public int getSecond() {
-        return second;
-    }
-
-    public String getTime() {
-        return "day-" + day + " - " + minute + ":" + second;
-    }
-
     // setter
     public void setDay(int day) throws IllegalArgumentException {
         if (day < 1) {
@@ -90,6 +81,10 @@ public class Time {
         }
 
         this.day = day;
+    }
+
+    public int getMinute() {
+        return minute;
     }
 
     public void setMinute(int minute) throws IllegalArgumentException {
@@ -104,12 +99,20 @@ public class Time {
         this.minute = minute;
     }
 
+    public int getSecond() {
+        return second;
+    }
+
     public void setSecond(int second) throws IllegalArgumentException {
         if (second < 0 || second > 59) {
             throw new IllegalArgumentException("Detik yang dimasukkan tidak valid");
         }
 
         this.second = second;
+    }
+
+    public String getTime() {
+        return "day-" + day + " - " + minute + ":" + second;
     }
 
     public void setTime(int day, int minute, int second) throws IllegalArgumentException {
@@ -122,7 +125,7 @@ public class Time {
         this.second = second;
     }
 
-    public void setIsNotIdle(boolean isNotIdle){
+    public void setIsNotIdle(boolean isNotIdle) {
         this.isNotIdle = isNotIdle;
     }
 }

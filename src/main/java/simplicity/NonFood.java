@@ -1,8 +1,6 @@
 package simplicity;
 
 public class NonFood extends Objek {
-    // Atribut
-
     private int objLength;
     private int objWidth;
     private int objPrice;
@@ -10,9 +8,8 @@ public class NonFood extends Objek {
     private Point startPoint;
     private Point endPoint;
 
-    // Konstruktor
-
-    public NonFood(String objekName, int objLength, int objWidth, int objPrice, Action action, Point startPoint, Point endPoint) {
+    public NonFood(String objekName, int objLength, int objWidth, int objPrice, Action action, Point startPoint,
+                   Point endPoint) {
         super(objekName);
         this.objLength = objLength;
         this.objWidth = objWidth;
@@ -88,8 +85,6 @@ public class NonFood extends Objek {
     public NonFood(String objekName, Point startPoint) {
         this(objekName, startPoint, startPoint);
     }
-
-    // Method
 
     public int getObjLength() {
         return objLength;

@@ -1,12 +1,8 @@
 package simplicity;
 
 public class Groceries extends Objek {
-    // Atribut
-
     private int grocPrice;
     private int grocHunger;
-
-    // Konstruktor
 
     public Groceries(String objekName, int grocPrice, int grocHunger) {
         super(objekName);
@@ -18,18 +14,16 @@ public class Groceries extends Objek {
         super(objekName);
     }
 
-    // Method
-
     public int getGrocPrice() {
         return grocPrice;
     }
 
-    public int getGrocHunger() {
-        return grocHunger;
-    }
-
     public void setGrocPrice(int grocPrice) {
         this.grocPrice = grocPrice;
+    }
+
+    public int getGrocHunger() {
+        return grocHunger;
     }
 
     public void setGrocHunger(int grocHunger) {

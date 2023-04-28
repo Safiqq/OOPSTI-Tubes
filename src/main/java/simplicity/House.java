@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class House {
-    // Attribute
     private final String owner;
-    private ArrayList<Room> listRoom = new ArrayList<>();
     private final Point houseLoc;
     private final Room defaultRoom;
+    private final ArrayList<Room> listRoom = new ArrayList<>();
 
-    // constructor
     public House(String owner) {
         Random random = new Random();
         Point point = new Point(random.nextInt(World.getWorld().getWorldLength()),
                 random.nextInt(World.getWorld().getWorldWidth()));
-
         this.owner = owner;
         houseLoc = point;
         defaultRoom = new Room();
@@ -29,7 +26,6 @@ public class House {
         listRoom.add(defaultRoom);
     }
 
-    // methods getter
     public String getOwner() {
         return owner;
     }
@@ -46,23 +42,9 @@ public class House {
         return listRoom;
     }
 
-    // methods setter
-    // // kayaknya gaperlu deh, bbikin jd permanen aja
-    // public void setHouseLoc(Point houseLoc){
-    // this.houseLoc = houseLoc;
-    // }
-
-    // public void setListRoom(ArrayList<Room> listRoom){
-    // this.listRoom = listRoom;
-    // }
-
-    // other methodss
-
     public void addListRoom(Room room) throws Exception {
         // check apakah area sekitar untuk menambah room kosong atau enggak
-        // try{
-        if ((room.getUpperSide() == null) && (room.getBottomSide() == null) && (room.getLeftSide() == null)
-                && (room.getRightSide() == null)) {
+        if ((room.getUpperSide() == null) && (room.getBottomSide() == null) && (room.getLeftSide() == null) && (room.getRightSide() == null)) {
             throw new Exception("Ruangan harus bersebelahan dengan ruangan lain");
         } else if (room.getLeftSide() != null) {
             if ((room.getLeftSide()).getRightSide() != null) {
@@ -83,10 +65,5 @@ public class House {
         } else {
             listRoom.add(room);
         }
-        // }
-        // catch (Exception e){
-        // System.out.println(e.getMessage());
-        // }
-
     }
 }

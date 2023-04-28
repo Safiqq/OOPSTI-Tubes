@@ -1,13 +1,11 @@
 package simplicity;
 
 public class World {
-    // attribute
-    private static World world = new World();
+    private static final World world = new World();
     private final int worldLength = 65;
     private final int worldWidth = 65;
     private House[][] matrixHouse;
 
-    // constructor
     private World() {
         matrixHouse = new House[worldLength][worldWidth];
         for (int i = 0; i < worldWidth; i++) {
@@ -21,7 +19,6 @@ public class World {
         return world;
     }
 
-    // methods getter
     public int getWorldLength() {
         return worldLength;
     }
@@ -34,18 +31,12 @@ public class World {
         return matrixHouse;
     }
 
-    // method setter
     public void setMatrixHouse(House[][] matrixHouse) {
         this.matrixHouse = matrixHouse;
     }
 
-    // other methods
     public boolean isWorldAvail(Point houseLoc) {
-        if (matrixHouse[houseLoc.getX()][houseLoc.getY()] == null) {
-            return true;
-        } else {
-            return false;
-        }
+        return matrixHouse[houseLoc.getX()][houseLoc.getY()] == null;
     }
 
     public boolean isHouseBuildAble() {
@@ -88,15 +79,15 @@ public class World {
         // }
     }
 
-    public Point searchHouse(String owner){
-        for (int i = 0; i < worldWidth; i++){
-            for (int j = 0; j < worldLength; j++){
-                if (matrixHouse[i][j].getOwner().equals(owner)){
+    public Point searchHouse(String owner) {
+        for (int i = 0; i < worldWidth; i++) {
+            for (int j = 0; j < worldLength; j++) {
+                if (matrixHouse[i][j].getOwner().equals(owner)) {
                     return new Point(i, j);
                 }
             }
         }
-        
+
         return null;
     }
 

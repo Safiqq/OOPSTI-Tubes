@@ -15,20 +15,24 @@ public class Effect {
         return motiveName;
     }
 
-    public int getMotiveEffect() {
-        return motiveEffect;
-    }
-
-    public int getCooldown() {
-        return cooldown;
-    }
-
     public void setMotiveName(String motiveName) {
         this.motiveName = motiveName;
     }
 
     public void setMotiveName(int motiveEffect) {
         this.motiveEffect = motiveEffect;
+    }
+
+    public int getMotiveEffect() {
+        return motiveEffect;
+    }
+
+    public void setMotiveEffect(int motiveEffect) {
+        this.motiveEffect = motiveEffect;
+    }
+
+    public int getCooldown() {
+        return cooldown;
     }
 
     public void setCooldown(int cooldown) {

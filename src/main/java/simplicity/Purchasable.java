@@ -1,5 +1,5 @@
 package simplicity;
 
 public interface Purchasable {
-    public Boolean isPurchasable();
+    public boolean isPurchasable();
 }

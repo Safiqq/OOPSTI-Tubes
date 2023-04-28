@@ -42,14 +42,6 @@ public class Motive {
         return mood;
     }
 
-    public int getHunger() {
-        return hunger;
-    }
-
-    public int getHealth() {
-        return health;
-    }
-
     public void setMood(int mood) throws IllegalArgumentException {
         if (mood > 100) {
             mood = 100;
@@ -61,6 +53,10 @@ public class Motive {
         }
     }
 
+    public int getHunger() {
+        return hunger;
+    }
+
     public void setHunger(int hunger) throws IllegalArgumentException {
         if (hunger > 100) {
             hunger = 100;
@@ -70,6 +66,10 @@ public class Motive {
         if (hunger <= 0) {
             throw new IllegalArgumentException("Kekenyangan Sim mencapai 0, Sim mati karena kelaparan");
         }
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     public void setHealth(int health) throws IllegalArgumentException {

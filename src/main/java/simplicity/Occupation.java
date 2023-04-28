@@ -3,10 +3,10 @@ package simplicity;
 import java.util.*;
 
 public class Occupation {
+    private static final Map<String, Integer> listJob = new HashMap<>();
+    private static List<String> keys;
     private String jobName;
     private int dailySalary;
-    private static Map<String, Integer> listJob = new HashMap<>();
-    private static List<String> keys;
 
     public Occupation() {
         fillListJob();
@@ -14,6 +14,14 @@ public class Occupation {
         Random random = new Random();
         jobName = keys.get(random.nextInt(keys.size()));
         dailySalary = listJob.get(jobName);
+    }
+
+    public static List<String> getKeys() {
+        return keys;
+    }
+
+    public static void setKeys(List<String> keys) {
+        Occupation.keys = keys;
     }
 
     private void fillListJob() {
@@ -52,19 +60,19 @@ public class Occupation {
         scanner.close();
     }
 
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public void setDailySalary(int dailySalary) {
-        this.dailySalary = dailySalary;
-    }
-
     public String getJobName() {
         return jobName;
     }
 
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
+
     public int getDailySalary() {
         return dailySalary;
+    }
+
+    public void setDailySalary(int dailySalary) {
+        this.dailySalary = dailySalary;
     }
 }
