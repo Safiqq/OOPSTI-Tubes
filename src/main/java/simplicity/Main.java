@@ -252,12 +252,12 @@ public class Main {
 
                 } else if (equals(act, "COOK")) {
                     Print.showCookingMenu();
-                    System.out.println("Masukkan nomor masakan yang ingin dibuat : ");
+                    System.out.print("Masukkan nomor masakan yang ingin dibuat : ");
                     int cooknumber = scanner.nextInt();
 
                     if (cooknumber == 1) {
                         // if (main.checkGroceries("Nasi") && main.checkGroceries("Ayam")) {
-                        if (!main.currentSim.getInventory().getBoxGroceries().isEmpty("Nasi")) {
+                        if (main.checkGroceries("Nasi") && main.checkGroceries("Ayam")) {
                             System.out.println("Berhasil memasak");
                         } else {
                             System.out.println("Bahan makananmu kurang :(");
@@ -578,5 +578,9 @@ public class Main {
             System.out.println("Pendaftaran Sim baru gagal");
             return null;
         }
+    }
+
+    public boolean checkGroceries(String namaGroc){
+        return currentSim.getInventory().getBoxGroceries().isNotEmpty(namaGroc);
     }
 }

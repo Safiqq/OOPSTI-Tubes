@@ -49,8 +49,12 @@ public class Box<T extends Objek> {
         return map.getOrDefault(objekName, 0);
     }
 
-    public boolean isEmpty(String objekName) {
+    public boolean isNotEmpty(String objekName) {
         return getCount(objekName) > 0;
+    }
+
+    public boolean isEmpty(String objekName) {
+        return getCount(objekName) == 0;
     }
 
     public void add(T t) {
