@@ -258,11 +258,8 @@ public class Main {
                         if (main.checkGroceries("Nasi") && main.checkGroceries("Ayam")) {
                             Food nasiayam = new Food("Nasi Ayam", 16);
                             main.cooking(nasiayam);
-                            main.currentSim.getInventory().getBoxFood().add(nasiayam);
-                            int newSimMood = main.currentSim.getMotive().getMood() + 10;
-                            main.currentSim.getMotive().setMood(newSimMood);
-                            // deleteGroceriesfromInventory("Nasi");
-                            // deleteGroceriesfromInventory("Ayam");
+                            main.deleteGroceriesfromInventory("Nasi");
+                            main.deleteGroceriesfromInventory("Ayam");
                             System.out.println("Berhasil memasak");
 
                         } else {
@@ -430,16 +427,14 @@ public class Main {
     public void cooking(Food makanan) {
         Thread thread = new Thread(new Runnable() {
             public void run() {
+                System.out.println("Cooking " + makanan.getObjekName());
+                int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
+                System.out.println(".....Please wait.....");
                 try {
-                    System.out.println("Cooking " + makanan.getObjekName());
-                    int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
-                    // for(int k = 0 ; k < ((makanan.getFoodHunger()*1.5)/2); k++){
-                    //     System.out.println("...Please wait...");
-
-                    //     Thread.sleep(sleeptime);
-                    // }
-                    System.out.println("Please wait");
-                    Thread.sleep(sleeptime);
+                    for(int k = (sleeptime/1000) ; k >= 1; k--){
+                        System.out.println("Time remaining " + k + " seconds");
+                        Thread.sleep(1000);
+                    }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
                 }
@@ -447,14 +442,16 @@ public class Main {
         });
 
         thread.start();
+        try{
+            thread.join();
+        }
+        catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Masakanmu selesai!");
+        currentSim.getInventory().getBoxFood().add(makanan);
+        int newSimMood = currentSim.getMotive().getMood() + 10;
+        currentSim.getMotive().setMood(newSimMood);
     }
+
 }
-//     try{
-//         thread.join();
-//     }
-//     catch (InterruptedException e){
-//         System.out.println(e.getMessage());
-//     }
-// }
-
-
