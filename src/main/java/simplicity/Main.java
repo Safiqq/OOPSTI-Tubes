@@ -429,7 +429,7 @@ public class Main {
             public void run() {
                 System.out.println("Cooking " + makanan.getObjekName());
                 int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
-                System.out.println(".....Please wait.....");
+                System.out.println(".......Please wait.......");
                 try {
                     for(int k = (sleeptime/1000) ; k >= 1; k--){
                         System.out.println("Time remaining " + k + " seconds");
