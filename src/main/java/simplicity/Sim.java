@@ -443,6 +443,7 @@ public class Sim {
     // }
 
     public void goTo () {
+    //cuma untuk pindah di satu ruangan
         Scanner scan = new Scanner(System.in);
         boolean pointValid = false;
         while(!pointValid){
