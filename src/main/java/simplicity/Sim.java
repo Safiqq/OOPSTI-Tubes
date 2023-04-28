@@ -2,7 +2,6 @@ package simplicity;
 
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 import javax.sound.sampled.SourceDataLine;
@@ -53,32 +52,31 @@ public class Sim {
         System.out.println(" ");
 
         // objek non makanan
-        if (inventory.getBoxNonFood().getLength() == 0) {
+        if (inventory.getBoxNonFood().length == 0) {
             System.out.println("Sim " + fullName + " tidak memiliki objek non-makanan dalam inventory");
         } else {
             int i = 0;
-            for (Map.Entry<String, Integer> entry : inventory.getBoxNonFood().getMap().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            for (IdentityHashMap.Entry<NonFood, Integer> entry : inventory.getBoxNonFood().getMapT().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey().getObjekName() + ", Jumlah: " + entry.getValue());
             }
         }
 
         // objek bahan makanan
-        if (inventory.getBoxGroceries().getLength() == 0) {
+        if (inventory.getBoxGroceries().length == 0) {
             System.out.println("Sim " + fullName + " tidak memiliki objek bahan makanan dalam inventory");
         } else {
             int i = 0;
-            for (Map.Entry<String, Integer> entry : inventory.getBoxGroceries().getMap().entrySet()) {
-                System.out
-                        .println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            for (IdentityHashMap.Entry<Groceries, Integer> entry : inventory.getBoxGroceries().getMapT().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey().getObjekName() + ", Jumlah: " + entry.getValue());
             }
         }
         // objek makanan
-        if (inventory.getBoxFood().getLength() == 0) {
+        if (inventory.getBoxFood().length == 0) {
             System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam inventory");
         } else {
             int i = 0;
-            for (Map.Entry<String, Integer> entry : inventory.getBoxFood().getMap().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            for (IdentityHashMap.Entry<Food, Integer> entry : inventory.getBoxFood().getMapT().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey().getObjekName() + ", Jumlah: " + entry.getValue());
             }
         }
     }
@@ -151,13 +149,13 @@ public class Sim {
         while (!done) {
             System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
             String roomName = scanner.nextLine();
-            if (oldRoom.equals(roomName)) {
+            if (oldRoom.equals(roomName.toUpperCase())) {
                 System.out.println("Nama ruangan sama dengan tempat Sim berada ");
                 System.out.println("Sim berada di ruangan " + oldRoom);
                 System.out.println();
             } else {
                 for (Room room : listRoom) {
-                    if (roomName.equals(room.getRoomName())) {
+                    if ((roomName.toUpperCase()).equals(room.getRoomName())) {
                         simLoc.setRoom(room);
                         // Sim teleportasi di point 3,3 dalam ruangan
                         simLoc.getPoint().setX(3);
@@ -173,7 +171,6 @@ public class Sim {
                 }
             }
         }
-
         scanner.close();
     }
 
@@ -292,17 +289,16 @@ public class Sim {
 
     public void visit(Point point, int time) {
         // waktu yang diperlukan untuk berkunjung ke rumah
-        // perhitungan/pemilihan titik rumah dari SIM yang ingin dikunjungi dibebaskan
-        // -> belum ditentuin
-        double x = Math.pow(point.getX() - simLoc.getPoint().getX(), 2);
-        double y = Math.pow(point.getY() - simLoc.getPoint().getY(), 2);
-        double walkTime = Math.sqrt(x + y);
+        // perhitungan/pemilihan titik rumah dari SIM yang ingin dikunjungi dibebaskan -> belum ditentuin
+        double x = Math.pow(point.getX()-simLoc.getPoint().getX(), 2);
+        double y = Math.pow(point.getY()-simLoc.getPoint().getY(), 2);
+        double walkTime = Math.sqrt(x+y);
 
         // pemain diminta memasukkan waktu durasi kelipatan 30 detik
         boolean done = false;
         Scanner scanner = new Scanner(System.in);
         while (!done) {
-            if (time % 30 != 0) {
+            if (time % 30 != 0){
                 System.out.println("Durasi berkunjung harus kelipatan 30");
                 System.out.print("Masukkan durasi berkunjung (dalam detik): ");
                 time = scanner.nextInt();
@@ -330,107 +326,107 @@ public class Sim {
         motive.changeHunger(minusHunger);
         motive.changeMood(plusMood);
     }
-
     //
-    // upgradeHouse masih kurang syncorize time
+    //upgradeHouse masih kurang syncorize time
     //
     public void upgradeHouse(House house) {
         Scanner scan = new Scanner(System.in);
 
-<<<<<<< Updated upstream
-        if (money >= 1500) {
-            // kalau rumah sekarang cuma ada 1 ruangan
-            if (house.getListRoom().size() == 1) {
-=======
         if (money >= 1500){
             //kalau rumah sekarang cuma ada 1 ruangan
             if (house.getListRoom().size()==1){
->>>>>>> Stashed changes
                 Room currentRoom = house.getDefaultRoom();
                 System.out.print("Masukkan nama ruangan baru : ");
                 String newRoomName = scan.nextLine();
-
-                // loop untuk mendapatkan lokasi ruangan baru yang valid
+                
+                //loop untuk mendapatkan lokasi ruangan baru yang valid
                 boolean roomLocValid = false;
-                while (!roomLocValid) {
-                    System.out.printf("Pilih lokasi %d disebelah RUANGAN UTAMA (kiri/kanan/atas/bawah) : ",
-                            newRoomName);
+                while (!roomLocValid){
+                    System.out.printf("Pilih lokasi %d disebelah RUANGAN UTAMA (kiri/kanan/atas/bawah) : ",newRoomName);
                     String roomLoc = scan.nextLine();
-                    if (roomLoc.toUpperCase() == "KANAN") {
-                        Room newRoom = new Room(newRoomName, null, null, currentRoom, null);
+                    if (roomLoc.toUpperCase() == "KANAN"){
+                        Room newRoom = new Room(newRoomName,null,null,currentRoom,null);
                         currentRoom.setRightSide(newRoom);
                         roomLocValid = true;
-                    } else if (roomLoc.toUpperCase() == "KIRI") {
-                        Room newRoom = new Room(newRoomName, null, null, null, currentRoom);
+                    }
+                    else if (roomLoc.toUpperCase() == "KIRI"){
+                        Room newRoom = new Room(newRoomName,null,null,null,currentRoom);
                         currentRoom.setLeftSide(newRoom);
                         roomLocValid = true;
-                    } else if (roomLoc.toUpperCase() == "ATAS") {
-                        Room newRoom = new Room(newRoomName, null, currentRoom, null, null);
+                    }
+                    else if (roomLoc.toUpperCase() == "ATAS"){
+                        Room newRoom = new Room(newRoomName,null,currentRoom,null,null);
                         currentRoom.setUpperSide(newRoom);
                         roomLocValid = true;
-                    } else if (roomLoc.toUpperCase() == "BAWAH") {
-                        Room newRoom = new Room(newRoomName, currentRoom, null, null, null);
+                    }
+                    else if (roomLoc.toUpperCase() == "BAWAH"){
+                        Room newRoom = new Room(newRoomName,currentRoom,null,null,null);
                         currentRoom.setBottomSide(newRoom);
                         roomLocValid = true;
-                    } else {
+                    }
+                    else{
                         System.out.println("Lokasi tidak valid.");
                     }
                 }
-                // decrease money money
-                money = money - 1500;
+                //decrease money money
+                money = money-1500;
             }
 
-            // kalau rumah sekarang ada >1 ruangan
-            else {
-                // loop untuk mendapatkan ruangan acuan
+            //kalau rumah sekarang ada >1 ruangan
+            else{
+                //loop untuk mendapatkan ruangan acuan
                 boolean pivotValid = false;
-                while (!pivotValid) {
+                while (!pivotValid){
                     System.out.print("Masukkan nama salah satu ruangan sebagai acuan : ");
                     String pivotRoomName = scan.nextLine();
-                    // cek ruangan acuan ada atau tidak
-                    for (Room currentRoom : house.getListRoom()) {
-                        if (currentRoom.getRoomName().equals(pivotRoomName.toUpperCase())) {
+                    //cek ruangan acuan ada atau tidak
+                    for (Room currentRoom : house.getListRoom()){
+                        if (currentRoom.getRoomName().equals(pivotRoomName.toUpperCase())){
                             System.out.print("Masukkan nama ruangan baru : ");
                             String newRoomName = scan.nextLine();
-
-                            // loop untuk medapatkan lokasi ruangan baru yang valid
+                            
+                            //loop untuk medapatkan lokasi ruangan baru yang valid
                             boolean roomLocValid = false;
-                            while (!roomLocValid) {
-                                System.out.printf("Pilih lokasi %d disebelah %d (kiri/kanan/atas/bawah) : ",
-                                        newRoomName, pivotRoomName);
+                            while (!roomLocValid){
+                                System.out.printf("Pilih lokasi %d disebelah %d (kiri/kanan/atas/bawah) : ",newRoomName,pivotRoomName);
                                 String roomLoc = scan.nextLine();
-                                if ((roomLoc.toUpperCase() == "KANAN") && currentRoom.getRightSide() == null) {
-                                    Room newRoom = new Room(newRoomName, null, null, currentRoom, null);
+                                if ((roomLoc.toUpperCase() == "KANAN") && currentRoom.getRightSide() == null){
+                                    Room newRoom = new Room(newRoomName,null,null,currentRoom,null);
                                     currentRoom.setRightSide(newRoom);
                                     roomLocValid = true;
-                                } else if ((roomLoc.toUpperCase() == "KIRI") && currentRoom.getLeftSide() == null) {
-                                    Room newRoom = new Room(newRoomName, null, null, null, currentRoom);
+                                }
+                                else if ((roomLoc.toUpperCase() == "KIRI") && currentRoom.getLeftSide() == null){
+                                    Room newRoom = new Room(newRoomName,null,null,null,currentRoom);
                                     currentRoom.setLeftSide(newRoom);
                                     roomLocValid = true;
-                                } else if ((roomLoc.toUpperCase() == "ATAS") && currentRoom.getUpperSide() == null) {
-                                    Room newRoom = new Room(newRoomName, null, currentRoom, null, null);
+                                }
+                                else if ((roomLoc.toUpperCase() == "ATAS") && currentRoom.getUpperSide() == null){
+                                    Room newRoom = new Room(newRoomName,null,currentRoom,null,null);
                                     currentRoom.setUpperSide(newRoom);
                                     roomLocValid = true;
-                                } else if ((roomLoc.toUpperCase() == "BAWAH") && currentRoom.getBottomSide() == null) {
-                                    Room newRoom = new Room(newRoomName, currentRoom, null, null, null);
+                                }
+                                else if ((roomLoc.toUpperCase() == "BAWAH") && currentRoom.getBottomSide() == null) {
+                                    Room newRoom = new Room(newRoomName,currentRoom,null,null,null);
                                     currentRoom.setBottomSide(newRoom);
                                     roomLocValid = true;
-                                } else {
-                                    System.out.println(
-                                            "Lokasi tidak valid atau lokasi yang dipilih sudah diisi ruangan lain.");
+                                }
+                                else{
+                                    System.out.println("Lokasi tidak valid atau lokasi yang dipilih sudah diisi ruangan lain.");
                                 }
                             }
-                            // decrease money
-                            money = money - 1500;
+                            //decrease money
+                            money = money-1500;
                             pivotValid = true;
-                        } else {
+                        }
+                        else{
                             System.out.println("Ruangan tidak dikenali");
                         }
                     }
                 }
             }
-            // ganngerti syncronize waktu nya gmn wkwkwk
-        } else {
+        // ganngerti syncronize waktu nya gmn wkwkwk
+        }
+        else{
             System.out.println("Uang kamu tidak cukup untuk upgrade rumah");
         }
         scan.close();
@@ -440,12 +436,33 @@ public class Sim {
     // public void buyItem(Objek objek) {
 
     // }
+    
 
     // public void installItem(NonFood nonFood) {
 
     // }
 
-    // public void goTo (Point point) {
-
-    // }
+    public void goTo () {
+        Scanner scan = new Scanner(System.in);
+        boolean pointValid = false;
+        while(!pointValid){
+            System.out.print("Masukan titik X tujuan : ");
+            int X = scan.nextInt();
+            System.out.println();
+    
+            System.out.print("Masukan titik Y tujuan : ");
+            int Y = scan.nextInt();
+            System.out.println();
+    
+            if ( X < 0 || X > 5 || Y < 0 || Y > 5){
+                System.out.println("Point tidak valid.");
+            }
+            else{
+                Point point = new Point(X,Y);
+                simLoc.setPoint(point);
+                pointValid = true;
+            }
+        }
+        scan.close();
+    }
 }
