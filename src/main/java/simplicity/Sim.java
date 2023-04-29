@@ -700,6 +700,7 @@ public class Sim {
                                             if (room.isSpaceEmpty(startPoint, endPoint)){
                                                 room.insertBarang(barang);
                                                 room.addListObjek(barang);
+                                                boxNonFood.delete(barang.getObjekName());
                                                 pointValid =  true;
                                             }
                                             //kalau lokasi yang dipilih ga tersedia
