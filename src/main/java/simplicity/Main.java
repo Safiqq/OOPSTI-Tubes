@@ -248,6 +248,27 @@ public class Main {
                     main.currentSim.sleep(simSleepTime);
 
                 } else if (equals(act, "EAT")) {
+                    main.currentSim.viewSimFood();
+                    System.out.print("Mau makan apa? : ");
+                    String maumakan = scanner.nextLine();
+
+                    if(equals(maumakan,"Nasi Ayam")){
+                        if(main.checkFood("Nasi Ayam")){
+                            //simEat(Food nasiayam);
+                            //deletefrominventory
+                            //++kekenyangan (di motive)
+                            //siklus 30 detik
+                            System.out.println("Makan selesai!");
+                        }
+                        else{
+                            System.out.println("Kamu tidak memiliki makanan " + maumakan);
+                        }
+
+                    }
+
+                    else{
+                        System.out.println("Kamu tidak memiliki makanan " + maumakan);
+                    }
 
                 } else if (equals(act, "COOK")) {
                     Print.showCookingMenu();
@@ -475,6 +496,10 @@ public class Main {
 
     public boolean checkGroceries(String namaGroc) {
         return currentSim.getInventory().getBoxGroceries().isNotEmpty(namaGroc);
+    }
+
+    public boolean checkFood(String namaFood){
+        return currentSim.getInventory().getBoxFood().isNotEmpty(namaFood);
     }
 
     public void deleteGroceriesfromInventory(String namagroc) {
