@@ -307,15 +307,15 @@ public class Sim {
     }
 
     public void sleep(int time) {
+        // waktunya gmn
+        currentTime.sleepMain(time);
+
         // efek tidur
         // +30 mood/240 dtk, +20 kesehatan/240 dtk
         int plusMood = 30 * (time / 240);
         int plusHealth = 20 * (time / 240);
         motive.changeMood(plusMood);
         motive.changeHealth(plusHealth);
-
-        // waktunya gmn
-
     }
 
     // public void eat(Food food) {
@@ -366,9 +366,6 @@ public class Sim {
         motive.changeMood(plusMood);
     }
 
-    //
-    //upgradeHouse masih kurang syncorize time
-    //
     public void upgradeHouse(House house) {
         Scanner scan = new Scanner(System.in);
 
@@ -464,7 +461,6 @@ public class Sim {
             System.out.println("Uang sim tidak cukup untuk upgrade rumah");
         }
         scan.close();
-
     }
 
     public void buyItem(){
