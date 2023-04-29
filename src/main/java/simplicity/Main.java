@@ -320,6 +320,9 @@ public class Main {
                             System.out.println("Bahan makananmu kurang :(");
                         }
                     }
+                    else{
+                        System.out.println("Masukkan nomor yang sesuai dong");
+                    }
 
                 } else if (equals(act, "VISIT")) {
                     // mau masukin visit rumah orang pake nama owner?
