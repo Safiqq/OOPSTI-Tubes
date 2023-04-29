@@ -408,7 +408,6 @@ public class Sim {
                 //decrease money
                 money = money - 1500;
             }
-
             //kalau rumah sekarang ada >1 ruangan
             else {
                 //loop untuk mendapatkan ruangan acuan
@@ -449,8 +448,6 @@ public class Sim {
                                             "ruangan lain.");
                                 }
                             }
-                            //decrease money
-                            money = money - 1500;
                             pivotValid = true;
                             break;
                         } else {
@@ -459,7 +456,10 @@ public class Sim {
                     }
                 }
             }
-            // ganngerti syncronize waktu nya gmn wkwkwk
+            //decrease money
+            money = money - 1500;
+            //sleep selama 18 menit tp bisa ditinggal
+            currentTime.sleep(1080);
         } else {
             System.out.println("Uang sim tidak cukup untuk upgrade rumah");
         }
