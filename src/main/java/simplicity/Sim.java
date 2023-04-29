@@ -54,6 +54,7 @@ public class Sim {
         System.out.println();
 
         /* Objek NonMakanan */
+        System.out.println("========Objek Non-Makanan========");
         if (inventory.getBoxNonFood().getLength() == 0) {
             System.out.println("Sim " + fullName + " tidak memiliki objek non-makanan dalam inventory");
         } else {
@@ -64,6 +65,7 @@ public class Sim {
         }
 
         /* Objek Bahan Makanan */
+        System.out.println("========Objek Bahan Makanan========");
         if (inventory.getBoxGroceries().getLength() == 0) {
             System.out.println("Sim " + fullName + " tidak memiliki objek bahan makanan dalam inventory");
         } else {
@@ -74,6 +76,7 @@ public class Sim {
         }
 
         /* Objek Makanan */
+        System.out.println("========Objek Makanan========");
         if (inventory.getBoxFood().getLength() == 0) {
             System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam inventory");
         } else {
@@ -82,6 +85,20 @@ public class Sim {
                 System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
             }
         }
+    }
+
+    public void viewSimFood(){
+        //Menampilkan makanan yang ada di inventory
+        System.out.println("========Berikut merupakan makanan yang kamu punya========");
+        if (inventory.getBoxFood().getLength() == 0) {
+            System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : inventory.getBoxFood().getMap().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
+
     }
 
     public boolean isMoneyEnough(int hargaobjek) {
