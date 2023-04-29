@@ -689,23 +689,33 @@ public class Sim {
                                         int endY = scan.nextInt();
                                         System.out.println();
 
-                                        //cek masukan point berada di range 0-5
+                                        //kalau point berada diluar 0-5
                                         if (startX < 0 || startX > 5 || startY < 0 || startY > 5
                                         || endX < 0 || endX > 5 || endY < 0 || endY > 5) {
                                             System.out.println("Point tidak valid.");
+                                        //kalau point berada di antara 0-5
                                         } else {
-                                            Point startPoint = new Point(startX, startY);
-                                            Point endPoint = new Point(endX, endY);
-                                            //kalau lokasi yang dipilih tersedia
-                                            if (room.isSpaceEmpty(startPoint, endPoint)){
-                                                room.insertBarang(barang);
-                                                room.addListObjek(barang);
-                                                boxNonFood.delete(barang.getObjekName());
-                                                pointValid =  true;
+                                            int length = startX - endX + 1;
+                                            int width = startY - endY + 1;
+                                            //kalau point sesuai dengan ukuran barang
+                                            if ((length == barang.getObjLength()) && (width == barang.getObjWidth())){
+                                                Point startPoint = new Point(startX, startY);
+                                                Point endPoint = new Point(endX, endY);
+                                                //kalau lokasi yang dipilih tersedia
+                                                if (room.isSpaceEmpty(startPoint, endPoint)){
+                                                    room.insertBarang(barang);
+                                                    room.addListObjek(barang);
+                                                    boxNonFood.delete(barang.getObjekName());
+                                                    pointValid =  true;
+                                                }
+                                                //kalau lokasi yang dipilih ga tersedia
+                                                else{
+                                                    System.out.println("Area ruangan tidak kosong.");
+                                                }
                                             }
-                                            //kalau lokasi yang dipilih ga tersedia
+                                            //kalau point tidak sesuai ukuran barang
                                             else{
-                                                System.out.println("Area ruangan tidak kosong.");
+                                                System.out.println("Point tidak sesuai dengan ukuran barang.");
                                             }
                                         }
                                     }
