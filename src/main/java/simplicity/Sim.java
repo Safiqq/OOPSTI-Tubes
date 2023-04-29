@@ -700,6 +700,7 @@ public class Sim {
                                             if (room.isSpaceEmpty(startPoint, endPoint)){
                                                 room.insertBarang(barang);
                                                 room.addListObjek(barang);
+                                                boxNonFood.delete(barang.getObjekName());
                                                 pointValid =  true;
                                             }
                                             //kalau lokasi yang dipilih ga tersedia
@@ -755,6 +756,36 @@ public class Sim {
                 Point point = new Point(X, Y);
                 simLoc.setPoint(point);
                 pointValid = true;
+            }
+        }
+        scan.close();
+    }
+
+    public void goToObjek(){
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Masukkan nama barang : ");
+        String objekName = scan.nextLine();
+        System.out.println();
+
+        ArrayList<NonFood> listBarang = simLoc.getRoom().getListObjek();
+        for (NonFood barang : listBarang){
+            //kalo barang ada di ruangan
+            if(Main.equals(objekName, barang.getObjekName())){
+                NonFood[][] matrixBarang = simLoc.getRoom().getMatrixBarang();
+                for(int i = 0 ; i < 6 ; i++){
+                    for(int j = 0 ; j < 6 ; j++){
+                        if (matrixBarang[i][j] == barang){
+                            simLoc.getPoint().setX(i);
+                            simLoc.getPoint().setY(j);
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+            //kalo barang ga ada di ruangan
+            else{
+                System.out.printf("%d tidak tersedia di %d.",barang.getObjekName(),simLoc.getRoom());
             }
         }
         scan.close();
