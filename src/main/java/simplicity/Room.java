@@ -5,9 +5,9 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Room {
+    // attribute
     private final int roomLength = 6;
     private final int roomWidth = 6;
-    // attribute
     private final String roomName;
     // new atribute
     private final boolean[][] emptyRoom = new boolean[roomLength][roomWidth];

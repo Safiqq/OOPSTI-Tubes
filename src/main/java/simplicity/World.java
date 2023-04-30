@@ -52,11 +52,6 @@ public class World {
         return false;
     }
 
-    public void addHouse(String owner, Point houseLoc) {
-        House house = new House(owner, houseLoc);
-        addHouse(house);
-    }
-
     public void addHouse(House house) {
         // add house ke world
         if (isWorldAvail(house.getHouseLoc())) {
