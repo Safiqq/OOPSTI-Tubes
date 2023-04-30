@@ -120,6 +120,7 @@ public class Sim {
         return getInventory().getBoxFood().isNotEmpty(namaFood);
     }
 
+    // thread hapus aja jd sleepMain di main
     public void simEat(Food nyam){
         Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -146,7 +147,17 @@ public class Sim {
         }
         System.out.println("Kamu selesai makan!");
         getInventory().getBoxFood().delete(nyam);
-        motive.changeHunger(nyam.getFoodHunger());
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeHunger(nyam.getFoodHunger());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            if (listSim.contains(this)){
+                listSim.remove(this);
+            }
+        }
     }
 
     public boolean checkGroceries(String namaGroc) {
@@ -157,6 +168,7 @@ public class Sim {
         getInventory().getBoxGroceries().delete(namagroc);
     }
 
+    // thread hapus aja jd sleepMain di main
     public void cooking(Food makanan) {
         Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -183,8 +195,17 @@ public class Sim {
         }
         System.out.println("Masakanmu selesai!");
         getInventory().getBoxFood().add(makanan);
-        int newSimMood = getMotive().getMood() + 10;
-        getMotive().setMood(newSimMood);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeMood(10);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            if (listSim.contains(this)){
+                listSim.remove(this);
+            }
+        }
     }
 
     public String getFullName() {
@@ -309,11 +330,6 @@ public class Sim {
     }
 
     public void work(int time) {
-        // efek -10 kekenyangan/30 dtk, -10 mood/30 dtk
-        int minusPoints = -10 * (time / 30);
-        motive.changeHunger(minusPoints);
-        motive.changeMood(minusPoints);
-
         workTime += time;
         // anggap pokoknya harus 4 menit (240 dtk) baru digaji, ga liat harinya
         int notPaid = workTime - paidTime;
@@ -321,6 +337,21 @@ public class Sim {
             int payday = workTime / 240;
             money += payday * occupation.getDailySalary();
             paidTime += payday * 240; // kalo ada time sisa yg belum dibayar
+        }
+
+        // efek -10 kekenyangan/30 dtk, -10 mood/30 dtk
+        int minusPoints = -10 * (time / 30);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeHunger(minusPoints);
+            motive.changeMood(minusPoints);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            if (listSim.contains(this)){
+                listSim.remove(this);
+            }
         }
     }
 
@@ -344,10 +375,19 @@ public class Sim {
         int plusHealth = 5 * (time / 20);
         int minusHunger = -5 * (time / 20);
         int plusMood = 10 * (time / 20);
-        motive.changeHealth(plusHealth);
-        motive.changeHunger(minusHunger);
-        motive.changeMood(plusMood);
 
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeHealth(plusHealth);
+            motive.changeHunger(minusHunger);
+            motive.changeMood(plusMood);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            if (listSim.contains(this)){
+                listSim.remove(this);
+            }
+        }
     }
 
     public void sleep(int time) {
@@ -355,8 +395,18 @@ public class Sim {
         // +30 mood/240 dtk, +20 kesehatan/240 dtk
         int plusMood = 30 * (time / 240);
         int plusHealth = 20 * (time / 240);
-        motive.changeMood(plusMood);
-        motive.changeHealth(plusHealth);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeMood(plusMood);
+            motive.changeHealth(plusHealth);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            if (listSim.contains(this)){
+                listSim.remove(this);
+            }
+        }    
     }
 
     public void eat() {
@@ -475,8 +525,18 @@ public class Sim {
         // +10 mood/30 dtk, -10 kekenyangan/30 dtk
         int plusMood = 10 * (time / 30);
         int minusHunger = -10 * (time / 30);
-        motive.changeMood(plusMood);
-        motive.changeHunger(minusHunger);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeMood(plusMood);
+            motive.changeHunger(minusHunger);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            if (listSim.contains(this)){
+                listSim.remove(this);
+            }
+        }
 
     }
 
@@ -486,8 +546,18 @@ public class Sim {
 
         int minusHunger = -20;
         int plusMood = 10;
-        motive.changeHunger(minusHunger);
-        motive.changeMood(plusMood);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeHunger(minusHunger);
+            motive.changeMood(plusMood);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            if (listSim.contains(this)){
+                listSim.remove(this);
+            }
+        }
     }
 
     public void upgradeHouse(House house) {

@@ -100,6 +100,29 @@ public class Main {
 
         System.out.println("Ketik 'HELP' untuk melihat menu game yang tersedia ");
         while (isStarted) {
+            // cek apakah currentSim masih ada di list Sim (tidak dihapus karena mati)
+            boolean checked = false;
+            while (!checked){
+                if (Sim.getListSim().contains(main.currentSim)){
+                    checked = true;
+                } else {
+                    System.out.println("Sim yang anda mainkan mati karena depresi, silahkan lakukan penggantian Sim");
+                    if (Sim.getListSim().size() == 0){
+                        System.out.println("Tidak bisa dilakukan pergantian Sim. Tidak terdapat Sim lain yang terdaftar.");
+                        System.out.println("Silahkan daftar Sim baru");
+                        System.out.print("Masukkan nama Sim anda: ");
+                        String simName = scanner.nextLine();
+                        Sim newSim = new Sim(simName);
+                        world.addHouse(newSim.getSimLoc().getHouse());
+                        main.currentSim = newSim;
+                        System.out.println("Selamat bermain!");
+                    } else {
+                        main.currentSim = main.chooseSim();
+                        System.out.println("Selamat bermain!");
+                    }
+                }
+            }
+
             System.out.println("2Waktu yang tersisa di " + time.getTime());
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
