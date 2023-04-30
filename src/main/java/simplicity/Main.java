@@ -17,8 +17,6 @@ public class Main {
         Action.fillListAction();
         scanner = new Scanner(System.in);
         time = new Time();
-        // time.runTime();
-        // time.setIsNotIdle(true);
         dayAddSim = 0;
         isStarted = false;
     }
@@ -55,8 +53,6 @@ public class Main {
             }
         }
 
-        // world.printMatrixHouse();
-
         System.out.println(time.getTime());
         // pilih Sim
         if (Sim.getListSim().size() == 0) {
@@ -64,9 +60,10 @@ public class Main {
             System.out.print("Masukkan nama Sim anda: ");
             String simName = scanner.nextLine();
             Sim newSim = new Sim(simName);
+            House newHouse = new House(simName);
+            world.addHouse(newHouse);
             main.currentSim = newSim;
             System.out.println("Selamat bermain!");
-            // world.printMatrixHouse();
 
         } else {
             System.out.print("Apakah anda ingin membuat Sim baru? (ya/tidak) ");
@@ -101,11 +98,9 @@ public class Main {
         }
 
         System.out.println("1Waktu yang tersisa di " + time.getTime());
-        main.currentSim.setCurrentTime(time);
 
         System.out.println("Ketik 'HELP' untuk melihat menu game yang tersedia ");
         while (isStarted) {
-            // time.setIsNotIdle(true);
             System.out.println("2Waktu yang tersisa di " + time.getTime());
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
@@ -128,6 +123,9 @@ public class Main {
                 main.currentSim.viewSimInventory();
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
+                // main.currentSim.upgradeHouse(house);
+                // selama 18 menit tapi bisa ditinggal
+                time.sleep(1080);
 
             } else if (equals(menu, "MOVE ROOM")) {
                 main.currentSim.moveRoom();
@@ -211,25 +209,29 @@ public class Main {
 
             } else if (equals(menu, "GO TO OBJECT")) {
 
-            } else if (equals(menu, "HESOYAM")) {
-                main.currentSim.setMoney(9999999);
-                System.out.println("Selamat! Kamu mendapatkan uang jajan dari Hotman Paris");
-
             } else if (equals(menu, "ACTION")) {
-                // time.setIsNotIdle(true);
                 Print.showAction();
                 System.out.print("Masukkan aksi yang ingin dijalankan: ");
                 String act = scanner.nextLine();
 
                 if (equals(act, "WORK")) {
-                    // time.setIsNotIdle(true);
-                    System.out.print("Masukkan durasi kerja (dalam detik): ");
-                    int simWorkTime = scanner.nextInt();
-                    main.currentSim.work(simWorkTime);
+                    // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
+                    if (time.getDay() > main.currentSim.getDayChangeJob()){
+                        System.out.print("Masukkan durasi kerja (dalam detik): ");
+                        int simWorkTime = scanner.nextInt();
+                        main.currentSim.work(simWorkTime);
+                    } else {
+                        System.out.println("Pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan");
+                    }
 
                 } else if (equals(act, "CHANGE JOB")) { // action ato taruh di work?
-                    // time.setIsNotIdle(true);
-                    main.currentSim.newJob();
+                    // harus setidaknya 12 menit bekerja
+                    if (main.currentSim.getWorkTime() >= 720){
+                        main.currentSim.newJob();
+                        main.currentSim.setDayChangeJob(time.getDay());
+                    } else {
+                        System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit");
+                    }
 
                 } else if (equals(act, "EXERCISE")) {
                     System.out.print("Masukkan durasi olahraga (dalam detik): ");
@@ -246,137 +248,14 @@ public class Main {
                     System.out.print("Masukkan durasi tidur (dalam detik): ");
                     int simSleepTime = scanner.nextInt();
                     main.currentSim.sleep(simSleepTime);
+                    time.sleepMain(simSleepTime);
 
-                } 
-                else if (equals(act, "EAT")) {
-                    main.currentSim.viewSimFood();
-                    System.out.print("Mau makan apa? : ");
-                    String maumakan = scanner.nextLine();
+                } else if (equals(act, "EAT")) {
+                    main.currentSim.eat();
 
-                    if(equals(maumakan,"Nasi Ayam")){
-                        if(main.checkFood("Nasi Ayam")){
-                            Food nasyam = main.currentSim.getInventory().getBoxFood().get("Nasi Ayam");
-                            main.simEat(nasyam);
-                        }
-                        else{
-                            System.out.println("Kamu tidak memiliki makanan " + maumakan);
-                        }
-                    }
-                    else if(equals(maumakan,"Nasi Kari")){
-                        if(main.checkFood("Nasi Kari")){
-                            Food naskar = main.currentSim.getInventory().getBoxFood().get("Nasi Kari");
-                            main.simEat(naskar);
-                        }
-                        else{
-                            System.out.println("Kamu tidak memiliki makanan " + maumakan);
-                        }
-                    }
-                    else if(equals(maumakan,"Susu Kacang")){
-                        if(main.checkFood("Susu Kacang")){
-                            Food suskac = main.currentSim.getInventory().getBoxFood().get("Susu Kacang");
-                            main.simEat(suskac);
-                        }
-                        else{
-                            System.out.println("Kamu tidak memiliki makanan " + maumakan);
-                        }
-                    }
-                    else if(equals(maumakan,"Tumis Sayur")){
-                        if(main.checkFood("Tumis Sayur")){
-                            Food tumsay = main.currentSim.getInventory().getBoxFood().get("Tumis Sayur");
-                            main.simEat(tumsay);
-                        }
-                        else{
-                            System.out.println("Kamu tidak memiliki makanan " + maumakan);
-                        }
-                    }
-                    else if(equals(maumakan,"Bistik")){
-                        if(main.checkFood("Bistik")){
-                            Food biwstik = main.currentSim.getInventory().getBoxFood().get("Bistik");
-                            main.simEat(biwstik);
-                        }
-                        else{
-                            System.out.println("Kamu tidak memiliki makanan " + maumakan);
-                        }
-                    }
-                    else{
-                        System.out.println("Kamu tidak memiliki makanan " + maumakan);
-                    }
-
-                } 
-                else if (equals(act, "COOK")) {
+                } else if (equals(act, "COOK")) {
                     Print.showCookingMenu();
-                    System.out.print("Masukkan nomor masakan yang ingin dibuat : ");
-                    int cooknumber = scanner.nextInt();
-
-                    if (cooknumber == 1) {
-                        if (main.checkGroceries("Nasi") && main.checkGroceries("Ayam")) {
-                            Food nasiayam = new Food("Nasi Ayam", 16);
-                            main.cooking(nasiayam);
-                            main.deleteGroceriesfromInventory("Nasi");
-                            main.deleteGroceriesfromInventory("Ayam");
-                            System.out.println("Berhasil memasak");
-
-                        } else {
-                            System.out.println("Bahan makananmu kurang :(");
-                        }
-                    }
-
-                    else if(cooknumber == 2){
-                        if (main.checkGroceries("Nasi") && main.checkGroceries("Kentang") && main.checkGroceries("Wortel") && main.checkGroceries("Sapi") ) {
-                            Food nasikari = new Food("Nasi Kari", 30);
-                            main.cooking(nasikari);
-                            main.deleteGroceriesfromInventory("Nasi");
-                            main.deleteGroceriesfromInventory("Kentang");
-                            main.deleteGroceriesfromInventory("Wortel");
-                            main.deleteGroceriesfromInventory("Sapi");
-                            System.out.println("Berhasil memasak");
-
-                        } else {
-                            System.out.println("Bahan makananmu kurang :(");
-                        }
-                    }
-
-                    else if(cooknumber == 3){
-                        if (main.checkGroceries("Susu") && main.checkGroceries("Kacang")) {
-                            Food susukacang = new Food("Susu Kacang", 5);
-                            main.cooking(susukacang);
-                            main.deleteGroceriesfromInventory("Susu");
-                            main.deleteGroceriesfromInventory("Kacang");
-                            System.out.println("Berhasil memasak");
-
-                        } else {
-                            System.out.println("Bahan makananmu kurang :(");
-                        }
-                    }
-
-                    else if(cooknumber == 4){
-                        if (main.checkGroceries("Wortel") && main.checkGroceries("Bayam")) {
-                            Food tumissayur = new Food("Tumis Sayur", 5);
-                            main.cooking(tumissayur);
-                            main.deleteGroceriesfromInventory("Wortel");
-                            main.deleteGroceriesfromInventory("Bayam");
-                            System.out.println("Berhasil memasak");
-
-                        } else {
-                            System.out.println("Bahan makananmu kurang :(");
-                        }
-                    }
-
-                    else if(cooknumber == 5){
-                        if (main.checkGroceries("Kentang") && main.checkGroceries("Sapi")) {
-                            Food kentangsapi = new Food("Bistik", 22);
-                            main.cooking(kentangsapi);
-                            main.deleteGroceriesfromInventory("Kentang");
-                            main.deleteGroceriesfromInventory("Sapi");
-                            System.out.println("Berhasil memasak");
-
-                        } else {
-                            System.out.println("Bahan makananmu kurang :(");
-                        }
-                    }
-                    else{
-                        System.out.println("Masukkan nomor yang sesuai dong");
-                    }
+                    main.currentSim.cook();
 
                 } else if (equals(act, "VISIT")) {
                     // mau masukin visit rumah orang pake nama owner?
@@ -407,6 +286,9 @@ public class Main {
                     time.sleepMain(10);
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
+                    // main.currentSim.upgradeHouse(house);
+                    // selama 18 menit tapi bisa ditinggal
+                    time.sleep(1080);
 
                 } else if (equals(act, "BUY ITEM")) {
                     Print.showBuyObjectMenu();
@@ -416,7 +298,6 @@ public class Main {
                     main.currentSim.moveRoom();
 
                 } else if (equals(act, "VIEW INVENTORY")) {
-                    // time.setIsNotIdle(true);
                     System.out.println(time.getTime());
                     main.currentSim.viewSimInventory();
 
@@ -497,6 +378,7 @@ public class Main {
         }
 
         // validasi lokasi rumah Sim
+        world.printMatrixHouse();
         System.out.println("Masukkan titik untuk mendirikan rumah: ");
         boolean done = false;
         int x = 0, y = 0;
@@ -525,78 +407,6 @@ public class Main {
             System.out.println("Pendaftaran Sim baru gagal");
             return null;
         }
-    }
-
-    public boolean checkGroceries(String namaGroc) {
-        return currentSim.getInventory().getBoxGroceries().isNotEmpty(namaGroc);
-    }
-
-    public boolean checkFood(String namaFood){
-        return currentSim.getInventory().getBoxFood().isNotEmpty(namaFood);
-    }
-
-    public void deleteGroceriesfromInventory(String namagroc) {
-        currentSim.getInventory().getBoxGroceries().delete(namagroc);
-    }
-
-    public void cooking(Food makanan) {
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                System.out.println("Cooking " + makanan.getObjekName());
-                int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
-                System.out.println(".......Please wait.......");
-                try {
-                    for(int k = (sleeptime/1000) ; k >= 1; k--){
-                        System.out.println("Time remaining " + k + " seconds");
-                        Thread.sleep(1000);
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        });
-
-        thread.start();
-        try{
-            thread.join();
-        }
-        catch (InterruptedException e){
-            System.out.println(e.getMessage());
-        }
-        System.out.println("Masakanmu selesai!");
-        currentSim.getInventory().getBoxFood().add(makanan);
-        int newSimMood = currentSim.getMotive().getMood() + 10;
-        currentSim.getMotive().setMood(newSimMood);
-    }
-
-    public void simEat(Food nyam){
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                System.out.println("Sedang Memakan " + nyam.getObjekName());
-                System.out.println(".......Please wait.......");
-                try {
-                    for(int k = 30 ; k >= 1; k--){
-                        System.out.println("Time remaining " + k + " seconds");
-                        Thread.sleep(1000);
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        });
-
-        thread.start();
-
-        try{
-            thread.join();
-        }
-        catch (InterruptedException e){
-            System.out.println(e.getMessage());
-        }
-        System.out.println("Kamu selesai makan!");
-        currentSim.getInventory().getBoxFood().delete(nyam);
-        int newHunger = currentSim.getMotive().getHunger() + nyam.getFoodHunger();
-        currentSim.getMotive().setHunger(newHunger);
     }
 
 }
