@@ -60,8 +60,7 @@ public class Main {
             System.out.print("Masukkan nama Sim anda: ");
             String simName = scanner.nextLine();
             Sim newSim = new Sim(simName);
-            House newHouse = new House(simName);
-            world.addHouse(newHouse);
+            world.addHouse(newSim.getSimLoc().getHouse());
             main.currentSim = newSim;
             System.out.println("Selamat bermain!");
 
@@ -123,7 +122,7 @@ public class Main {
                 main.currentSim.viewSimInventory();
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
-                // main.currentSim.upgradeHouse(house);
+                main.currentSim.upgradeHouse(main.currentSim.getSimLoc().getHouse());
                 // selama 18 menit tapi bisa ditinggal
                 time.sleep(1080);
 
@@ -217,9 +216,14 @@ public class Main {
                 if (equals(act, "WORK")) {
                     // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
                     if (time.getDay() > main.currentSim.getDayChangeJob()){
-                        System.out.print("Masukkan durasi kerja (dalam detik): ");
-                        int simWorkTime = scanner.nextInt();
+                        // validasi waktu kerja kelipatan 120
+                        int simWorkTime = main.validateTime("kerja", 120);
+                        main.currentSim.setStatus("working");
+                        time.sleepMain(simWorkTime);
+                        // efek kerja
                         main.currentSim.work(simWorkTime);
+                        main.currentSim.setStatus("idle");
+
                     } else {
                         System.out.println("Pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan");
                     }
@@ -234,9 +238,13 @@ public class Main {
                     }
 
                 } else if (equals(act, "EXERCISE")) {
-                    System.out.print("Masukkan durasi olahraga (dalam detik): ");
-                    int simExerciseTime = scanner.nextInt();
+                    // validasi waktu olahraga kelipatan 20
+                    int simExerciseTime = main.validateTime("olahraga", 20);
+                    main.currentSim.setStatus("doing exercise");
+                    time.sleepMain(simExerciseTime);
+                    // efek olahraga
                     main.currentSim.exercise(simExerciseTime);
+                    main.currentSim.setStatus("idle");
 
                 } else if (equals(act, "SLEEP")) {
                     // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
@@ -247,20 +255,24 @@ public class Main {
 
                     System.out.print("Masukkan durasi tidur (dalam detik): ");
                     int simSleepTime = scanner.nextInt();
-                    main.currentSim.sleep(simSleepTime);
+                    main.currentSim.setStatus("sleeping");
                     time.sleepMain(simSleepTime);
+                    // efek tidur
+                    main.currentSim.sleep(simSleepTime);
+                    main.currentSim.setStatus("idle");
 
                 } else if (equals(act, "EAT")) {
-                    main.currentSim.viewSimFood();
-                    System.out.print("Mau makan apa? ");
-                    String maumakan = scanner.nextLine();
-                    main.currentSim.eat(maumakan);
+                    main.currentSim.setStatus("eating");
+                    // efek makan
+                    main.currentSim.eat();
+                    main.currentSim.setStatus("idle");
 
                 } else if (equals(act, "COOK")) {
                     Print.showCookingMenu();
-                    System.out.print("Masukkan nomor masakan yang ingin dibuat: ");
-                    int cooknumber = scanner.nextInt();
-                    main.currentSim.cook(cooknumber);
+                    main.currentSim.setStatus("cooking");
+                    // efek memasak
+                    main.currentSim.cook();
+                    main.currentSim.setStatus("idle");
 
                 } else if (equals(act, "VISIT")) {
                     // mau masukin visit rumah orang pake nama owner?
@@ -278,20 +290,37 @@ public class Main {
                         }
                     }
 
-                    System.out.print("Masukkan durasi berkunjung (dalam detik): ");
-                    int simVisitTime = scanner.nextInt();
-                    main.currentSim.visit(houseLoc, simVisitTime);
+                    // validasi waktu berkunjung kelipatan 30
+                    int simVisitTime = main.validateTime("berkunjung", 30);
+
+                    // waktu yang diperlukan untuk berkunjung ke rumah
+                    // perhitungan/pemilihan titik rumah dari SIM yang ingin dikunjungi dibebaskan -> belum ditentuin
+                    double x = Math.pow(houseLoc.getX() - main.currentSim.getSimLoc().getPoint().getX(), 2);
+                    double y = Math.pow(houseLoc.getY() - main.currentSim.getSimLoc().getPoint().getY(), 2);
+                    double walkTime = Math.sqrt(x + y);
+                    
+                    int time_total = simVisitTime + (int) walkTime;
+
+                    main.currentSim.setStatus("visiting");
+                    time.sleepMain(time_total);
+                    // efek berkunjung
+                    main.currentSim.visit(time_total);
+                    main.currentSim.setStatus("idle");
 
                 } else if (equals(act, "PEE")) {
                     // sim minimal buang air 1 kali tiap habis makan
                     // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa
                     // buang air -> gimana
 
-                    main.currentSim.pee();
+                    main.currentSim.setStatus("peeing");
+                    // siklus 10 detik
                     time.sleepMain(10);
+                    // efek buang air
+                    main.currentSim.pee();
+                    main.currentSim.setStatus("idle");
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
-                    // main.currentSim.upgradeHouse(house);
+                    main.currentSim.upgradeHouse(main.currentSim.getSimLoc().getHouse());
                     // selama 18 menit tapi bisa ditinggal
                     time.sleep(1080);
 
@@ -333,6 +362,22 @@ public class Main {
         } catch (final Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public int validateTime(String action, int kelipatan){
+        boolean done = false;
+        int time = 0;
+        while (!done){
+            System.out.print("Masukkan durasi " + action + " (dalam detik): ");
+            time = scanner.nextInt();
+            if (time % kelipatan != 0){
+                System.out.println("Durasi " + action + " harus kelipatan " + kelipatan);
+            } else {
+                done = true;
+            }
+        }
+
+        return time;
     }
 
     public Sim chooseSim() {
@@ -402,8 +447,8 @@ public class Main {
         Point houseLoc = new Point(x, y);
         // cek fungsi isWorldAvail
         if (world.isWorldAvail(houseLoc)) {
-            Sim newSim = new Sim(simName);
-            world.addHouse(newSim.getFullName(), houseLoc);
+            Sim newSim = new Sim(simName, houseLoc);
+            world.addHouse(newSim.getSimLoc().getHouse());
             System.out.println("Sim berhasil didaftarkan");
             // world.printMatrixHouse();
             return newSim;

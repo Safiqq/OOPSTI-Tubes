@@ -40,20 +40,22 @@ public class Time {
     }
 
     public void sleep(int seconds) {
+        // aksi yang butuh waktu dan bisa ditinggal
         Thread thread = new Thread(() -> {
-                try {
-                    for (int i = 0; i < seconds; i++) {
-                        countdown();
-                        Thread.sleep(1000);
-                    }
-                } catch (InterruptedException e) {
-                    System.out.println(e);
+            try {
+                for (int i = 0; i < seconds; i++) {
+                    countdown();
+                    Thread.sleep(1000);
                 }
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
         });
         thread.start();
     }
 
     public void sleepMain(int seconds) {
+        // aksi yang butuh waktu dan tidak bisa ditinggal/aksi aktif
         try {
             for (int i = 0; i < seconds; i++) {
                 countdown();
@@ -114,5 +116,5 @@ public class Time {
         this.minute = minute;
         this.second = second;
     }
-    
+
 }

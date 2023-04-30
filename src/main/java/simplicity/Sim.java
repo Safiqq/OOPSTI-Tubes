@@ -13,7 +13,7 @@ public class Sim {
     private int money;
     private Inventory inventory;
     private Motive motive;
-    private String status;
+    private String status = "idle";
     private int workTime = 0;
     private int paidTime = 0;
     private int dayChangeJob = 0;
@@ -28,6 +28,18 @@ public class Sim {
         this.simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 
         listSim.add(this);
+    }
+
+    public Sim(String fullName, Point houseLoc){
+        this.motive = new Motive(); // inisiasi di class motive
+        this.money = 100;
+        this.occupation = new Occupation(); // inisiasi di class occupation
+        this.fullName = fullName;
+        this.inventory = new Inventory(); // inisiasi di class inventory
+        House house = new House(fullName, houseLoc);
+        this.simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
+
+        listSim.add(this);     
     }
 
     public static List<Sim> getListSim() {return listSim;}
@@ -134,8 +146,7 @@ public class Sim {
         }
         System.out.println("Kamu selesai makan!");
         getInventory().getBoxFood().delete(nyam);
-        int newHunger = getMotive().getHunger() + nyam.getFoodHunger();
-        getMotive().setHunger(newHunger);
+        motive.changeHunger(nyam.getFoodHunger());
     }
 
     public boolean checkGroceries(String namaGroc) {
@@ -298,24 +309,7 @@ public class Sim {
     }
 
     public void work(int time) {
-        // validasi time kelipatan 120
-        boolean done = false;
-        Scanner scanner = new Scanner(System.in);
-        while (!done) {
-            if (time % 120 != 0) {
-                System.out.println("Durasi bekerja harus kelipatan 120");
-                System.out.print("Masukkan durasi kerja (dalam detik): ");
-                time = scanner.nextInt();
-            } else {
-                done = true;
-            }
-        }
-        scanner.close();
-
-        // ini ngabisin waktu kerja nunggu ato lgsg keskip??
-
         // efek -10 kekenyangan/30 dtk, -10 mood/30 dtk
-        // pake list Effect?
         int minusPoints = -10 * (time / 30);
         motive.changeHunger(minusPoints);
         motive.changeMood(minusPoints);
@@ -346,30 +340,13 @@ public class Sim {
     }
 
     public void exercise(int time) {
-        // validasi time kelipatan 20
-        boolean done = false;
-        Scanner scanner = new Scanner(System.in);
-        while (!done) {
-            if (time % 20 != 0) {
-                System.out.println("Durasi olahraga harus kelipatan 20");
-                System.out.print("Masukkan durasi olahraga (dalam detik): ");
-                time = scanner.nextInt();
-            } else {
-                done = true;
-            }
-        }
-        scanner.close();
-
         // efek +5 kesehatan/20 dtk, -5 kekenyangan/20 dtk, +10 mood/20 dtk
-        // pake list Effect?
         int plusHealth = 5 * (time / 20);
         int minusHunger = -5 * (time / 20);
         int plusMood = 10 * (time / 20);
         motive.changeHealth(plusHealth);
         motive.changeHunger(minusHunger);
         motive.changeMood(plusMood);
-
-        // waktunya gmn
 
     }
 
@@ -382,7 +359,11 @@ public class Sim {
         motive.changeHealth(plusHealth);
     }
 
-    public void eat(String maumakan) {
+    public void eat() {
+        Scanner scanner = new Scanner(System.in);
+        viewSimFood();
+        System.out.print("Mau makan apa? ");
+        String maumakan = scanner.nextLine();
         if (maumakan.equalsIgnoreCase("Nasi Ayam")){
             if (checkFood("Nasi Ayam")){
                 Food nasyam = getInventory().getBoxFood().get("Nasi Ayam");
@@ -424,7 +405,10 @@ public class Sim {
 
     }
 
-    public void cook(int cooknumber) {
+    public void cook() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Masukkan nomor masakan yang ingin dibuat: ");
+        int cooknumber = scanner.nextInt();
         if (cooknumber == 1) {
             if (checkGroceries("Nasi") && checkGroceries("Ayam")) {
                 Food nasiayam = new Food("Nasi Ayam", 16);
@@ -487,28 +471,7 @@ public class Sim {
         }
     }
 
-    public void visit(Point point, int time) {
-        // waktu yang diperlukan untuk berkunjung ke rumah
-        // perhitungan/pemilihan titik rumah dari SIM yang ingin dikunjungi dibebaskan -> belum ditentuin
-        double x = Math.pow(point.getX() - simLoc.getPoint().getX(), 2);
-        double y = Math.pow(point.getY() - simLoc.getPoint().getY(), 2);
-        double walkTime = Math.sqrt(x + y);
-
-        // pemain diminta memasukkan waktu durasi kelipatan 30 detik
-        boolean done = false;
-        Scanner scanner = new Scanner(System.in);
-        while (!done) {
-            if (time % 30 != 0) {
-                System.out.println("Durasi berkunjung harus kelipatan 30");
-                System.out.print("Masukkan durasi berkunjung (dalam detik): ");
-                time = scanner.nextInt();
-            } else {
-                done = true;
-            }
-        }
-
-        scanner.close();
-
+    public void visit(int time) {
         // +10 mood/30 dtk, -10 kekenyangan/30 dtk
         int plusMood = 10 * (time / 30);
         int minusHunger = -10 * (time / 30);
