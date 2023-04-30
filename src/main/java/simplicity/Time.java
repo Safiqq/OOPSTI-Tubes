@@ -4,7 +4,6 @@ public class Time {
     private int day;
     private int minute;
     private int second;
-    private boolean isNotIdle;
 
     public Time() {
         this(1, 12, 0);
@@ -12,15 +11,6 @@ public class Time {
 
     public Time(int day, int minute, int second) {
         setTime(day, minute, second);
-        isNotIdle = false;
-    }
-
-    public boolean isNotIdle() {
-        return isNotIdle;
-    }
-
-    public void setNotIdle(boolean notIdle) {
-        isNotIdle = notIdle;
     }
 
     private boolean isValid(int day, int minute, int second) {
@@ -51,7 +41,6 @@ public class Time {
 
     public void sleep(int seconds) {
         Thread thread = new Thread(() -> {
-            if (isNotIdle) {
                 try {
                     for (int i = 0; i < seconds; i++) {
                         countdown();
@@ -60,7 +49,6 @@ public class Time {
                 } catch (InterruptedException e) {
                     System.out.println(e);
                 }
-            }
         });
         thread.start();
     }
@@ -126,8 +114,5 @@ public class Time {
         this.minute = minute;
         this.second = second;
     }
-
-    public void setIsNotIdle(boolean isNotIdle) {
-        this.isNotIdle = isNotIdle;
-    }
+    
 }

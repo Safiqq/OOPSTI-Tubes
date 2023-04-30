@@ -251,11 +251,16 @@ public class Main {
                     time.sleepMain(simSleepTime);
 
                 } else if (equals(act, "EAT")) {
-                    main.currentSim.eat();
+                    main.currentSim.viewSimFood();
+                    System.out.print("Mau makan apa? ");
+                    String maumakan = scanner.nextLine();
+                    main.currentSim.eat(maumakan);
 
                 } else if (equals(act, "COOK")) {
                     Print.showCookingMenu();
-                    main.currentSim.cook();
+                    System.out.print("Masukkan nomor masakan yang ingin dibuat: ");
+                    int cooknumber = scanner.nextInt();
+                    main.currentSim.cook(cooknumber);
 
                 } else if (equals(act, "VISIT")) {
                     // mau masukin visit rumah orang pake nama owner?

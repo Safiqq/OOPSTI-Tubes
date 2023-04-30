@@ -382,40 +382,36 @@ public class Sim {
         motive.changeHealth(plusHealth);
     }
 
-    public void eat() {
-        viewSimFood();
-        System.out.print("Mau makan apa? : ");
-        String maumakan = scanner.nextLine();
-
-        if (equals(maumakan,"Nasi Ayam")){
+    public void eat(String maumakan) {
+        if (maumakan.equalsIgnoreCase("Nasi Ayam")){
             if (checkFood("Nasi Ayam")){
                 Food nasyam = getInventory().getBoxFood().get("Nasi Ayam");
                 simEat(nasyam);
             } else {
                 System.out.println("Kamu tidak memiliki makanan " + maumakan);
             }
-        } else if (equals(maumakan,"Nasi Kari")){
+        } else if (maumakan.equalsIgnoreCase("Nasi Kari")){
             if (checkFood("Nasi Kari")){
                 Food naskar = getInventory().getBoxFood().get("Nasi Kari");
                 simEat(naskar);
             } else {
                 System.out.println("Kamu tidak memiliki makanan " + maumakan);
             }
-        } else if (equals(maumakan,"Susu Kacang")){
+        } else if (maumakan.equalsIgnoreCase("Susu Kacang")){
             if (checkFood("Susu Kacang")){
                 Food suskac = getInventory().getBoxFood().get("Susu Kacang");
                 simEat(suskac);
             } else{
                 System.out.println("Kamu tidak memiliki makanan " + maumakan);
             }
-        } else if(equals(maumakan,"Tumis Sayur")){
+        } else if(maumakan.equalsIgnoreCase("Tumis Sayur")){
             if (checkFood("Tumis Sayur")){
                 Food tumsay = getInventory().getBoxFood().get("Tumis Sayur");
                 simEat(tumsay);
             } else {
                 System.out.println("Kamu tidak memiliki makanan " + maumakan);
             }
-        } else if (equals(maumakan,"Bistik")){
+        } else if (maumakan.equalsIgnoreCase("Bistik")){
             if (checkFood("Bistik")){
                 Food biwstik = getInventory().getBoxFood().get("Bistik");
                 simEat(biwstik);
@@ -428,10 +424,7 @@ public class Sim {
 
     }
 
-    public void cook() {
-        System.out.print("Masukkan nomor masakan yang ingin dibuat: ");
-        int cooknumber = scanner.nextInt();
-
+    public void cook(int cooknumber) {
         if (cooknumber == 1) {
             if (checkGroceries("Nasi") && checkGroceries("Ayam")) {
                 Food nasiayam = new Food("Nasi Ayam", 16);
