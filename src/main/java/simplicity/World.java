@@ -77,15 +77,16 @@ public class World {
         return null;
     }
 
+    // mau benerin tampilan print?
     public void printMatrixHouse() {
         // menampilkan world
         System.out.println();
         for (int i = 0; i < worldWidth; i++) {
             for (int j = 0; j < worldLength; j++) {
                 if (matrixHouse[i][j] == null) {
-                    System.out.print("O");
+                    System.out.print(0);
                 } else {
-                    System.out.print("X");
+                    System.out.print(1);
                 }
                 System.out.print(" ");
             }

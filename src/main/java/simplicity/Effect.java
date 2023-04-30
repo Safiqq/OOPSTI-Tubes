@@ -19,10 +19,6 @@ public class Effect {
         this.motiveName = motiveName;
     }
 
-    public void setMotiveName(int motiveEffect) {
-        this.motiveEffect = motiveEffect;
-    }
-
     public int getMotiveEffect() {
         return motiveEffect;
     }

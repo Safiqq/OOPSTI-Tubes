@@ -96,6 +96,7 @@ public class Room {
             for (int i = barang.getStartPoint().getY(); i <= barang.getEndPoint().getY(); i++) {
                 for (int j = barang.getStartPoint().getX(); j <= barang.getEndPoint().getX(); j++) {
                     matrixBarang[i][j] = barang;
+                    emptyRoom[i][j] = false;
                 }
             }
             addListObjek(barang);
