@@ -105,7 +105,7 @@ public class CLIMain extends Main {
                 }
             }
 
-            System.out.println("2Waktu yang tersisa di " + time.getTime());
+            System.out.println("Waktu yang tersisa di " + time.getTime());
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
             if (equals(menu, "HELP")) {
