@@ -160,6 +160,6 @@ public class Action {
     }
 
     public void deleteEffect(String key) {
-        listEffect.removeIf(effect -> effect.getMotiveName().equals(key));
+        listEffect.removeIf(effect -> Main.equals(effect.getMotiveName(), key));
     }
 }

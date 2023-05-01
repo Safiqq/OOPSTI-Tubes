@@ -3,13 +3,16 @@ package simplicity;
 public abstract class Main {
     protected static final World world = World.getWorld();
     protected static final String[] menu = {
-            "Start Game - Memulai permainan", "Help - Melihat menu game yang tersedia",
-            "Exit - Keluar dari permainan", "View Sim Info - Menampilkan informasi setiap atribut dari Sim",
+            "Start Game - Memulai permainan",
+            "Help - Melihat menu game yang tersedia",
+            "Exit - Keluar dari permainan",
+            "View Sim Info - Menampilkan informasi setiap atribut dari Sim",
             "View Current Location - Menampilkan lokasi dari Sim",
             "View Inventory - Menampilkan isi inventory yang dimiliki Sim",
             "Upgrade House - Melakukan penambahan ruangan dalam rumah",
             "Move Room - Perpindahan lokasi ke ruang lain yang ada pada rumah yang sedang ditempati Sim",
-            "Edit Room - Melakukan perubahan pada ruangan", "Add Sim - Menambahkan sebuah Sim dalam world",
+            "Edit Room - Melakukan perubahan pada ruangan",
+            "Add Sim - Menambahkan sebuah Sim dalam world",
             "Change Sim - Mengganti ke Sim lain untuk dimainkan",
             "List Object - Menampilkan daftar objek dalam sebuah ruangan",
             "Go to Object - Sim berjalan menuju suatu objek",

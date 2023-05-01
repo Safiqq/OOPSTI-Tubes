@@ -16,7 +16,7 @@ public class House {
     public House(String owner, Point houseLoc) {
         this.owner = owner;
         this.houseLoc = houseLoc;
-        defaultRoom = new Room("Ruang Utama");
+        defaultRoom = new Room();
         listRoom.add(defaultRoom);
 
         World.getWorld().addHouse(this);
@@ -38,28 +38,7 @@ public class House {
         return listRoom;
     }
 
-    public void addListRoom(Room room) throws Exception {
-        // check apakah area sekitar untuk menambah room kosong atau enggak
-        if ((room.getUpperSide() == null) && (room.getBottomSide() == null) && (room.getLeftSide() == null) && (room.getRightSide() == null)) {
-            throw new Exception("Ruangan harus bersebelahan dengan ruangan lain");
-        } else if (room.getLeftSide() != null) {
-            if ((room.getLeftSide()).getRightSide() != null) {
-                throw new Exception("Lokasi sudah diisi ruangan lain.");
-            }
-        } else if (room.getRightSide() != null) {
-            if ((room.getRightSide()).getLeftSide() != null) {
-                throw new Exception("Lokasi sudah diisi ruangan lain.");
-            }
-        } else if (room.getUpperSide() != null) {
-            if ((room.getUpperSide()).getBottomSide() != null) {
-                throw new Exception("Lokasi sudah diisi ruangan lain.");
-            }
-        } else if (room.getBottomSide() != null) {
-            if ((room.getBottomSide()).getUpperSide() != null) {
-                throw new Exception("Lokasi sudah diisi ruangan lain.");
-            }
-        } else {
-            listRoom.add(room);
-        }
+    public void addListRoom(Room room) {
+        listRoom.add(room);
     }
 }

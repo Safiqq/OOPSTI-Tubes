@@ -36,17 +36,15 @@ public class World {
     }
 
     public boolean isWorldAvail(Point houseLoc) {
-        return matrixHouse[houseLoc.getX()][houseLoc.getY()] == null;
+        return matrixHouse[houseLoc.getY()][houseLoc.getX()] == null;
     }
 
     public boolean isHouseBuildAble() {
         // true jika ada spot kosong untuk membangun rumah
         // false jika tidak ada
-        for (int i = 0; i < 64; i++) {
-            for (int j = 0; j < 64; j++) {
-                if (matrixHouse[i][j] == null) {
-                    return true;
-                }
+        for (int i = 0; i < worldLength; i++) {
+            for (int j = 0; j < worldWidth; j++) {
+                if (matrixHouse[i][j] == null) return true;
             }
         }
         return false;
@@ -55,7 +53,7 @@ public class World {
     public void addHouse(House house) {
         // add house ke world
         if (isWorldAvail(house.getHouseLoc())) {
-            matrixHouse[house.getHouseLoc().getX()][house.getHouseLoc().getY()] = house;
+            matrixHouse[house.getHouseLoc().getY()][house.getHouseLoc().getX()] = house;
         } else {
             System.out.println("Sudah ada rumah Sim lain");
         }
@@ -64,7 +62,7 @@ public class World {
     public Point searchHouse(String owner) {
         for (int i = 0; i < worldWidth; i++) {
             for (int j = 0; j < worldLength; j++) {
-                if (matrixHouse[i][j].getOwner().equals(owner)) {
+                if (Main.equals(matrixHouse[i][j].getOwner(), owner)) {
                     return new Point(i, j);
                 }
             }
