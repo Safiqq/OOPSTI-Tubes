@@ -41,6 +41,7 @@ public class Time {
 
     public void sleep(int seconds) {
         // salah, ntar gw benerin (safiq)
+        // aksi yang butuh waktu dan bisa ditinggal
         //        Thread thread = new Thread(() -> {
         //            try {
         //                for (int i = 0; i < seconds; i++) {
@@ -55,6 +56,7 @@ public class Time {
     }
 
     public void sleepMain(int seconds) {
+        // aksi yang butuh waktu dan tidak bisa ditinggal/aksi aktif
         try {
             for (int i = 0; i < seconds; i++) {
                 countdown();

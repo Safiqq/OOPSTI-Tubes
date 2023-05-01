@@ -22,9 +22,8 @@ public class GUIMain extends Main {
     }
 
     public void start() {
-        GUIMain main = new GUIMain();
-        main.importFont();
-        main.showMainFrame();
+        importFont();
+        showMainFrame();
     }
 
     public void importFont() {
