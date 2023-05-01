@@ -118,85 +118,6 @@ public class Sim {
         return hargaobjek <= money;
     }
 
-    // thread hapus aja jd sleepMain di main
-    public void simEat(Food nyam) {
-        Thread thread = new Thread(() -> {
-            System.out.println("Sedang Memakan " + nyam.getObjekName());
-            System.out.println(".......Please wait.......");
-            try {
-                for (int k = 30; k >= 1; k--) {
-                    System.out.println("Time remaining " + k + " seconds");
-                    Thread.sleep(1000);
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        });
-
-        thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("Kamu selesai makan!");
-        getInventory().getBoxFood().delete(nyam);
-
-        // menghapus sim dari list sim jika mati
-        try {
-            motive.changeHunger(nyam.getFoodHunger());
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
-            listSim.remove(this);
-        }
-    }
-
-    public boolean checkGroceries(String namaGroc) {
-        return getInventory().getBoxGroceries().isNotEmpty(namaGroc);
-    }
-
-    public void deleteGroceriesfromInventory(String namagroc) {
-        getInventory().getBoxGroceries().delete(namagroc);
-    }
-
-    // thread hapus aja jd sleepMain di main
-    public void cooking(Food makanan) {
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                System.out.println("Cooking " + makanan.getObjekName());
-                int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
-                System.out.println(".......Please wait.......");
-                try {
-                    for (int k = (sleeptime / 1000); k >= 1; k--) {
-                        System.out.println("Time remaining " + k + " seconds");
-                        Thread.sleep(1000);
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        });
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println("Masakanmu selesai!");
-        getInventory().getBoxFood().add(makanan);
-
-        // menghapus sim dari list sim jika mati
-        try {
-            motive.changeMood(10);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
-            listSim.remove(this);
-        }
-    }
-
     public String getFullName() {
         return this.fullName;
     }
@@ -273,10 +194,6 @@ public class Sim {
         return this.simLoc;
     }
 
-    public void setListInventory(Inventory inventory) {
-        this.inventory = inventory;
-    }
-
     public void moveRoom() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Room> listRoom = simLoc.getHouse().getListRoom();
@@ -293,13 +210,13 @@ public class Sim {
         while (!done) {
             System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
             String roomName = scanner.nextLine();
-            if (oldRoom.equals(roomName.toUpperCase())) {
+            if (Main.equals(oldRoom, roomName)) {
                 System.out.println("Nama ruangan sama dengan tempat Sim berada ");
                 System.out.println("Sim berada di ruangan " + oldRoom);
                 System.out.println();
             } else {
                 for (Room room : listRoom) {
-                    if ((roomName.toUpperCase()).equals(room.getRoomName())) {
+                    if (Main.equals(roomName, room.getRoomName())) {
                         simLoc.setRoom(room);
                         // Sim teleportasi di point 3,3 dalam ruangan
                         simLoc.getPoint().setX(3);
@@ -392,6 +309,14 @@ public class Sim {
         }
     }
 
+    public boolean checkGroceries(String namaGroc) {
+        return getInventory().getBoxGroceries().isNotEmpty(namaGroc);
+    }
+
+    public void deleteGroceriesFromInventory(String namagroc) {
+        getInventory().getBoxGroceries().delete(namagroc);
+    }
+
     public boolean checkFood(String namaFood) {
         return getInventory().getBoxFood().isNotEmpty(namaFood);
     }
@@ -439,6 +364,78 @@ public class Sim {
         } else {
             System.out.println("Kamu tidak memiliki makanan " + maumakan);
         }
+        scanner.close();
+    }
+
+    // thread hapus aja jd sleepMain di main
+    public void simEat(Food nyam) {
+        Thread thread = new Thread(() -> {
+            System.out.println("Sedang Memakan " + nyam.getObjekName());
+            System.out.println(".......Please wait.......");
+            try {
+                for (int k = 30; k >= 1; k--) {
+                    System.out.println("Time remaining " + k + " seconds");
+                    Thread.sleep(1000);
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
+
+        thread.start();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Kamu selesai makan!");
+        getInventory().getBoxFood().delete(nyam);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeHunger(nyam.getFoodHunger());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            listSim.remove(this);
+        }
+    }
+
+    // thread hapus aja jd sleepMain di main
+    public void cooking(Food makanan) {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                System.out.println("Cooking " + makanan.getObjekName());
+                int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
+                System.out.println(".......Please wait.......");
+                try {
+                    for (int k = (sleeptime / 1000); k >= 1; k--) {
+                        System.out.println("Time remaining " + k + " seconds");
+                        Thread.sleep(1000);
+                    }
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Masakanmu selesai!");
+        getInventory().getBoxFood().add(makanan);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeMood(10);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
+            listSim.remove(this);
+        }
     }
 
     public void cook() {
@@ -450,8 +447,8 @@ public class Sim {
             if (checkGroceries("Nasi") && checkGroceries("Ayam")) {
                 Food nasiayam = new Food("Nasi Ayam", 16);
                 cooking(nasiayam);
-                deleteGroceriesfromInventory("Nasi");
-                deleteGroceriesfromInventory("Ayam");
+                deleteGroceriesFromInventory("Nasi");
+                deleteGroceriesFromInventory("Ayam");
                 System.out.println("Berhasil memasak");
 
             } else {
@@ -462,10 +459,10 @@ public class Sim {
                     && checkGroceries("Sapi")) {
                 Food nasikari = new Food("Nasi Kari", 30);
                 cooking(nasikari);
-                deleteGroceriesfromInventory("Nasi");
-                deleteGroceriesfromInventory("Kentang");
-                deleteGroceriesfromInventory("Wortel");
-                deleteGroceriesfromInventory("Sapi");
+                deleteGroceriesFromInventory("Nasi");
+                deleteGroceriesFromInventory("Kentang");
+                deleteGroceriesFromInventory("Wortel");
+                deleteGroceriesFromInventory("Sapi");
                 System.out.println("Berhasil memasak");
 
             } else {
@@ -475,8 +472,8 @@ public class Sim {
             if (checkGroceries("Susu") && checkGroceries("Kacang")) {
                 Food susukacang = new Food("Susu Kacang", 5);
                 cooking(susukacang);
-                deleteGroceriesfromInventory("Susu");
-                deleteGroceriesfromInventory("Kacang");
+                deleteGroceriesFromInventory("Susu");
+                deleteGroceriesFromInventory("Kacang");
                 System.out.println("Berhasil memasak");
 
             } else {
@@ -486,8 +483,8 @@ public class Sim {
             if (checkGroceries("Wortel") && checkGroceries("Bayam")) {
                 Food tumissayur = new Food("Tumis Sayur", 5);
                 cooking(tumissayur);
-                deleteGroceriesfromInventory("Wortel");
-                deleteGroceriesfromInventory("Bayam");
+                deleteGroceriesFromInventory("Wortel");
+                deleteGroceriesFromInventory("Bayam");
                 System.out.println("Berhasil memasak");
 
             } else {
@@ -497,8 +494,8 @@ public class Sim {
             if (checkGroceries("Kentang") && checkGroceries("Sapi")) {
                 Food kentangsapi = new Food("Bistik", 22);
                 cooking(kentangsapi);
-                deleteGroceriesfromInventory("Kentang");
-                deleteGroceriesfromInventory("Sapi");
+                deleteGroceriesFromInventory("Kentang");
+                deleteGroceriesFromInventory("Sapi");
                 System.out.println("Berhasil memasak");
 
             } else {
@@ -507,6 +504,7 @@ public class Sim {
         } else {
             System.out.println("Masukkan nomor yang sesuai dong");
         }
+        scanner.close();
     }
 
     public void visit(int time) {
@@ -545,6 +543,12 @@ public class Sim {
 
     public void upgradeHouse(House house) {
         Scanner scan = new Scanner(System.in);
+        System.out.println("List ruangan di rumahmu : ");
+        int i = 1;
+        for (Room room : house.getListRoom()) {
+            System.out.println(i + ". " + room.getRoomName());
+            i++;
+        }
 
         if (isMoneyEnough(1500)) {
             // kalau rumah sekarang cuma ada 1 ruangan
@@ -556,8 +560,7 @@ public class Sim {
                 // loop untuk mendapatkan lokasi ruangan baru yang valid
                 boolean roomLocValid = false;
                 while (!roomLocValid) {
-                    System.out.printf("Pilih lokasi %s disebelah RUANGAN UTAMA (kiri/kanan/atas/bawah) : ",
-                            newRoomName);
+                    System.out.printf("Pilih lokasi %s di sebelah Ruangan Utama (kiri/kanan/atas/bawah) : ", newRoomName);
                     String roomLoc = scan.nextLine();
                     if (Main.equals(roomLoc, "KANAN")) {
                         Room newRoom = new Room(newRoomName, null, null, currentRoom, null);
@@ -602,7 +605,7 @@ public class Sim {
                             // loop untuk medapatkan lokasi ruangan baru yang valid
                             boolean roomLocValid = false;
                             while (!roomLocValid) {
-                                System.out.printf("Pilih lokasi %s disebelah %s (kiri/kanan/atas/bawah) : ",
+                                System.out.printf("Pilih lokasi %s di sebelah %s (kiri/kanan/atas/bawah) : ",
                                         newRoomName, pivotRoomName);
                                 String roomLoc = scan.nextLine();
                                 if (Main.equals(roomLoc, "KANAN") && currentRoom.getRightSide() == null) {
@@ -806,14 +809,22 @@ public class Sim {
                 System.out.println("Uang-mu kurang :( ");
             }
         }
+        scanner.close();
     }
 
     public void installItem() {
         Scanner scan = new Scanner(System.in);
-        Box<NonFood> boxNonFood = getInventory().getBoxNonFood();
         // kalau sim sedang berada di rumah sendiri
         if (!Main.equals(getFullName(), simLoc.getHouse().getOwner())) {
             boolean barangValid = false;
+            Box<NonFood> boxNonFood = getInventory().getBoxNonFood();
+
+            System.out.println("List barang di inventory kamu : ");
+            int i = 1;
+            for (NonFood barang : boxNonFood.getList()) {
+                System.out.println(i + ". " + barang.getObjekName() + " - " + boxNonFood.getCount(barang.getObjekName()));
+                i++;
+            }
 
             // looping input nama barang
             while (!barangValid) {
@@ -949,7 +960,7 @@ public class Sim {
                 NonFood[][] matrixBarang = simLoc.getRoom().getMatrixBarang();
                 for (int i = 0; i < 6; i++) {
                     for (int j = 0; j < 6; j++) {
-                        if (matrixBarang[i][j] == barang) {
+                        if (matrixBarang[j][i] == barang) {
                             simLoc.getPoint().setX(i);
                             simLoc.getPoint().setY(j);
                             break;
