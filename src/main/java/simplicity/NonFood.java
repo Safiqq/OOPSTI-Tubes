@@ -8,8 +8,7 @@ public class NonFood extends Objek {
     private Point startPoint;
     private Point endPoint;
 
-    public NonFood(String objekName, int objLength, int objWidth, int objPrice, Action action, Point startPoint,
-                   Point endPoint) {
+    public NonFood(String objekName, int objLength, int objWidth, int objPrice, Action action, Point startPoint, Point endPoint) {
         super(objekName);
         this.objLength = objLength;
         this.objWidth = objWidth;

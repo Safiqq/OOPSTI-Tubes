@@ -10,13 +10,7 @@ public class House {
     private final ArrayList<Room> listRoom = new ArrayList<>();
 
     public House(String owner) {
-        Random random = new Random();
-        Point point = new Point(random.nextInt(World.getWorld().getWorldLength()),
-                random.nextInt(World.getWorld().getWorldWidth()));
-        this.owner = owner;
-        houseLoc = point;
-        defaultRoom = new Room();
-        listRoom.add(defaultRoom);
+        this(owner, new Point(new Random().nextInt(World.getWorld().getWorldLength()), new Random().nextInt(World.getWorld().getWorldWidth())));
     }
 
     public House(String owner, Point houseLoc) {
@@ -24,6 +18,8 @@ public class House {
         this.houseLoc = houseLoc;
         defaultRoom = new Room("Ruang Utama");
         listRoom.add(defaultRoom);
+
+        World.getWorld().addHouse(this);
     }
 
     public String getOwner() {
