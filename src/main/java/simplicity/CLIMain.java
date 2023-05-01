@@ -415,7 +415,7 @@ public class CLIMain extends Main {
         // cek fungsi isWorldAvail
         if (world.isWorldAvail(houseLoc)) {
             Sim newSim = new Sim(simName);
-            world.addHouse(newSim.getFullName(), houseLoc);
+            world.addHouse(newSim.getSimLoc().getHouse());
             System.out.println("Sim berhasil didaftarkan");
             return newSim;
         } else {
