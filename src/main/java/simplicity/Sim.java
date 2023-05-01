@@ -558,18 +558,22 @@ public class Sim {
                     if (Main.equals(roomLoc, "KANAN")) {
                         Room newRoom = new Room(newRoomName, null, null, currentRoom, null);
                         currentRoom.setRightSide(newRoom);
+                        simLoc.getHouse().addListRoom(newRoom);
                         roomLocValid = true;
                     } else if (Main.equals(roomLoc, "KIRI")) {
                         Room newRoom = new Room(newRoomName, null, null, null, currentRoom);
                         currentRoom.setLeftSide(newRoom);
+                        simLoc.getHouse().addListRoom(newRoom);
                         roomLocValid = true;
                     } else if (Main.equals(roomLoc, "ATAS")) {
                         Room newRoom = new Room(newRoomName, null, currentRoom, null, null);
                         currentRoom.setUpperSide(newRoom);
+                        simLoc.getHouse().addListRoom(newRoom);
                         roomLocValid = true;
                     } else if (Main.equals(roomLoc, "BAWAH")) {
                         Room newRoom = new Room(newRoomName, currentRoom, null, null, null);
                         currentRoom.setBottomSide(newRoom);
+                        simLoc.getHouse().addListRoom(newRoom);
                         roomLocValid = true;
                     } else {
                         System.out.println("Lokasi tidak valid.");
@@ -600,28 +604,31 @@ public class Sim {
                                 if (Main.equals(roomLoc, "KANAN") && currentRoom.getRightSide() == null) {
                                     Room newRoom = new Room(newRoomName, null, null, currentRoom, null);
                                     currentRoom.setRightSide(newRoom);
+                                    simLoc.getHouse().addListRoom(newRoom);
                                     roomLocValid = true;
                                 } else if (Main.equals(roomLoc, "KIRI") && currentRoom.getLeftSide() == null) {
                                     Room newRoom = new Room(newRoomName, null, null, null, currentRoom);
                                     currentRoom.setLeftSide(newRoom);
+                                    simLoc.getHouse().addListRoom(newRoom);
                                     roomLocValid = true;
                                 } else if (Main.equals(roomLoc, "ATAS") && currentRoom.getUpperSide() == null) {
                                     Room newRoom = new Room(newRoomName, null, currentRoom, null, null);
                                     currentRoom.setUpperSide(newRoom);
+                                    simLoc.getHouse().addListRoom(newRoom);
                                     roomLocValid = true;
                                 } else if (Main.equals(roomLoc, "BAWAH") && currentRoom.getBottomSide() == null) {
                                     Room newRoom = new Room(newRoomName, currentRoom, null, null, null);
                                     currentRoom.setBottomSide(newRoom);
+                                    simLoc.getHouse().addListRoom(newRoom);
                                     roomLocValid = true;
                                 } else {
-                                    System.out.println("Lokasi tidak valid atau lokasi yang dipilih sudah diisi " +
-                                            "ruangan lain.");
+                                    System.out.println("Lokasi tidak valid atau lokasi yang dipilih sudah diisi ruangan lain.");
                                 }
                             }
                             pivotValid = true;
                             break;
                         } else {
-                            System.out.println("Ruangan tidak dikenali");
+                            System.out.println("Ruangan tidak dikenali.");
                         }
                     }
                 }
