@@ -49,7 +49,7 @@ public class Occupation {
         while (!done) {
             System.out.print("Masukkan nama pekerjaan baru: ");
             jobName = scanner.nextLine();
-            if (!jobName.equals(oldJobName)) {
+            if (!Main.equals(jobName, oldJobName)) {
                 done = true;
             } else {
                 System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama");

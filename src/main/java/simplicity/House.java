@@ -16,7 +16,7 @@ public class House {
     public House(String owner, Point houseLoc) {
         this.owner = owner;
         this.houseLoc = houseLoc;
-        defaultRoom = new Room("Ruang Utama");
+        defaultRoom = new Room();
         listRoom.add(defaultRoom);
 
         World.getWorld().addHouse(this);

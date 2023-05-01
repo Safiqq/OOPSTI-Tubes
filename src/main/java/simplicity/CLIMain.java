@@ -79,7 +79,7 @@ public class CLIMain extends Main {
             }
         }
 
-        System.out.println("1Waktu yang tersisa di " + time.getTime());
+        //        System.out.println("Waktu yang tersisa di " + time.getTime());
         // setCurrentTime(time);
 
         System.out.println("Ketik 'HELP' untuk melihat menu game yang tersedia ");
@@ -105,7 +105,6 @@ public class CLIMain extends Main {
                 }
             }
 
-            System.out.println("Waktu yang tersisa di " + time.getTime());
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
             if (equals(menu, "HELP")) {
@@ -113,7 +112,6 @@ public class CLIMain extends Main {
 
             } else if (equals(menu, "EXIT")) {
                 System.out.println("Anda keluar dari game Simplicity");
-                System.out.println("3Waktu yang tersisa di " + time.getTime());
                 System.out.println("Bye...");
                 System.exit(0);
 
@@ -351,7 +349,7 @@ public class CLIMain extends Main {
 
                 } else if (equals(act, "CHECK TIME")) {
                     // pake harus ngehampirin objek jam dulu
-                    System.out.println("4Waktu yang tersisa di- " + time.getTime());
+                    System.out.println("Waktu yang tersisa di- " + time.getTime());
                     // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
 
                 } else {
@@ -449,7 +447,7 @@ public class CLIMain extends Main {
             x = scanner.nextInt();
             System.out.print("Y: ");
             y = scanner.nextInt();
-            if ((x < 0 || x > 64) || (y < 0 || y > 64)) {
+            if ((x < 0 || x > world.getWorldLength() - 1) || (y < 0 || y > world.getWorldWidth() - 1)) {
                 System.out.println("Titik tidak valid. World berukuran 64x64");
             } else {
                 done = true;
