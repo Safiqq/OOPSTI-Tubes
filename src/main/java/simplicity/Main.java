@@ -23,10 +23,6 @@ public abstract class Main {
     protected Sim currentSim;
     protected int dayAddSim;
 
-    public Main() {
-        Action.fillListAction();
-    }
-
     public static String[] getMenu() {
         return menu;
     }
@@ -36,6 +32,7 @@ public abstract class Main {
     }
 
     public static void main(String[] args) {
+        Action.fillListAction();
         Main main;
         if (args.length > 0) {
             if (equals(args[0], "cli")) {

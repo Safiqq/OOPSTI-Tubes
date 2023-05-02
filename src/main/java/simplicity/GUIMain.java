@@ -18,7 +18,6 @@ public class GUIMain extends Main {
     private final static String fontPath = basePath + "/fonts";
 
     public GUIMain() {
-        super();
     }
 
     public void start() {

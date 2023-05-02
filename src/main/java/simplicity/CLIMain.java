@@ -9,7 +9,6 @@ public class CLIMain extends Main {
     private static boolean isStarted;
 
     public CLIMain() {
-        super();
         scanner = new Scanner(System.in);
         time = new Time();
         dayAddSim = 0;
