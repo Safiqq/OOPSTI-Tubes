@@ -197,38 +197,43 @@ public class Sim {
     public void moveRoom() {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Room> listRoom = simLoc.getHouse().getListRoom();
-        System.out.println("Daftar ruangan yang terdapat di dalam rumah: ");
-        int i = 1;
-        for (Room room : listRoom) {
-            System.out.println(i + ". " + room.getRoomName());
-            i++;
+        if (listRoom.size()==1){
+            System.out.println("Hanya ada Ruangan Utama di rumah ini.");
         }
-        
-        String oldRoom = simLoc.getRoom().getRoomName();
-        
-        boolean done = false;
-        while (!done) {
-            System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
-            String roomName = scanner.nextLine();
-            if (Main.equals(oldRoom, roomName)) {
-                System.out.println("Nama ruangan sama dengan tempat Sim berada ");
-                System.out.println("Sim berada di ruangan " + oldRoom);
-                System.out.println();
-            } else {
-                for (Room room : listRoom) {
-                    if (Main.equals(roomName, room.getRoomName())) {
-                        simLoc.setRoom(room);
-                        // Sim teleportasi di point 3,3 dalam ruangan
-                        simLoc.getPoint().setX(3);
-                        simLoc.getPoint().setY(3);
-                        done = true;
-                        break;
-                    }
-                }
-                
-                if (!done) {
-                    System.out.println("Tidak ditemukan ruangan bernama " + roomName);
+        else{
+            System.out.println("Daftar ruangan yang terdapat di dalam rumah: ");
+            int i = 1;
+            for (Room room : listRoom) {
+                System.out.println(i + ". " + room.getRoomName());
+                i++;
+            }
+            
+            String oldRoom = simLoc.getRoom().getRoomName();
+            
+            boolean done = false;
+            while (!done) {
+                System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
+                String roomName = scanner.nextLine();
+                if (Main.equals(oldRoom, roomName)) {
+                    System.out.println("Nama ruangan sama dengan tempat Sim berada ");
+                    System.out.println("Sim berada di ruangan " + oldRoom);
                     System.out.println();
+                } else {
+                    for (Room room : listRoom) {
+                        if (Main.equals(roomName, room.getRoomName())) {
+                            simLoc.setRoom(room);
+                            // Sim teleportasi di point 3,3 dalam ruangan
+                            simLoc.getPoint().setX(3);
+                            simLoc.getPoint().setY(3);
+                            done = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!done) {
+                        System.out.println("Tidak ditemukan ruangan bernama " + roomName);
+                        System.out.println();
+                    }
                 }
             }
         }
