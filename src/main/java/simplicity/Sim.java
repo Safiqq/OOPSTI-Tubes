@@ -843,7 +843,6 @@ public class Sim {
             }
         }
         scanner.close();
-        scanner.close();
     }
 
     public void installItem() {
@@ -1011,4 +1010,10 @@ public class Sim {
         scan.close();
     }
 
+    public String getObjLoc(){
+        // mengembalikan nama objek dimana sim sedang berada
+        NonFood[][] matriksBarang = simLoc.getRoom().getMatrixBarang();
+        NonFood obj = matriksBarang[simLoc.getPoint().getX()][simLoc.getPoint().getY()];
+        return obj.getObjekName();
+    }
 }

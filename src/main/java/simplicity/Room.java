@@ -74,6 +74,8 @@ public class Room {
                 }
             }
             addListObjek(barang);
+        } else {
+            System.out.println("Tidak memungkinkan meletakkan " + barang.getObjekName() + " di titik tersebut");
         }
     }
 
