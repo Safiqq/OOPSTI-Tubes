@@ -103,13 +103,13 @@ public class CLIMain extends Main {
                 System.exit(0);
 
             } else if (equals(menu, "VIEW SIM INFO")) {
-                currentSim.viewSimInfo();
+                Print.viewSimInfo(currentSim);
 
             } else if (equals(menu, "VIEW CURRENT LOCATION")) {
-                currentSim.viewSimLoc();
+                Print.viewSimLoc(currentSim);
 
             } else if (equals(menu, "VIEW INVENTORY")) {
-                currentSim.viewSimInventory();
+                Print.viewSimInventory(currentSim);
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
                 currentSim.upgradeHouse(currentSim.getSimLoc().getHouse());
@@ -192,24 +192,41 @@ public class CLIMain extends Main {
                         i++;
                     }
                 } else {
-                    System.out.println("Tidak ada daftar objek dalam ruangan "
-                            + currentSim.getSimLoc().getRoom().getRoomName() + ".");
+                    System.out.println("Tidak ada daftar objek dalam ruangan " + currentSim.getSimLoc().getRoom().getRoomName() + ".");
                 }
 
             } else if (equals(menu, "GO TO OBJECT")) {
+                currentSim.goToObjek();
 
-            } else if (equals(menu, "HESOYAM")) {
-                currentSim.setMoney(9999999);
-                System.out.println("Selamat! Kamu mendapatkan uang jajan dari Hotman Paris");
+            } else if (equals(menu, "CHANGE JOB")) {
+                // harus setidaknya 12 menit bekerja
+                if (currentSim.getWorkTime() >= 720) {
+                    currentSim.newJob();
+                    currentSim.setDayChangeJob(time.getDay());
+                } else {
+                    System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit");
+                }
 
             } else if (equals(menu, "ACTION")) {
-                Print.showAction();
+                if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")){
+                    Print.showAction("Sleep");
+                } else if (equals(currentSim.getObjLoc(), "Toilet")){
+                    Print.showAction("Pee");
+                } else if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")){
+                    Print.showAction("Cook");
+                } else if (equals(currentSim.getObjLoc(), "Meja dan kursi")){
+                    Print.showAction("Eat");
+                } else if (equals(currentSim.getObjLoc(), "Jam")){
+                    Print.showAction("Check Time");
+                } else {
+                    Print.showAction(null);
+                }
+
                 System.out.print("Masukkan aksi yang ingin dijalankan: ");
                 String act = scanner.nextLine();
 
                 if (equals(act, "WORK")) {
-                    // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian
-                    // pekerjaan
+                    // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
                     if (time.getDay() > currentSim.getDayChangeJob()) {
                         // validasi waktu kerja kelipatan 120
                         int simWorkTime = validateTime("kerja", 120);
@@ -222,15 +239,6 @@ public class CLIMain extends Main {
                         System.out.println("Pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan");
                     }
 
-                } else if (equals(act, "CHANGE JOB")) { // action ato taruh di work?
-                    // harus setidaknya 12 menit bekerja
-                    if (currentSim.getWorkTime() >= 720) {
-                        currentSim.newJob();
-                        currentSim.setDayChangeJob(time.getDay());
-                    } else {
-                        System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit");
-                    }
-
                 } else if (equals(act, "EXERCISE")) {
                     // validasi waktu olahraga kelipatan 20
                     int simExerciseTime = validateTime("olahraga", 20);
@@ -241,34 +249,49 @@ public class CLIMain extends Main {
                     currentSim.deleteStatus("Exercise");
 
                 } else if (equals(act, "SLEEP")) {
-                    // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
-                    // efek tidak tidur -> -5 kesehatan dan -5 mood setelah 10 mnt tanpa tidur
-                    // apakah harus 3 menit langsung atau boleh dicicil?
-                    // penambahan efek tidur apakah akumulasi dalam hari tersebut atau langsung
-                    // dibagi tiap tidur
+                    if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")){
+                        // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
+                        // efek tidak tidur -> -5 kesehatan dan -5 mood setelah 10 mnt tanpa tidur
+                        // apakah harus 3 menit langsung atau boleh dicicil?
+                        // penambahan efek tidur apakah akumulasi dalam hari tersebut atau langsung
+                        // dibagi tiap tidur
 
-                    System.out.print("Masukkan durasi tidur (dalam detik): ");
-                    int simSleepTime = scanner.nextInt();
-                    currentSim.addStatus("Sleep", simSleepTime);
-                    time.sleepMain(simSleepTime);
-                    // efek tidur
-                    currentSim.sleep(simSleepTime);
-                    currentSim.deleteStatus("Sleep");
+                        System.out.print("Masukkan durasi tidur (dalam detik): ");
+                        int simSleepTime = scanner.nextInt();
+                        currentSim.addStatus("Sleep", simSleepTime);
+                        time.sleepMain(simSleepTime);
+                        // efek tidur
+                        currentSim.sleep(simSleepTime);
+                        currentSim.deleteStatus("Sleep");
+                    } else {
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kasur");
+                        System.out.println("Silahkan melakukan action - go to object ke kasur untuk menjalankan aksi ini");
+                    }
 
                 } else if (equals(act, "EAT")) {
-                    //                    Duration belom diset
-                    currentSim.addStatus("Eat", 0);
-                    // efek makan
-                    currentSim.eat();
-                    currentSim.deleteStatus("Eat");
+                    if (equals(currentSim.getObjLoc(), "Meja dan kursi")){
+                        // Duration belum diset
+                        currentSim.addStatus("Eat", 0);
+                        // efek makan
+                        currentSim.eat();
+                        currentSim.deleteStatus("Eat");
+                    } else {
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di Meja dan kursi");
+                        System.out.println("Silahkan melakukan action - go to object ke Meja dan kursi untuk menjalankan aksi ini");
+                    }
 
                 } else if (equals(act, "COOK")) {
-                    Print.showCookingMenu();
-                    //                    Duration belom diset
-                    currentSim.addStatus("Cook", 0);
-                    // efek memasak
-                    currentSim.cook();
-                    currentSim.deleteStatus("Cook");
+                    if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")){
+                        Print.showCookingMenu();
+                        // Duration belum diset
+                        currentSim.addStatus("Cook", 0);
+                        // efek memasak
+                        currentSim.cook();
+                        currentSim.deleteStatus("Cook");
+                    } else {
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di Kompor gas atau Kompor listrik");
+                        System.out.println("Silahkan melakukan action - go to object ke Kompor gas atau Kompor listrik untuk menjalankan aksi ini");
+                    }
 
                 } else if (equals(act, "VISIT")) {
                     // mau masukin visit rumah orang pake nama owner?
@@ -304,16 +327,21 @@ public class CLIMain extends Main {
                     currentSim.deleteStatus("Visit");
 
                 } else if (equals(act, "PEE")) {
-                    // sim minimal buang air 1 kali tiap habis makan
-                    // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa
-                    // buang air -> gimana
+                    if (equals(currentSim.getObjLoc(), "Toilet")){
+                        // sim minimal buang air 1 kali tiap habis makan
+                        // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa
+                        // buang air -> gimana
 
-                    currentSim.addStatus("Pee", 10);
-                    // siklus 10 detik
-                    time.sleepMain(10);
-                    // efek buang air
-                    currentSim.pee();
-                    currentSim.deleteStatus("Pee");
+                        currentSim.addStatus("Pee", 10);
+                        // siklus 10 detik
+                        time.sleepMain(10);
+                        // efek buang air
+                        currentSim.pee();
+                        currentSim.deleteStatus("Pee");
+                    } else {
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di toilet");
+                        System.out.println("Silahkan melakukan action - go to object ke toilet untuk menjalankan aksi ini");
+                    }
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
                     // currentSim.upgradeHouse(house);
@@ -330,14 +358,19 @@ public class CLIMain extends Main {
 
                 } else if (equals(act, "VIEW INVENTORY")) {
                     System.out.println(time.getTime());
-                    currentSim.viewSimInventory();
+                    Print.viewSimInventory(currentSim);
 
                 } else if (equals(act, "INSTALL ITEM")) {
 
                 } else if (equals(act, "CHECK TIME")) {
-                    // pake harus ngehampirin objek jam dulu
-                    System.out.println("Waktu yang tersisa di- " + time.getTime());
-                    // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
+                    if (equals(currentSim.getObjLoc(), "Jam")){
+                        System.out.println("Waktu yang tersisa di- " + time.getTime());
+                        // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
+
+                    } else {
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di jam");
+                        System.out.println("Silahkan melakukan action - go to object ke jam untuk menjalankan aksi ini");
+                    }
 
                 } else {
                     System.out.println("Aksi tidak valid");

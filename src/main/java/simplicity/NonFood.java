@@ -40,42 +40,42 @@ public class NonFood extends Objek {
             objLength = 4;
             objWidth = 1;
             objPrice = 50;
-            action = Action.get("Tidur");
+            action = Action.get("Sleep");
         } else if (Main.equals(objekName, "Kasur queen size")) {
             objLength = 4;
             objWidth = 2;
             objPrice = 100;
-            action = Action.get("Tidur");
+            action = Action.get("Sleep");
         } else if (Main.equals(objekName, "Kasur king size")) {
             objLength = 5;
             objWidth = 2;
             objPrice = 150;
-            action = Action.get("Tidur");
+            action = Action.get("Sleep");
         } else if (Main.equals(objekName, "Toilet")) {
             objLength = 1;
             objWidth = 1;
             objPrice = 50;
-            action = Action.get("Buang air");
+            action = Action.get("Pee");
         } else if (Main.equals(objekName, "Kompor gas")) {
             objLength = 2;
             objWidth = 1;
             objPrice = 100;
-            action = Action.get("Memasak");
+            action = Action.get("Cook");
         } else if (Main.equals(objekName, "Kompor listrik")) {
             objLength = 1;
             objWidth = 1;
             objPrice = 200;
-            action = Action.get("Memasak");
+            action = Action.get("Cook");
         } else if (Main.equals(objekName, "Meja dan kursi")) {
             objLength = 3;
             objWidth = 3;
             objPrice = 50;
-            action = Action.get("Makan");
+            action = Action.get("Eat");
         } else if (Main.equals(objekName, "Jam")) {
             objLength = 1;
             objWidth = 1;
             objPrice = 10;
-            action = Action.get("Melihat waktu");
+            action = Action.get("Check Time");
         }
         this.startPoint = startPoint;
         this.endPoint = endPoint;

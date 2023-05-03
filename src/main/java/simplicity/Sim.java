@@ -37,7 +37,7 @@ public class Sim {
         occupation = new Occupation(); // inisiasi di class occupation
         inventory = new Inventory(); // inisiasi di class inventory
         House house = new House(fullName, houseLoc);
-        this.simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
+        simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 
         listSim.add(this);
     }
@@ -59,59 +59,6 @@ public class Sim {
         return null;
     }
 
-    public void viewSimInfo() {
-        System.out.println("Nama Sim: " + fullName);
-        System.out.println("Pekerjaan Sim: " + occupation.getJobName());
-        System.out.println("Kesehatan Sim: " + motive.getHealth());
-        System.out.println("Kekenyangan Sim: " + motive.getHunger());
-        System.out.println("Mood Sim: " + motive.getMood());
-        System.out.println("Uang Sim: " + money);
-    }
-
-    public void viewSimLoc() {
-        System.out.println("Lokasi Sim: ");
-        System.out.println("Rumah milik: " + simLoc.getHouse().getOwner());
-        System.out.println("Nama ruangan: " + simLoc.getRoom().getRoomName());
-        System.out.println("X: " + simLoc.getPoint().getX() + ", Y: " + simLoc.getPoint().getY());
-    }
-
-    public void viewSimInventory() {
-        System.out.println("Berikut merupakan inventory yang dimiliki oleh Sim " + fullName);
-        System.out.println();
-
-        /* Objek NonMakanan */
-        System.out.println("========Objek Non-Makanan========");
-        if (inventory.getBoxNonFood().getLength() == 0) {
-            System.out.println("Sim " + fullName + " tidak memiliki objek non-makanan dalam inventory");
-        } else {
-            int i = 0;
-            for (Map.Entry<String, Integer> entry : inventory.getBoxNonFood().getMap().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
-            }
-        }
-
-        /* Objek Bahan Makanan */
-        System.out.println("========Objek Bahan Makanan========");
-        if (inventory.getBoxGroceries().getLength() == 0) {
-            System.out.println("Sim " + fullName + " tidak memiliki objek bahan makanan dalam inventory");
-        } else {
-            int i = 0;
-            for (Map.Entry<String, Integer> entry : inventory.getBoxGroceries().getMap().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
-            }
-        }
-
-        /* Objek Makanan */
-        System.out.println("========Objek Makanan========");
-        if (inventory.getBoxFood().getLength() == 0) {
-            System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam inventory");
-        } else {
-            int i = 0;
-            for (Map.Entry<String, Integer> entry : inventory.getBoxFood().getMap().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
-            }
-        }
-    }
 
     public boolean isMoneyEnough(int hargaobjek) {
         return hargaobjek <= money;
@@ -987,5 +934,12 @@ public class Sim {
             }
         }
         scan.close();
+    }
+
+    public String getObjLoc(){
+        // mengembalikan nama objek dimana sim sedang berada
+        NonFood[][] matriksBarang = simLoc.getRoom().getMatrixBarang();
+        NonFood obj = matriksBarang[simLoc.getPoint().getX()][simLoc.getPoint().getY()];
+        return obj.getObjekName();
     }
 }

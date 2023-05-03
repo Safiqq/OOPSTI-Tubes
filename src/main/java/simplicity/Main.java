@@ -16,6 +16,7 @@ public abstract class Main {
             "Change Sim - Mengganti ke Sim lain untuk dimainkan",
             "List Object - Menampilkan daftar objek dalam sebuah ruangan",
             "Go to Object - Sim berjalan menuju suatu objek",
+            "Change Job - Sim dapat mengganti pekerjaan",
             "Action - Melakukan sebuah aksi pada suatu objek"
     };
 

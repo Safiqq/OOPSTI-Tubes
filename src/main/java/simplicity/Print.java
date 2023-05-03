@@ -26,16 +26,29 @@ public class Print {
         printMenu(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
     }
 
-    public static void showAction() {
+    public static void showAction(String action) {
         System.out.println("Aksi yang dapat dipilih:");
-        // Change Job gatau masuk action ato ngga
+
         int i = 1;
         List<Action> listAction = Action.getListAction();
         for (int j = 0; j < Action.getListAction().size(); j++) {
-            if (!listAction.get(j).getActionName().contains("Not")) {
-                System.out.println(i + ". " + listAction.get(j).getActionName());
+            if (!listAction.get(j).getActionName().contains("Not") && !listAction.get(j).getActionName().contains("Sleep") && !listAction.get(j).getActionName().contains("Eat") && !listAction.get(j).getActionName().contains("Cook") && !listAction.get(j).getActionName().contains("Pee") && !listAction.get(j).getActionName().contains("Check")) {
+                System.out.println(i + ". " + listAction.get(j).getActionName() + " - " + listAction.get(j).getDescription());
                 i++;
             }
+        }
+
+        System.out.print(i);
+        if (Main.equals(action, "Pee")){
+            System.out.println(". " + Action.get("Pee").getActionName() + " - " + Action.get("Pee").getDescription());
+        } else if (Main.equals(action, "Sleep")){
+            System.out.println(". " + Action.get("Sleep").getActionName() + " - " + Action.get("Sleep").getDescription());
+        } else if (Main.equals(action, "Eat")){
+            System.out.println(". " + Action.get("Eat").getActionName() + " - " + Action.get("Eat").getDescription());
+        } else if (Main.equals(action, "Cook")){
+            System.out.println(". " + Action.get("Cook").getActionName() + " - " + Action.get("Cook").getDescription());
+        } else if (Main.equals(action, "Check Time")){
+            System.out.println(". " + Action.get("Check Time").getActionName() + " - " + Action.get("Check Time").getDescription());
         }
     }
 
@@ -92,6 +105,60 @@ public class Print {
         } else {
             int i = 0;
             for (Map.Entry<String, Integer> entry : boxFood.getMap().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
+    }
+
+    public static void viewSimInfo(Sim sim) {
+        System.out.println("Nama Sim: " + sim.getFullName());
+        System.out.println("Pekerjaan Sim: " + sim.getOccupation().getJobName());
+        System.out.println("Kesehatan Sim: " + sim.getMotive().getHealth());
+        System.out.println("Kekenyangan Sim: " + sim.getMotive().getHunger());
+        System.out.println("Mood Sim: " + sim.getMotive().getMood());
+        System.out.println("Uang Sim: " + sim.getMoney());
+    }
+
+    public static void viewSimLoc(Sim sim) {
+        System.out.println("Lokasi Sim: ");
+        System.out.println("Rumah milik: " + sim.getSimLoc().getHouse().getOwner());
+        System.out.println("Nama ruangan: " + sim.getSimLoc().getRoom().getRoomName());
+        System.out.println("X: " + sim.getSimLoc().getPoint().getX() + ", Y: " + sim.getSimLoc().getPoint().getY());
+    }
+
+    public static void viewSimInventory(Sim sim) {
+        System.out.println("Berikut merupakan inventory yang dimiliki oleh Sim " + sim.getFullName());
+        System.out.println();
+
+        /* Objek NonMakanan */
+        System.out.println("========Objek Non-Makanan========");
+        if (sim.getInventory().getBoxNonFood().getLength() == 0) {
+            System.out.println("Sim " + sim.getFullName() + " tidak memiliki objek non-makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : sim.getInventory().getBoxNonFood().getMap().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
+
+        /* Objek Bahan Makanan */
+        System.out.println("========Objek Bahan Makanan========");
+        if (sim.getInventory().getBoxGroceries().getLength() == 0) {
+            System.out.println("Sim " + sim.getFullName() + " tidak memiliki objek bahan makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : sim.getInventory().getBoxGroceries().getMap().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
+
+        /* Objek Makanan */
+        System.out.println("========Objek Makanan========");
+        if (sim.getInventory().getBoxFood().getLength() == 0) {
+            System.out.println("Sim " + sim.getFullName() + " tidak memiliki objek makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : sim.getInventory().getBoxFood().getMap().entrySet()) {
                 System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
             }
         }
