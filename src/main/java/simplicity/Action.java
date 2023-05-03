@@ -106,11 +106,8 @@ public class Action {
         listAction.add(new Action("Check Time", "Tindakan ini akan menunjukkan sisa waktu pada hari tersebut beserta sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal."));
 
         /* Aksi Buatan */
-        /* Aksi Lempar Kursi */
-        listAction.add(new Action("Throw Chair", "Kursi yang dilempar akan hilang."));
-
-        /* Aksi Naik Meja */
-        listAction.add(new Action("Climb Table", "Sims dapat naik ke atas meja."));
+        /* Aksi Naik Meja dan Kursi */
+        listAction.add(new Action("Climb Table and Chair", "Sims dapat naik ke atas meja dan kursi."));
 
         /* Aksi Menyalakan Kompor */
         listAction.add(new Action("Turn On Stove", "Kompor harus dinyalakan terlebih dahulu untuk bisa memasak."));
@@ -129,6 +126,9 @@ public class Action {
 
         /* Aksi Bercermin */
         listAction.add(new Action("Look Mirror", "Sims dapat bercermin di cermin."));
+
+        /* Aksi Lempar Cermin */
+        listAction.add(new Action("Throw Mirror", "Cermin yang dilempar akan hilang."));
     }
 
     public String getActionName() {

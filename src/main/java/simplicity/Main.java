@@ -33,7 +33,12 @@ public abstract class Main {
     }
 
     public static void main(String[] args) {
+        // Isi Action, Groceries, Food, dan NonFood
         Action.fillListAction();
+        Groceries.fillListGroceries();
+        Food.fillListFood();
+        NonFood.fillListNonFood();
+
         Main main;
         if (args.length > 0) {
             if (equals(args[0], "cli")) {

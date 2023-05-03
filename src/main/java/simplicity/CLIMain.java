@@ -43,7 +43,7 @@ public class CLIMain extends Main {
             System.out.println("Tidak ada Sim yang tersedia. Silakan daftarkan Sim terlebih dahulu.");
             currentSim = createNewSim();
         } else {
-            System.out.print("Apakah anda ingin membuat Sim baru? (YA/TIDAK): ");
+            System.out.print("Apakah Anda ingin membuat Sim baru? (YA/TIDAK): ");
             String ans = scanner.nextLine();
             if (equals(ans, "YA")) {
                 // Cek apakah masih ada tanah kosong di World
@@ -80,7 +80,7 @@ public class CLIMain extends Main {
                 if (Sim.getListSim().contains(currentSim)) {
                     checked = true;
                 } else {
-                    System.out.println("Sim yang anda mainkan mati karena depresi, silakan lakukan penggantian Sim.");
+                    System.out.println("Sim yang Anda mainkan mati karena depresi, silakan lakukan penggantian Sim.");
                     if (Sim.getListSim().size() == 0) {
                         System.out.println("Tidak bisa dilakukan pergantian Sim. Tidak terdapat Sim lain yang terdaftar.");
                         System.out.println("Silakan buat Sim baru.");
@@ -121,7 +121,7 @@ public class CLIMain extends Main {
             } else if (equals(menu, "EDIT ROOM")) {
                 boolean done = false;
                 while (!done) {
-                    System.out.print("Apakah anda ingin membeli barang baru atau memindahkan barang? (beli/pindah)");
+                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (beli/pindah)");
                     String ans = scanner.nextLine();
                     if (equals(ans, "BELI")) {
 
@@ -169,8 +169,8 @@ public class CLIMain extends Main {
                     while (!done) {
                         newSim = chooseSim();
                         if (equals(newSim.getFullName(), oldSim.getFullName())) {
-                            System.out.println("Nama Sim sama dengan yang sedang anda mainkan");
-                            System.out.println("Masukkan nama Sim yang berbeda");
+                            System.out.println("Nama Sim sama dengan yang sedang Anda mainkan.");
+                            System.out.println("Masukkan nama Sim yang berbeda!");
                         } else {
                             done = true;
                         }
@@ -203,23 +203,11 @@ public class CLIMain extends Main {
                     currentSim.newJob();
                     currentSim.setDayChangeJob(time.getDay());
                 } else {
-                    System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit");
+                    System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit.");
                 }
 
             } else if (equals(menu, "ACTION")) {
-                if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")) {
-                    Print.showAction("Sleep");
-                } else if (equals(currentSim.getObjLoc(), "Toilet")) {
-                    Print.showAction("Pee");
-                } else if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")) {
-                    Print.showAction("Cook");
-                } else if (equals(currentSim.getObjLoc(), "Meja dan kursi")) {
-                    Print.showAction("Eat");
-                } else if (equals(currentSim.getObjLoc(), "Jam")) {
-                    Print.showAction("Check Time");
-                } else {
-                    Print.showAction(null);
-                }
+                Print.showAction(currentSim.getObjLoc());
 
                 System.out.print("Masukkan aksi yang ingin dijalankan: ");
                 String act = scanner.nextLine();
@@ -232,7 +220,7 @@ public class CLIMain extends Main {
                         // cek waktu sisa dalam hari
                         int remainingSeconds = time.getMinute() * 60 + time.getSecond();
                         // jika sim kerja lebih dari sisa waktu, maka sisa waktu dihitung kerja esok harinya
-                        if (simWorkTime > remainingSeconds){
+                        if (simWorkTime > remainingSeconds) {
                             currentSim.setStoreWorkTime(simWorkTime - remainingSeconds);
                             currentSim.setWorkTime(currentSim.getWorkTime() + remainingSeconds);
                         } else {
@@ -244,30 +232,29 @@ public class CLIMain extends Main {
                         time.sleepMain(simWorkTime);
                         // efek kerja
                         currentSim.work(simWorkTime);
-                        currentSim.deleteStatus("Work");
 
                         // hitung gaji
-                        if (time.getDay() > currentSim.getDayWork()){
+                        if (time.getDay() > currentSim.getDayWork()) {
                             // gaji harian (4 menit kerja = 240 dtk)
                             // gaji baru dihitung setelah berganti hari
-                            if (currentSim.getWorkTime() > 240){
+                            if (currentSim.getWorkTime() > 240) {
                                 int payday = currentSim.getOccupation().getDailySalary() * (currentSim.getWorkTime() / 240);
                                 currentSim.setMoney(currentSim.getMoney() + payday);
 
                                 currentSim.setDayWork(time.getDay());
                                 currentSim.setWorkTime(0);
-                            } 
+                            }
                             // tidak bekerja lebih dari 4 menit, maka tidak digaji
-                            
+
                             // klo ada waktu kerja yg kepotong hari, ditambah ke workTime setelah berganti hari dan telah direset 0
-                            if (currentSim.getStoreWorkTime() > 0){
+                            if (currentSim.getStoreWorkTime() > 0) {
                                 currentSim.setWorkTime(currentSim.getWorkTime() + currentSim.getStoreWorkTime());
                                 currentSim.setStoreWorkTime(0);
                             }
-                        } 
+                        }
 
                     } else {
-                        System.out.println("Pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan");
+                        System.out.println("Pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan.");
                     }
 
                 } else if (equals(act, "EXERCISE")) {
@@ -277,10 +264,9 @@ public class CLIMain extends Main {
                     time.sleepMain(simExerciseTime);
                     // efek olahraga
                     currentSim.exercise(simExerciseTime);
-                    currentSim.deleteStatus("Exercise");
 
                 } else if (equals(act, "SLEEP")) {
-                    if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")) {
+                    if (currentSim.getObjLoc().contains("Kasur")) {
                         // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
                         // efek tidak tidur -> -5 kesehatan dan -5 mood setelah 10 mnt tanpa tidur
                         // apakah harus 3 menit langsung atau boleh dicicil?
@@ -293,10 +279,9 @@ public class CLIMain extends Main {
                         time.sleepMain(simSleepTime);
                         // efek tidur
                         currentSim.sleep(simSleepTime);
-                        currentSim.deleteStatus("Sleep");
                     } else {
-                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kasur");
-                        System.out.println("Silahkan melakukan action - go to object ke kasur untuk menjalankan aksi ini");
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kasur.");
+                        System.out.println("Silahkan melakukan Action - Go to Object ke kasur untuk menjalankan aksi ini.");
                     }
 
                 } else if (equals(act, "EAT")) {
@@ -305,23 +290,48 @@ public class CLIMain extends Main {
                         currentSim.addStatus("Eat", 0);
                         // efek makan
                         currentSim.eat();
-                        currentSim.deleteStatus("Eat");
                     } else {
-                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di Meja dan kursi");
-                        System.out.println("Silahkan melakukan action - go to object ke Meja dan kursi untuk menjalankan aksi ini");
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di meja dan kursi.");
+                        System.out.println("Silahkan melakukan Action - Go to Object ke meja dan kursi untuk menjalankan aksi ini.");
                     }
 
                 } else if (equals(act, "COOK")) {
-                    if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")) {
+                    if (currentSim.getObjLoc().contains("Kompor")) {
                         Print.showCookingMenu();
-                        // Duration belum diset
-                        currentSim.addStatus("Cook", 0);
                         // efek memasak
-                        currentSim.cook();
-                        currentSim.deleteStatus("Cook");
+                        System.out.print("Masukkan nomor masakan yang ingin dibuat: ");
+                        int cooknumber = scanner.nextInt();
+
+                        Food food = null;
+                        if (cooknumber == 1 && currentSim.checkGroceries("Nasi") && currentSim.checkGroceries("Ayam")) {
+                            food = new Food("Nasi Ayam");
+                        } else if (cooknumber == 2 && currentSim.checkGroceries("Nasi") && currentSim.checkGroceries("Kentang") && currentSim.checkGroceries("Wortel") && currentSim.checkGroceries("Sapi")) {
+                            food = new Food("Nasi Kari");
+                        } else if (cooknumber == 3 && currentSim.checkGroceries("Susu") && currentSim.checkGroceries("Kacang")) {
+                            food = new Food("Susu Kacang");
+                        } else if (cooknumber == 4 && currentSim.checkGroceries("Wortel") && currentSim.checkGroceries("Bayam")) {
+                            food = new Food("Tumis Sayur");
+                        } else if (cooknumber == 5 && currentSim.checkGroceries("Kentang") && currentSim.checkGroceries("Sapi")) {
+                            food = new Food("Bistik");
+                        } else {
+                            if (cooknumber < 1 || cooknumber > 5) {
+                                System.out.println("Masukkan nomor yang sesuai dong!");
+                            } else {
+                                System.out.println("Bahan makananmu kurang :(");
+                            }
+                        }
+
+                        if (food != null) {
+                            currentSim.cook(food);
+                            for (Groceries groceries : food.getListGroceries()) {
+                                currentSim.deleteGroceriesFromInventory(groceries.getObjekName());
+                            }
+                            System.out.println("Berhasil memasak.");
+                            currentSim.addStatus("Cook", (int) (1.5 * food.getFoodHunger()));
+                        }
                     } else {
-                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di Kompor gas atau Kompor listrik");
-                        System.out.println("Silahkan melakukan action - go to object ke Kompor gas atau Kompor listrik untuk menjalankan aksi ini");
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kompor gas atau kompor listrik.");
+                        System.out.println("Silahkan melakukan Action - Go to Object ke kompor gas atau kompor listrik untuk menjalankan aksi ini.");
                     }
 
                 } else if (equals(act, "VISIT")) {
@@ -355,7 +365,6 @@ public class CLIMain extends Main {
                     time.sleepMain(time_total);
                     // efek berkunjung
                     currentSim.visit(time_total);
-                    currentSim.deleteStatus("Visit");
 
                 } else if (equals(act, "PEE")) {
                     if (equals(currentSim.getObjLoc(), "Toilet")) {
@@ -368,10 +377,9 @@ public class CLIMain extends Main {
                         time.sleepMain(10);
                         // efek buang air
                         currentSim.pee();
-                        currentSim.deleteStatus("Pee");
                     } else {
-                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di toilet");
-                        System.out.println("Silahkan melakukan action - go to object ke toilet untuk menjalankan aksi ini");
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di toilet.");
+                        System.out.println("Silahkan melakukan action - go to object ke toilet untuk menjalankan aksi ini.");
                     }
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
@@ -397,12 +405,18 @@ public class CLIMain extends Main {
                     if (equals(currentSim.getObjLoc(), "Jam")) {
                         System.out.println("Waktu yang tersisa di- " + time.getTime());
                         // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
-
                     } else {
-                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di jam");
-                        System.out.println("Silahkan melakukan action - go to object ke jam untuk menjalankan aksi ini");
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di jam.");
+                        System.out.println("Silahkan melakukan Action - Go to Object ke jam untuk menjalankan aksi ini.");
                     }
 
+                } else if (equals(act, "CLIMB TABLE AND CHAIR")) {
+                    if (equals(currentSim.getObjLoc(), "Meja dan kursi")) {
+                        System.out.println("Sim naik ke meja dan kursi.");
+                    } else {
+                        System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di meja dan kursi.");
+                        System.out.println("Silahkan melakukan Action - Go to Object ke meja dan kursi untuk menjalankan aksi ini.");
+                    }
                 } else {
                     System.out.println("Aksi tidak valid");
                 }
@@ -461,12 +475,12 @@ public class CLIMain extends Main {
     // Buat Sim baru (bukan Sim pertama)
     public Sim menuAddSim() {
         // Validasi nama Sim
-        System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
+        System.out.print("Masukkan nama Sim yang ingin Anda tambahkan: ");
         String simName = scanner.nextLine();
         while (Sim.isNotRegistered(simName)) {
             System.out.println("Nama Sim telah terdaftar. Silakan menggunakan nama lain.");
             Print.printListSim();
-            System.out.print("Masukkan nama Sim yang ingin anda tambahkan: ");
+            System.out.print("Masukkan nama Sim yang ingin Anda tambahkan: ");
             simName = scanner.nextLine();
         }
 
@@ -502,7 +516,7 @@ public class CLIMain extends Main {
 
     // Buat Sim baru (Sim pertama)
     public Sim createNewSim() {
-        System.out.print("Masukkan nama Sim anda: ");
+        System.out.print("Masukkan nama Sim Anda: ");
         String simName = scanner.nextLine();
         while (equals(simName.trim(), "") && Sim.isNotRegistered(simName)) {
             if (equals(simName.trim(), "")) {
@@ -510,7 +524,7 @@ public class CLIMain extends Main {
             } else {
                 System.out.print("Nama Sim sudah terdaftar. Silakan masukkan nama lain.");
             }
-            System.out.println("Masukkan nama Sim anda: ");
+            System.out.println("Masukkan nama Sim Anda:");
             simName = scanner.nextLine();
         }
         System.out.println("Sim dengan nama " + simName + " berhasil dibuat.");
@@ -558,7 +572,7 @@ public class CLIMain extends Main {
         House house = currentSim.getSimLoc().getHouse();
         List<Room> listRoom = house.getListRoom();
         Room tempRoom = currentSim.getSimLoc().getRoom();
-        System.out.println("List ruangan di rumahmu : ");
+        System.out.println("List ruangan di rumahmu:");
         for (int i = 0; i < listRoom.size(); i++) {
             System.out.println((i + 1) + ". " + listRoom.get(i).getRoomName());
         }
@@ -578,12 +592,12 @@ public class CLIMain extends Main {
                 }
             }
 
-            System.out.print("Masukkan nama ruangan baru : ");
+            System.out.print("Masukkan nama ruangan baru:");
             String newRoomName = scanner.nextLine();
 
             // Loop untuk mendapatkan lokasi ruangan baru yang valid
             while (true) {
-                System.out.printf("Pilih lokasi %s disebelah Ruangan Utama (kiri/kanan/atas/bawah) : ", newRoomName);
+                System.out.printf("Pilih lokasi %s disebelah Ruangan Utama (kiri/kanan/atas/bawah): ", newRoomName);
                 String roomLoc = scanner.nextLine();
                 if (Main.equals(roomLoc, "KANAN")) {
                     Room newRoom = new Room(newRoomName, null, null, tempRoom, null);
