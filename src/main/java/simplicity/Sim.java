@@ -309,26 +309,9 @@ public class Sim {
 
     // thread hapus aja jd sleepMain di main
     public void simEat(Food nyam) {
-        Thread thread = new Thread(() -> {
-            System.out.println("Sedang Memakan " + nyam.getObjekName());
-            System.out.println(".......Please wait.......");
-            try {
-                for (int k = 30; k >= 1; k--) {
-                    System.out.println("Time remaining " + k + " seconds");
-                    Thread.sleep(1000);
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        });
+        System.out.println("Sedang Memakan " + nyam.getObjekName());
+        System.out.println(".......Please wait.......");
 
-        thread.start();
-
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
         System.out.println("Kamu selesai makan!");
         getInventory().getBoxFood().delete(nyam);
 
@@ -344,27 +327,18 @@ public class Sim {
 
     // thread hapus aja jd sleepMain di main
     public void cooking(Food makanan) {
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                System.out.println("Cooking " + makanan.getObjekName());
-                int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
-                System.out.println(".......Please wait.......");
-                try {
-                    for (int k = (sleeptime / 1000); k >= 1; k--) {
-                        System.out.println("Time remaining " + k + " seconds");
-                        Thread.sleep(1000);
-                    }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        });
-        thread.start();
+        System.out.println("Cooking " + makanan.getObjekName());
+        int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
+        System.out.println(".......Please wait.......");
         try {
-            thread.join();
-        } catch (InterruptedException e) {
+            for (int k = (sleeptime / 1000); k >= 1; k--) {
+                System.out.println("Time remaining " + k + " seconds");
+                Thread.sleep(1000);
+            }
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
         System.out.println("Masakanmu selesai!");
         getInventory().getBoxFood().add(makanan);
 
