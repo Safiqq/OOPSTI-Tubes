@@ -15,7 +15,9 @@ public class Sim {
     private Inventory inventory;
     private Map<String, Integer> mapStatus;
     private int workTime = 0;
-    private int paidTime = 0;
+    private int dayWork = 0;
+    private int storeWorkTime = 0;
+    private int totalWorkTime = 0;
     private int dayChangeJob = 0;
 
     public Sim(String fullName) {
@@ -80,12 +82,28 @@ public class Sim {
         this.workTime = workTime;
     }
 
-    public int getPaidTime() {
-        return paidTime;
+    public int getDayWork() {
+        return dayWork;
     }
 
-    public void setPaidTime(int paidTime) {
-        this.paidTime = paidTime;
+    public void setDayWork(int dayWork) {
+        this.dayWork = dayWork;
+    }
+
+    public int getStoreWorkTime() {
+        return storeWorkTime;
+    }
+
+    public void setStoreWorkTime(int storeWorkTime) {
+        this.storeWorkTime = storeWorkTime;
+    }
+
+    public int getTotalWorkTime() {
+        return totalWorkTime;
+    }
+
+    public void setTotalWorkTime(int totalWorkTime){
+        this.totalWorkTime = totalWorkTime;
     }
 
     public int getDayChangeJob() {
@@ -165,14 +183,7 @@ public class Sim {
     }
 
     public void work(int time) {
-        workTime += time;
-        // anggap pokoknya harus 4 menit (240 dtk) baru digaji, ga liat harinya
-        int notPaid = workTime - paidTime;
-        if (notPaid > 240) {
-            int payday = workTime / 240;
-            money += payday * occupation.getDailySalary();
-            paidTime += payday * 240; // kalo ada time sisa yg belum dibayar
-        }
+        totalWorkTime += time;
 
         // efek -10 kekenyangan/30 dtk, -10 mood/30 dtk
         int minusPoints = -10 * (time / 30);
@@ -199,7 +210,7 @@ public class Sim {
             occupation.setDailySalary(oldJob.getDailySalary());
         } else {
             money -= payChangeJob;
-            workTime = 0;
+            totalWorkTime = 0;
         }
     }
 
