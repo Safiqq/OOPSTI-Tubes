@@ -1,6 +1,7 @@
 package simplicity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class CLIMain extends Main {
@@ -112,9 +113,7 @@ public class CLIMain extends Main {
                 Print.viewSimInventory(currentSim);
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
-                currentSim.upgradeHouse(currentSim.getSimLoc().getHouse());
-                // selama 18 menit tapi bisa ditinggal
-                time.sleep(1080);
+                upgradeHouse();
 
             } else if (equals(menu, "MOVE ROOM")) {
                 moveRoom();
@@ -208,15 +207,15 @@ public class CLIMain extends Main {
                 }
 
             } else if (equals(menu, "ACTION")) {
-                if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")){
+                if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")) {
                     Print.showAction("Sleep");
-                } else if (equals(currentSim.getObjLoc(), "Toilet")){
+                } else if (equals(currentSim.getObjLoc(), "Toilet")) {
                     Print.showAction("Pee");
-                } else if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")){
+                } else if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")) {
                     Print.showAction("Cook");
-                } else if (equals(currentSim.getObjLoc(), "Meja dan kursi")){
+                } else if (equals(currentSim.getObjLoc(), "Meja dan kursi")) {
                     Print.showAction("Eat");
-                } else if (equals(currentSim.getObjLoc(), "Jam")){
+                } else if (equals(currentSim.getObjLoc(), "Jam")) {
                     Print.showAction("Check Time");
                 } else {
                     Print.showAction(null);
@@ -249,7 +248,7 @@ public class CLIMain extends Main {
                     currentSim.deleteStatus("Exercise");
 
                 } else if (equals(act, "SLEEP")) {
-                    if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")){
+                    if (equals(currentSim.getObjLoc(), "Kasur single") || equals(currentSim.getObjLoc(), "Kasur queen size") || equals(currentSim.getObjLoc(), "Kasur king size")) {
                         // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
                         // efek tidak tidur -> -5 kesehatan dan -5 mood setelah 10 mnt tanpa tidur
                         // apakah harus 3 menit langsung atau boleh dicicil?
@@ -269,7 +268,7 @@ public class CLIMain extends Main {
                     }
 
                 } else if (equals(act, "EAT")) {
-                    if (equals(currentSim.getObjLoc(), "Meja dan kursi")){
+                    if (equals(currentSim.getObjLoc(), "Meja dan kursi")) {
                         // Duration belum diset
                         currentSim.addStatus("Eat", 0);
                         // efek makan
@@ -281,7 +280,7 @@ public class CLIMain extends Main {
                     }
 
                 } else if (equals(act, "COOK")) {
-                    if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")){
+                    if (equals(currentSim.getObjLoc(), "Kompor gas") || equals(currentSim.getObjLoc(), "Kompor listrik")) {
                         Print.showCookingMenu();
                         // Duration belum diset
                         currentSim.addStatus("Cook", 0);
@@ -327,7 +326,7 @@ public class CLIMain extends Main {
                     currentSim.deleteStatus("Visit");
 
                 } else if (equals(act, "PEE")) {
-                    if (equals(currentSim.getObjLoc(), "Toilet")){
+                    if (equals(currentSim.getObjLoc(), "Toilet")) {
                         // sim minimal buang air 1 kali tiap habis makan
                         // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa
                         // buang air -> gimana
@@ -345,7 +344,7 @@ public class CLIMain extends Main {
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
                     // currentSim.upgradeHouse(house);
-                    currentSim.upgradeHouse(currentSim.getSimLoc().getHouse());
+                    upgradeHouse();
                     // selama 18 menit tapi bisa ditinggal
                     time.sleep(1080);
 
@@ -363,7 +362,7 @@ public class CLIMain extends Main {
                 } else if (equals(act, "INSTALL ITEM")) {
 
                 } else if (equals(act, "CHECK TIME")) {
-                    if (equals(currentSim.getObjLoc(), "Jam")){
+                    if (equals(currentSim.getObjLoc(), "Jam")) {
                         System.out.println("Waktu yang tersisa di- " + time.getTime());
                         // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
 
@@ -519,6 +518,69 @@ public class CLIMain extends Main {
                     }
                 }
             }
+        }
+    }
+
+    // Sim upgrade rumah (tambah ruangan)
+    public void upgradeHouse() {
+        House house = currentSim.getSimLoc().getHouse();
+        List<Room> listRoom = house.getListRoom();
+        Room tempRoom = currentSim.getSimLoc().getRoom();
+        System.out.println("List ruangan di rumahmu : ");
+        for (int i = 0; i < listRoom.size(); i++) {
+            System.out.println((i + 1) + ". " + listRoom.get(i).getRoomName());
+        }
+
+        if (currentSim.isMoneyEnough(1500)) {
+            // Kalau rumah sekarang cuma ada 1 ruangan
+            if (listRoom.size() > 1) {
+                while (true) {
+                    System.out.print("Masukkan nama salah satu ruangan sebagai acuan: ");
+                    String roomName = scanner.nextLine();
+                    tempRoom = house.get(roomName);
+                    if (tempRoom != null) {
+                        break;
+                    } else {
+                        System.out.println("Ruangan tidak dikenali...");
+                    }
+                }
+            }
+
+            System.out.print("Masukkan nama ruangan baru : ");
+            String newRoomName = scanner.nextLine();
+
+            // Loop untuk mendapatkan lokasi ruangan baru yang valid
+            while (true) {
+                System.out.printf("Pilih lokasi %s disebelah Ruangan Utama (kiri/kanan/atas/bawah) : ", newRoomName);
+                String roomLoc = scanner.nextLine();
+                if (Main.equals(roomLoc, "KANAN")) {
+                    Room newRoom = new Room(newRoomName, null, null, tempRoom, null);
+                    tempRoom.setRightSide(newRoom);
+                    house.addListRoom(newRoom);
+                    break;
+                } else if (Main.equals(roomLoc, "KIRI")) {
+                    Room newRoom = new Room(newRoomName, null, null, null, tempRoom);
+                    tempRoom.setLeftSide(newRoom);
+                    house.addListRoom(newRoom);
+                    break;
+                } else if (Main.equals(roomLoc, "ATAS")) {
+                    Room newRoom = new Room(newRoomName, null, tempRoom, null, null);
+                    tempRoom.setUpperSide(newRoom);
+                    house.addListRoom(newRoom);
+                    break;
+                } else if (Main.equals(roomLoc, "BAWAH")) {
+                    Room newRoom = new Room(newRoomName, tempRoom, null, null, null);
+                    tempRoom.setBottomSide(newRoom);
+                    house.addListRoom(newRoom);
+                    break;
+                } else {
+                    System.out.println("Lokasi tidak valid.");
+                }
+            }
+            // Decrease money
+            currentSim.setMoney(currentSim.getMoney() - 1500);
+        } else {
+            System.out.println("Uang Sim tidak cukup untuk upgrade rumah.");
         }
     }
 }

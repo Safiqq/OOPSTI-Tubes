@@ -483,129 +483,6 @@ public class Sim {
         }
     }
 
-    public void upgradeHouse(House house) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("List ruangan di rumahmu : ");
-        int i = 1;
-        for (Room room : house.getListRoom()) {
-            System.out.println(i + ". " + room.getRoomName());
-            i++;
-        }
-        System.out.println("List ruangan di rumahmu : ");
-        i = 1;
-        for (Room room : house.getListRoom()) {
-            System.out.println(i + ". " + room.getRoomName());
-            i++;
-        }
-
-        if (isMoneyEnough(1500)) {
-            // kalau rumah sekarang cuma ada 1 ruangan
-            if (house.getListRoom().size() == 1) {
-                Room currentRoom = house.getDefaultRoom();
-                System.out.print("Masukkan nama ruangan baru : ");
-                String newRoomName = scan.nextLine();
-
-                // loop untuk mendapatkan lokasi ruangan baru yang valid
-                boolean roomLocValid = false;
-                while (!roomLocValid) {
-                    System.out.printf("Pilih lokasi %s disebelah Ruangan Utama (kiri/kanan/atas/bawah) : ",
-                            newRoomName);
-                    String roomLoc = scan.nextLine();
-                    if (Main.equals(roomLoc, "KANAN")) {
-                        Room newRoom = new Room(newRoomName, null, null, currentRoom, null);
-                        currentRoom.setRightSide(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        roomLocValid = true;
-                    } else if (Main.equals(roomLoc, "KIRI")) {
-                        Room newRoom = new Room(newRoomName, null, null, null, currentRoom);
-                        currentRoom.setLeftSide(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        roomLocValid = true;
-                    } else if (Main.equals(roomLoc, "ATAS")) {
-                        Room newRoom = new Room(newRoomName, null, currentRoom, null, null);
-                        currentRoom.setUpperSide(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        roomLocValid = true;
-                    } else if (Main.equals(roomLoc, "BAWAH")) {
-                        Room newRoom = new Room(newRoomName, currentRoom, null, null, null);
-                        currentRoom.setBottomSide(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        simLoc.getHouse().addListRoom(newRoom);
-                        roomLocValid = true;
-                    } else {
-                        System.out.println("Lokasi tidak valid.");
-                    }
-                }
-                // decrease money
-                money = money - 1500;
-            }
-            // kalau rumah sekarang ada >1 ruangan
-            else {
-                // loop untuk mendapatkan ruangan acuan
-                boolean pivotValid = false;
-                while (!pivotValid) {
-                    System.out.print("Masukkan nama salah satu ruangan sebagai acuan : ");
-                    String pivotRoomName = scan.nextLine();
-                    // cek ruangan acuan ada atau tidak
-                    for (Room currentRoom : house.getListRoom()) {
-                        if (Main.equals(currentRoom.getRoomName(), pivotRoomName)) {
-                            System.out.print("Masukkan nama ruangan baru : ");
-                            String newRoomName = scan.nextLine();
-
-                            // loop untuk medapatkan lokasi ruangan baru yang valid
-                            boolean roomLocValid = false;
-                            while (!roomLocValid) {
-                                System.out.printf("Pilih lokasi %s di sebelah %s (kiri/kanan/atas/bawah) : ",
-                                        newRoomName, pivotRoomName);
-                                String roomLoc = scan.nextLine();
-                                if (Main.equals(roomLoc, "KANAN") && currentRoom.getRightSide() == null) {
-                                    Room newRoom = new Room(newRoomName, null, null, currentRoom, null);
-                                    currentRoom.setRightSide(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    roomLocValid = true;
-                                } else if (Main.equals(roomLoc, "KIRI") && currentRoom.getLeftSide() == null) {
-                                    Room newRoom = new Room(newRoomName, null, null, null, currentRoom);
-                                    currentRoom.setLeftSide(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    roomLocValid = true;
-                                } else if (Main.equals(roomLoc, "ATAS") && currentRoom.getUpperSide() == null) {
-                                    Room newRoom = new Room(newRoomName, null, currentRoom, null, null);
-                                    currentRoom.setUpperSide(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    roomLocValid = true;
-                                } else if (Main.equals(roomLoc, "BAWAH") && currentRoom.getBottomSide() == null) {
-                                    Room newRoom = new Room(newRoomName, currentRoom, null, null, null);
-                                    currentRoom.setBottomSide(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    simLoc.getHouse().addListRoom(newRoom);
-                                    roomLocValid = true;
-                                } else {
-                                    System.out.println("Lokasi tidak valid atau lokasi yang dipilih sudah diisi ruangan lain.");
-                                    System.out.println("Lokasi tidak valid atau lokasi yang dipilih sudah diisi ruangan lain.");
-                                }
-                            }
-                            pivotValid = true;
-                            break;
-                        } else {
-                            System.out.println("Ruangan tidak dikenali..");
-                        }
-                    }
-                }
-            }
-            // decrease money
-            money = money - 1500;
-        } else {
-            System.out.println("Uang sim tidak cukup untuk upgrade rumah");
-        }
-        scan.close();
-    }
-
     public void buyItem() {
         Scanner scanner = new Scanner(System.in);
         boolean done = false;
@@ -936,7 +813,7 @@ public class Sim {
         scan.close();
     }
 
-    public String getObjLoc(){
+    public String getObjLoc() {
         // mengembalikan nama objek dimana sim sedang berada
         NonFood[][] matriksBarang = simLoc.getRoom().getMatrixBarang();
         NonFood obj = matriksBarang[simLoc.getPoint().getX()][simLoc.getPoint().getY()];
