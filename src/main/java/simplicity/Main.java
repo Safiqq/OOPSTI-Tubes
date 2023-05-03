@@ -33,7 +33,8 @@ public abstract class Main {
     }
 
     public static void main(String[] args) {
-        // Isi Action, Groceries, Food, dan NonFood
+        // Isi Job, Action, Groceries, Food, dan NonFood
+        Occupation.fillListJob();
         Action.fillListAction();
         Groceries.fillListGroceries();
         Food.fillListFood();

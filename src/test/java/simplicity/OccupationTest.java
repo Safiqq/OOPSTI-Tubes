@@ -10,6 +10,7 @@ public class OccupationTest {
 
     @BeforeClass
     public static void setUp() throws Exception {
+        Occupation.fillListJob();
         occupation = new Occupation();
     }
 

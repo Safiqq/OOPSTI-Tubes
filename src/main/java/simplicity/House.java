@@ -10,7 +10,8 @@ public class House {
     private final ArrayList<Room> listRoom = new ArrayList<>();
 
     public House(String owner) {
-        this(owner, new Point(new Random().nextInt(World.getWorld().getWorldLength()), new Random().nextInt(World.getWorld().getWorldWidth())));
+        this(owner, new Point(new Random().nextInt(World.getWorld().getLength()),
+                new Random().nextInt(World.getWorld().getWidth())));
 
         World.getWorld().addHouse(this);
     }

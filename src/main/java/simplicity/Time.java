@@ -39,15 +39,25 @@ public class Time {
         }
     }
 
-    public void sleep(int seconds) {
-        // salah, ntar gw benerin (safiq)
+    public void effectCountdown(Sim sim) {
+        for (String status : sim.getMapStatus().keySet()) {
+            int duration = sim.getMapStatus().get(status);
+            if (duration > 0) {
+                sim.getMapStatus().put(status, duration - 1);
+            }
+            if (duration == 0) {
+                sim.applyEffect(status);
+                sim.deleteStatus(status);
+            }
+        }
     }
 
-    public void sleepMain(int seconds) {
+    public void sleepMain(Sim sim, int seconds) {
         // aksi yang butuh waktu dan tidak bisa ditinggal/aksi aktif
         try {
             for (int i = 0; i < seconds; i++) {
                 countdown();
+                effectCountdown(sim);
                 Thread.sleep(1000);
             }
         } catch (InterruptedException e) {

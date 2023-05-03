@@ -3,11 +3,11 @@ package simplicity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NonFood extends Objek {
+public class NonFood extends Objek implements Purchasable {
     private static final List<NonFood> listNonFood = new ArrayList<>();
-    private int objLength;
-    private int objWidth;
-    private int objPrice;
+    private int length;
+    private int width;
+    private int price;
     private List<Action> listAction;
     private Point startPoint;
     private Point endPoint;
@@ -18,6 +18,7 @@ public class NonFood extends Objek {
 
     public NonFood(String objekName, Point startPoint, Point endPoint) {
         super(objekName);
+        listAction = new ArrayList<>();
         if (Main.equals(objekName, "Kasur Single")) {
             setLWP(4, 1, 50);
 
@@ -122,34 +123,34 @@ public class NonFood extends Objek {
         return null;
     }
 
-    public void setLWP(int objLength, int objWidth, int objPrice) {
-        this.objLength = objLength;
-        this.objWidth = objWidth;
-        this.objPrice = objPrice;
+    public void setLWP(int length, int width, int price) {
+        this.length = length;
+        this.width = width;
+        this.price = price;
     }
 
-    public int getObjLength() {
-        return objLength;
+    public int getLength() {
+        return length;
     }
 
-    public void setObjLength(int objLength) {
-        this.objLength = objLength;
+    public void setLength(int length) {
+        this.length = length;
     }
 
-    public int getObjWidth() {
-        return objWidth;
+    public int getWidth() {
+        return width;
     }
 
-    public void setObjWidth(int objWidth) {
-        this.objWidth = objWidth;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    public int getObjPrice() {
-        return objPrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setObjPrice(int price) {
-        objPrice = price;
+    public void setPrice(int price) {
+        price = price;
     }
 
     public List<Action> getListAction() {

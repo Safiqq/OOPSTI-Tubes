@@ -68,6 +68,15 @@ public class Food extends Objek {
         listFood.add(new Food("Bistik"));
     }
 
+    public static Food get(String objekName) {
+        for (Food food : listFood) {
+            if (Main.equals(objekName, food.getObjekName())) {
+                return food;
+            }
+        }
+        return null;
+    }
+
     public static List<Food> getListFood() {
         return listFood;
     }

@@ -14,5 +14,4 @@ public class Objek {
     public void setObjekName(String objekName) {
         this.objekName = objekName;
     }
-
 }

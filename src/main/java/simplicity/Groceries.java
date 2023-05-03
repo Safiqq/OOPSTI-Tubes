@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Groceries extends Objek {
     private static final List<Groceries> listGroceries = new ArrayList<>();
-    private int grocPrice;
-    private int grocHunger;
+    private int price;
+    private int hunger;
 
-    public Groceries(String objekName, int grocPrice, int grocHunger) {
+    public Groceries(String objekName, int price, int hunger) {
         super(objekName);
-        this.grocPrice = grocPrice;
-        this.grocHunger = grocHunger;
+        this.price = price;
+        this.hunger = hunger;
     }
 
     public Groceries(String objekName) {
@@ -74,24 +74,24 @@ public class Groceries extends Objek {
         listGroceries.add(new Groceries("Susu"));
     }
 
-    public void setPH(int grocPrice, int grocHunger) {
-        this.grocPrice = grocPrice;
-        this.grocHunger = grocHunger;
+    public void setPH(int price, int hunger) {
+        this.price = price;
+        this.hunger = hunger;
     }
 
-    public int getGrocPrice() {
-        return grocPrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setGrocPrice(int grocPrice) {
-        this.grocPrice = grocPrice;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public int getGrocHunger() {
-        return grocHunger;
+    public int getHunger() {
+        return hunger;
     }
 
-    public void setGrocHunger(int grocHunger) {
-        this.grocHunger = grocHunger;
+    public void setHunger(int hunger) {
+        this.hunger = hunger;
     }
 }

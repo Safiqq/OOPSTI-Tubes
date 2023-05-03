@@ -62,11 +62,14 @@ public class GUIMain extends Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(createButton("Start Game", e -> {
-            String simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM", JOptionPane.QUESTION_MESSAGE);
+            String simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM",
+                    JOptionPane.QUESTION_MESSAGE);
             if (simName != null) {
                 while (equals(simName.trim(), "")) {
-                    simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM", JOptionPane.QUESTION_MESSAGE);
-                    if (simName == null) break;
+                    simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM",
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (simName == null)
+                        break;
                 }
                 if (simName != null) {
                     currentSim = new Sim(simName);
@@ -194,7 +197,7 @@ public class GUIMain extends Main {
 
         for (int i = 0; i < (Room.getRoomWidth() * Room.getRoomLength()); i++) {
             NonFood barang = currentSim.getSimLoc().getRoom().getMatrixBarang()[i / 6][i % 6];
-            //            JLabel label = createLabel("      ", 90);
+            // JLabel label = createLabel(" ", 90);
             JPanel panelx = createPanel(100, 100);
             if (barang != null) {
                 panelx.setBackground(Color.RED);
@@ -252,13 +255,13 @@ public class GUIMain extends Main {
 
     public JPanel createWorld(JFrame frame) {
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(world.getWorldWidth(), world.getWorldLength()));
+        panel.setLayout(new GridLayout(world.getWidth(), world.getLength()));
 
-        for (int i = 0; i < (world.getWorldWidth() * world.getWorldLength()); i++) {
+        for (int i = 0; i < (world.getWidth() * world.getLength()); i++) {
             JLabel label;
             Point houseLoc = currentSim.getSimLoc().getHouse().getHouseLoc();
             label = createLabel("       ", 6);
-            if (i % world.getWorldWidth() == houseLoc.getX() && i / world.getWorldLength() == houseLoc.getY()) {
+            if (i % world.getWidth() == houseLoc.getX() && i / world.getLength() == houseLoc.getY()) {
                 label.setBackground(new Color(166, 227, 41));
             } else {
                 label.setBackground(new Color(255, 255, 255));
@@ -271,13 +274,14 @@ public class GUIMain extends Main {
             label.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if (!world.isWorldAvail(new Point(_i % world.getWorldWidth(), _i / world.getWorldLength()))) {
+                    if (!world.isWorldAvail(new Point(_i % world.getWidth(), _i / world.getLength()))) {
                         frame.setVisible(false);
                         showRoomFrame(_houseLoc, "Ruang Utama");
                     } else {
-                        JOptionPane.showMessageDialog(_frame, "Belum ada rumah di (" + _i % world.getWorldWidth() + ", " + _i / world.getWorldLength() + ").");
+                        JOptionPane.showMessageDialog(_frame, "Belum ada rumah di (" + _i % world.getWidth() + ", "
+                                + _i / world.getLength() + ").");
                     }
-                    System.out.println("X: " + _i % world.getWorldWidth() + ", Y: " + _i / world.getWorldLength());
+                    System.out.println("X: " + _i % world.getWidth() + ", Y: " + _i / world.getLength());
                 }
 
                 @Override
@@ -286,7 +290,7 @@ public class GUIMain extends Main {
                     ToolTipManager.sharedInstance().setDismissDelay(60 * 1000);
                 }
             });
-            label.setToolTipText("(" + i % world.getWorldWidth() + ", " + i / world.getWorldLength() + ")");
+            label.setToolTipText("(" + i % world.getWidth() + ", " + i / world.getLength() + ")");
             panel.add(label);
         }
         return panel;

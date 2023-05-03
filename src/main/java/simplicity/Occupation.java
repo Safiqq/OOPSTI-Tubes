@@ -9,7 +9,6 @@ public class Occupation {
     private int dailySalary;
 
     public Occupation() {
-        fillListJob();
         keys = new ArrayList<>(listJob.keySet());
         Random random = new Random();
         jobName = keys.get(random.nextInt(keys.size()));
@@ -24,7 +23,7 @@ public class Occupation {
         Occupation.keys = keys;
     }
 
-    private void fillListJob() {
+    public static void fillListJob() {
         listJob.put("Badut Sulap", 15);
         listJob.put("Koki", 30);
         listJob.put("Polisi", 35);

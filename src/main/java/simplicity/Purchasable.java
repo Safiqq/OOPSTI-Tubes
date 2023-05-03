@@ -1,5 +1,7 @@
 package simplicity;
 
 public interface Purchasable {
-    boolean isPurchasable();
+    int getPrice();
+
+    void setPrice(int price);
 }
