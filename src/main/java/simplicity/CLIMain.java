@@ -264,7 +264,6 @@ public class CLIMain extends Main {
                                 currentSim.setWorkTime(currentSim.getWorkTime() + currentSim.getStoreWorkTime());
                                 currentSim.setStoreWorkTime(0);
                             }
-
                         } 
 
                     } else {

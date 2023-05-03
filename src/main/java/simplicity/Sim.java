@@ -333,7 +333,6 @@ public class Sim {
         try {
             for (int k = (sleeptime / 1000); k >= 1; k--) {
                 System.out.println("Time remaining " + k + " seconds");
-                Thread.sleep(1000);
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
