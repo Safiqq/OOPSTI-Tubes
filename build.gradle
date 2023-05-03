@@ -28,9 +28,13 @@ dependencies {
     testImplementation 'junit:junit:4.13'
 }
 
+ext {
+    simplicity = "simplicity.Main"
+}
+
 application {
     // Define the main class for the application.
-    mainClassName = 'simplicity.Main'
+    mainClassName = simplicity
 }
 
 
@@ -39,7 +43,18 @@ test {
     include '**simplicity/*'
 }
 
-
 run {
     standardInput = System.in
+}
+
+task cli(type: JavaExec) {
+    main = simplicity
+    classpath = sourceSets.main.runtimeClasspath
+    args 'cli'
+    standardInput = System.in
+}
+
+task gui(type: JavaExec) {
+    main = simplicity
+    classpath = sourceSets.main.runtimeClasspath
 }

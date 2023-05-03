@@ -26,10 +26,15 @@ memiliki keahlian dengan bahasa Java, Indra dan Doni meminta kalian untuk membua
 ## Requirements
 
 1. JDK v8+
-2. Gradle 6.6+
+2. Gradle v6.6+
+3. json-simple v1.1.1
 
 ## Features
 
 ## How to Use
 
-1. `gradle test run --console=plain`
+#### CLI: `gradle cli`
+
+#### GUI: `gradle gui`
+
+#### Test: `gradle test`
