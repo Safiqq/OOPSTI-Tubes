@@ -3,6 +3,7 @@ package simplicity;
 import com.google.common.primitives.Ints;
 
 import java.util.List;
+import java.util.Map;
 
 public class Print {
     public static void printMenu(int[] numbers) {
@@ -79,5 +80,20 @@ public class Print {
             i++;
         }
         System.out.println();
+    }
+
+    public static void viewSimFood(Sim sim) {
+        // Menampilkan makanan yang ada di inventory
+        Box<Food> boxFood = sim.getInventory().getBoxFood();
+        
+        System.out.println("========Berikut merupakan makanan yang kamu punya========");
+        if (boxFood.getLength() == 0) {
+            System.out.println("Sim " + sim.getFullName() + " tidak memiliki objek makanan dalam inventory");
+        } else {
+            int i = 0;
+            for (Map.Entry<String, Integer> entry : boxFood.getMap().entrySet()) {
+                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
+            }
+        }
     }
 }

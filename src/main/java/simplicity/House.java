@@ -22,6 +22,15 @@ public class House {
         World.getWorld().addHouse(this);
     }
 
+    public Room get(String roomName) {
+        for (Room room : listRoom) {
+            if (Main.equals(roomName, room.getRoomName())) {
+                return room;
+            }
+        }
+        return null;
+    }
+
     public String getOwner() {
         return owner;
     }

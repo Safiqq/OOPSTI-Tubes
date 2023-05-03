@@ -9,33 +9,33 @@ public class Sim {
     private static final List<Sim> listSim = new ArrayList<>();
     private final Location simLoc;
     private String fullName;
-    private Occupation occupation;
-    private int money;
-    private Inventory inventory;
     private Motive motive;
-    private String status = "idle";
+    private int money;
+    private Occupation occupation;
+    private Inventory inventory;
+    private Map<String, Integer> mapStatus;
     private int workTime = 0;
     private int paidTime = 0;
     private int dayChangeJob = 0;
 
     public Sim(String fullName) {
-        this.motive = new Motive(); // inisiasi di class motive
-        this.money = 100;
-        this.occupation = new Occupation(); // inisiasi di class occupation
         this.fullName = fullName;
-        this.inventory = new Inventory(); // inisiasi di class inventory
+        motive = new Motive(); // inisiasi di class motive
+        money = 100;
+        occupation = new Occupation(); // inisiasi di class occupation
+        inventory = new Inventory(); // inisiasi di class inventory
         House house = new House(fullName);
-        this.simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
+        simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 
         listSim.add(this);
     }
 
     public Sim(String fullName, Point houseLoc) {
-        this.motive = new Motive(); // inisiasi di class motive
-        this.money = 100;
-        this.occupation = new Occupation(); // inisiasi di class occupation
         this.fullName = fullName;
-        this.inventory = new Inventory(); // inisiasi di class inventory
+        motive = new Motive(); // inisiasi di class motive
+        money = 100;
+        occupation = new Occupation(); // inisiasi di class occupation
+        inventory = new Inventory(); // inisiasi di class inventory
         House house = new House(fullName, houseLoc);
         this.simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 
@@ -44,6 +44,19 @@ public class Sim {
 
     public static List<Sim> getListSim() {
         return listSim;
+    }
+
+    public static boolean isNotRegistered(String simName) {
+        return get(simName) != null;
+    }
+
+    public static Sim get(String simName) {
+        for (Sim sim : Sim.getListSim()) {
+            if (Main.equals(simName, sim.getFullName())) {
+                return sim;
+            }
+        }
+        return null;
     }
 
     public void viewSimInfo() {
@@ -98,20 +111,6 @@ public class Sim {
                 System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
             }
         }
-    }
-
-    public void viewSimFood() {
-        // Menampilkan makanan yang ada di inventory
-        System.out.println("========Berikut merupakan makanan yang kamu punya========");
-        if (inventory.getBoxFood().getLength() == 0) {
-            System.out.println("Sim " + fullName + " tidak memiliki objek makanan dalam inventory");
-        } else {
-            int i = 0;
-            for (Map.Entry<String, Integer> entry : inventory.getBoxFood().getMap().entrySet()) {
-                System.out.println((++i) + ". Objek: " + entry.getKey() + ", Jumlah: " + entry.getValue());
-            }
-        }
-
     }
 
     public boolean isMoneyEnough(int hargaobjek) {
@@ -182,61 +181,40 @@ public class Sim {
         this.motive = motive;
     }
 
-    public String getStatus() {
-        return this.status;
+    public Map<String, Integer> getMapStatus() {
+        return mapStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setMapStatus(Map<String, Integer> mapStatus) {
+        this.mapStatus = mapStatus;
+    }
+
+    public void addStatus(String status, int duration) {
+        List<Action> listAction = Action.getListAction();
+        for (Action action : listAction) {
+            if (Main.equals(status, action.getActionName())) {
+                mapStatus.put(status, duration);
+            }
+        }
+    }
+
+    public void deleteStatus(String status) {
+        List<Action> listAction = Action.getListAction();
+        for (Action action : listAction) {
+            if (Main.equals(status, action.getActionName())) {
+                mapStatus.remove(status);
+            }
+        }
     }
 
     public Location getSimLoc() {
         return this.simLoc;
     }
 
-    public void moveRoom() {
-        Scanner scanner = new Scanner(System.in);
-        ArrayList<Room> listRoom = simLoc.getHouse().getListRoom();
-        if (listRoom.size() == 1) {
-            System.out.println("Hanya ada Ruangan Utama di rumah ini.");
-        } else {
-            System.out.println("Daftar ruangan yang terdapat di dalam rumah: ");
-            int i = 1;
-            for (Room room : listRoom) {
-                System.out.println(i + ". " + room.getRoomName());
-                i++;
-            }
-
-            String oldRoom = simLoc.getRoom().getRoomName();
-
-            boolean done = false;
-            while (!done) {
-                System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
-                String roomName = scanner.nextLine();
-                if (Main.equals(oldRoom, roomName)) {
-                    System.out.println("Nama ruangan sama dengan tempat Sim berada ");
-                    System.out.println("Sim berada di ruangan " + oldRoom);
-                    System.out.println();
-                } else {
-                    for (Room room : listRoom) {
-                        if (Main.equals(roomName, room.getRoomName())) {
-                            simLoc.setRoom(room);
-                            // Sim teleportasi di point 3,3 dalam ruangan
-                            simLoc.getPoint().setX(3);
-                            simLoc.getPoint().setY(3);
-                            done = true;
-                            break;
-                        }
-                    }
-
-                    if (!done) {
-                        System.out.println("Tidak ditemukan ruangan bernama " + roomName);
-                        System.out.println();
-                    }
-                }
-            }
-        }
-        scanner.close();
+    public void moveRoom(String roomName) {
+        simLoc.setRoom(simLoc.getHouse().get(roomName));
+        simLoc.getPoint().setX(3);
+        simLoc.getPoint().setY(3);
     }
 
     public void work(int time) {
@@ -327,7 +305,7 @@ public class Sim {
 
     public void eat() {
         Scanner scanner = new Scanner(System.in);
-        viewSimFood();
+        Print.viewSimFood(this);
         System.out.print("Mau makan apa? ");
         String maumakan = scanner.nextLine();
         if (Main.equals(maumakan, "Nasi Ayam")) {
@@ -1010,5 +988,4 @@ public class Sim {
         }
         scan.close();
     }
-
 }
