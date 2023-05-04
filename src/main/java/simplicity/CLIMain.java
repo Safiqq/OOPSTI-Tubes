@@ -3,6 +3,7 @@ package simplicity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Random;
 
 public class CLIMain extends Main {
     private final Scanner scanner;
@@ -700,11 +701,16 @@ public class CLIMain extends Main {
             objek = new Groceries("Susu");
         }
 
+        Random rd = new Random();
+        double randomizer = rd.nextDouble(1.5);
+        int waktukirim = (int) (randomizer * 30);
+
         if (objek != null) {
             if (Main.equals(objek.getClass().getSimpleName(), "Groceries")) {
                 if (currentSim.isMoneyEnough(((Groceries) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((Groceries) objek).getPrice());
                     currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
+                    time.sleepMain(currentSim, waktukirim);
                     System.out.println("Berhasil membeli barang!");
                 } else {
                     System.out.println("Uangmu kurang :(");
@@ -713,6 +719,7 @@ public class CLIMain extends Main {
                 if (currentSim.isMoneyEnough(((NonFood) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((NonFood) objek).getPrice());
                     currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
+                    time.sleepMain(currentSim, waktukirim);
                     System.out.println("Berhasil membeli barang!");
                 } else {
                     System.out.println("Uangmu kurang :(");
