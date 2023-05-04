@@ -710,6 +710,7 @@ public class CLIMain extends Main {
                 if (currentSim.isMoneyEnough(((Groceries) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((Groceries) objek).getPrice());
                     currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
+                    System.out.println("Mengirim barang...");
                     time.sleepMain(currentSim, waktukirim);
                     System.out.println("Berhasil membeli barang!");
                 } else {
@@ -719,6 +720,7 @@ public class CLIMain extends Main {
                 if (currentSim.isMoneyEnough(((NonFood) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((NonFood) objek).getPrice());
                     currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
+                    System.out.println("Mengirim barang...");
                     time.sleepMain(currentSim, waktukirim);
                     System.out.println("Berhasil membeli barang!");
                 } else {
