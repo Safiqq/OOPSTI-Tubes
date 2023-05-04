@@ -71,6 +71,10 @@ public class World {
         return null;
     }
 
+    public House findHouse(Point houseLoc){
+        return matrixHouse[houseLoc.getY()][houseLoc.getX()];
+    }
+
     // mau benerin tampilan print?
     public void printMatrixHouse() {
         // menampilkan world
