@@ -709,9 +709,9 @@ public class CLIMain extends Main {
             if (Main.equals(objek.getClass().getSimpleName(), "Groceries")) {
                 if (currentSim.isMoneyEnough(((Groceries) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((Groceries) objek).getPrice());
-                    currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
                     System.out.println("Mengirim barang...");
-                    time.sleepMain(currentSim, waktukirim);
+                    currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
+                    // time.sleepMain(currentSim, waktukirim);
                     System.out.println("Berhasil membeli barang!");
                 } else {
                     System.out.println("Uangmu kurang :(");
@@ -719,9 +719,9 @@ public class CLIMain extends Main {
             } else if (Main.equals(objek.getClass().getSimpleName(), "NonFood")) {
                 if (currentSim.isMoneyEnough(((NonFood) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((NonFood) objek).getPrice());
-                    currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
                     System.out.println("Mengirim barang...");
-                    time.sleepMain(currentSim, waktukirim);
+                    currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
+                    // time.sleepMain(currentSim, waktukirim);
                     System.out.println("Berhasil membeli barang!");
                 } else {
                     System.out.println("Uangmu kurang :(");
