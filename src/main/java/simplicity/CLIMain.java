@@ -870,7 +870,7 @@ public class CLIMain extends Main {
 
     public void installItem() {
         // kalau sim sedang berada di rumah sendiri
-        if (!Main.equals(currentSim.getFullName(), currentSim.getSimLoc().getHouse().getOwner())) {
+        if (Main.equals(currentSim.getFullName(), currentSim.getSimLoc().getHouse().getOwner())) {
             boolean barangValid = false;
             Box<NonFood> boxNonFood = currentSim.getInventory().getBoxNonFood();
 
@@ -925,8 +925,8 @@ public class CLIMain extends Main {
                                             System.out.println("Point tidak valid.");
                                             // Kalau point berada di antara 0-5
                                         } else {
-                                            int length = startX - endX + 1;
-                                            int width = startY - endY + 1;
+                                            int length = Math.abs(startX - endX) + 1;
+                                            int width = Math.abs(startY - endY) + 1;
                                             // Kalau point sesuai dengan ukuran barang
                                             if ((length == barang.getLength()) && (width == barang.getWidth())) {
                                                 Point startPoint = new Point(startX, startY);
