@@ -756,7 +756,6 @@ public class CLIMain extends Main {
             System.out.println("Masukkan nomor item yang ingin dibeli.");
             System.out.print("Nomor: ");
             buynumber = scanner.nextInt();
-            System.out.println("Nomor tidak teridentifikasi. Masukkan nomor yang tersedia.");
         } while (buynumber < 1 || buynumber > 18);
 
         Objek objek;
@@ -825,6 +824,13 @@ public class CLIMain extends Main {
                         System.out.println("Berhasil membeli barang!");
                     });
                     thread.start();
+
+                    try{
+                        thread.join();
+                    }
+                    catch(Exception e){
+                        e.getMessage();
+                    }
                 } else {
                     System.out.println("Uangmu kurang :(");
                 }
@@ -846,6 +852,15 @@ public class CLIMain extends Main {
                         System.out.println("Berhasil membeli barang!");
                     });
                     thread.start();
+
+                    try{
+                        thread.join();
+                    }
+                    catch(Exception e){
+                        e.getMessage();
+                    }
+
+
                 } else {
                     System.out.println("Uangmu kurang :(");
                 }
