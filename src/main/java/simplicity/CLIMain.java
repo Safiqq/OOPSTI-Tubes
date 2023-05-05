@@ -922,14 +922,18 @@ public class CLIMain extends Main {
                                                 if ((length == barang.getLength()) && (width == barang.getWidth())) {
                                                     Point startPoint = new Point(startX, startY);
                                                     Point endPoint = new Point(endX, endY);
-                                                    // Kalau lokasi yang dipilih tersedia
-                                                    if (room.isSpaceEmpty(startPoint, endPoint)) {
-                                                        room.insertBarang(barang);
-                                                        room.addListObjek(barang);
-                                                        boxNonFood.delete(barang.getObjekName());
-                                                        pointValid = true;
-                                                    } else { // Kalau lokasi yang dipilih ga tersedia
-                                                        System.out.println("Area ruangan tidak kosong.");
+                                                    if (startPoint != null && endPoint != null) {
+                                                        // Kalau lokasi yang dipilih tersedia
+                                                        if (room.isSpaceEmpty(startPoint, endPoint)) {
+                                                            room.insertBarang(barang);
+                                                            room.addListObjek(barang);
+                                                            boxNonFood.delete(barang.getObjekName());
+                                                            pointValid = true;
+                                                        } else { // Kalau lokasi yang dipilih ga tersedia
+                                                            System.out.println("Area ruangan tidak kosong.");
+                                                        }
+                                                    } else {
+                                                        System.out.println("Point gagal dibuat, memori penuh!");
                                                     }
                                                 } else { // Kalau point tidak sesuai ukuran barang
                                                     System.out.println("Point tidak sesuai dengan ukuran barang.");
