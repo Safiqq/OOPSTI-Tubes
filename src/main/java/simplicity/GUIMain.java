@@ -277,8 +277,7 @@ public class GUIMain extends Main {
                         frame.setVisible(false);
                         showRoomFrame(_houseLoc, "Ruang Utama");
                     } else {
-                        JOptionPane.showMessageDialog(_frame, "Belum ada rumah di (" + _i % world.getWidth() + ", "
-                                + _i / world.getLength() + ").");
+                        JOptionPane.showMessageDialog(_frame, "Belum ada rumah di (" + _i % world.getWidth() + ", " + _i / world.getLength() + ").");
                     }
                     System.out.println("X: " + _i % world.getWidth() + ", Y: " + _i / world.getLength());
                 }

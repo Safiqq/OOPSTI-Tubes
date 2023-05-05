@@ -102,7 +102,7 @@ public class CLIMain extends Main {
                 Print.showMenu();
 
             } else if (equals(menu, "EXIT")) {
-                System.out.println("Anda keluar dari game Simplicity");
+                System.out.println("Anda keluar dari game Simplicity!");
                 System.out.println("Bye...");
                 System.exit(0);
 
@@ -120,25 +120,24 @@ public class CLIMain extends Main {
                     upgradeHouse();
                 } else {
                     System.out.println("Sim tidak sedang berada di rumah sendiri.");
-                    System.out.println("Silahkan kembali ke rumah sendiri untuk melakukan upgrade House");
+                    System.out.println("Silakan kembali ke rumah sendiri untuk melakukan upgrade House");
                 }
 
             } else if (equals(menu, "MOVE ROOM")) {
                 moveRoom();
 
             } else if (equals(menu, "EDIT ROOM")) {
-                boolean done = false;
-                while (!done) {
+                while (true) {
                     System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah)");
                     String ans = scanner.nextLine();
                     if (equals(ans, "BELI")) {
                         buyItem();
-                        done = true;
+                        break;
                     } else if (equals(ans, "PINDAH")) {
                         moveObjek();
-                        done = true;
+                        break;
                     } else {
-                        System.out.println("Perintah tidak valid");
+                        System.out.println("Perintah tidak valid.");
                     }
                 }
 
@@ -147,29 +146,28 @@ public class CLIMain extends Main {
                 if (time.getDay() > dayAddSim) {
                     // cek masi ada spot kosong di world ato ngga
                     if (world.isHouseBuildAble()) {
-                        boolean done = false;
                         Sim newSim;
-                        while (!done) {
+                        while (true) {
                             newSim = menuAddSim();
                             if (newSim != null) {
                                 dayAddSim = time.getDay(); // hanya dapat dilakukan 1 hari sekali
-                                done = true;
+                                break;
                             } else {
-                                System.out.println("Silakan mencoba mendaftarkan Sim baru di lokasi yang berbeda");
+                                System.out.println("Silakan mencoba mendaftarkan Sim baru di lokasi yang berbeda.");
                             }
                         }
                     } else {
-                        System.out.println("World penuh, tidak memungkinkan membuat Sim baru");
+                        System.out.println("World penuh, tidak memungkinkan membuat Sim baru.");
                     }
                 } else {
-                    System.out.println("Menu 'ADD SIM' hanya dapat dijalankan 1 hari sekali");
+                    System.out.println("Menu 'ADD SIM' hanya dapat dijalankan 1 hari sekali.");
                 }
 
             } else if (equals(menu, "CHANGE SIM")) {
                 // di listSim hanya ada 1 sim
                 if (Sim.getListSim().size() == 1) {
                     System.out.println("Tidak bisa dilakukan pergantian Sim. Hanya terdapat 1 Sim yang terdaftar.");
-                    System.out.println("Ketik 'ADD SIM' untuk menambah Sim baru");
+                    System.out.println("Ketik 'ADD SIM' untuk menambah Sim baru!");
                 } else {
                     Sim oldSim = currentSim;
                     boolean done = false;
@@ -193,14 +191,9 @@ public class CLIMain extends Main {
                 // ruangan tsb
                 ArrayList<NonFood> listObjek = currentSim.getSimLoc().getRoom().getListObjek();
                 if (listObjek.size() > 0) {
-                    int i = 1;
-                    for (NonFood nonFood : listObjek) {
-                        System.out.println(i + ". " + nonFood.getObjekName());
-                        i++;
-                    }
+                    Print.printListObjek(currentSim.getSimLoc().getRoom());
                 } else {
-                    System.out.println("Tidak ada daftar objek dalam ruangan "
-                            + currentSim.getSimLoc().getRoom().getRoomName() + ".");
+                    System.out.println("Tidak ada daftar objek dalam ruangan " + currentSim.getSimLoc().getRoom().getRoomName() + ".");
                 }
 
             } else if (equals(menu, "GO TO OBJECT")) {
@@ -346,7 +339,7 @@ public class CLIMain extends Main {
                         }
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kompor gas atau kompor listrik.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke kompor gas atau kompor listrik untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke kompor gas atau kompor listrik untuk menjalankan aksi ini.");
                     }
 
                 } else if (equals(act, "VISIT")) {
@@ -363,7 +356,7 @@ public class CLIMain extends Main {
                             Print.printListSim();
                         } else {
                             if (houseLoc == currentSim.getSimLoc().getHouse().getHouseLoc()) {
-                                System.out.println("Rumah yang ingin dituju Sim sama dengan rumah lokasi Sim tengah berada");
+                                System.out.println("Rumah yang ingin dituju Sim sama dengan rumah lokasi Sim tengah berada.");
                             } else {
                                 break;
                             }
@@ -416,7 +409,7 @@ public class CLIMain extends Main {
 
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di toilet.");
-                        System.out.println("Silahkan melakukan action - go to object ke toilet untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke toilet untuk menjalankan aksi ini.");
                     }
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
@@ -424,7 +417,7 @@ public class CLIMain extends Main {
                         upgradeHouse();
                     } else {
                         System.out.println("Sim tidak sedang berada di rumah sendiri.");
-                        System.out.println("Silahkan kembali ke rumah sendiri untuk melakukan upgrade House");
+                        System.out.println("Silakan kembali ke rumah sendiri untuk melakukan upgrade House");
                     }
 
                 } else if (equals(act, "BUY ITEM")) {
@@ -448,7 +441,7 @@ public class CLIMain extends Main {
                         Print.printStatus(currentSim);
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di jam.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke jam untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke jam untuk menjalankan aksi ini.");
                     }
 
                 } else if (equals(act, "CLIMB TABLE AND CHAIR")) {
@@ -460,21 +453,21 @@ public class CLIMain extends Main {
 
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di meja dan kursi.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke meja dan kursi untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke meja dan kursi untuk menjalankan aksi ini.");
                     }
                 } else if (equals(act, "TURN ON STOVE")) {
                     if (currentSim.getObjLoc().contains("Kompor")) {
                         System.out.println("Sim menyalakan kompor.");
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kompor.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke kompor untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke kompor untuk menjalankan aksi ini.");
                     }
                 } else if (equals(act, "TURN OFF STOVE")) {
                     if (currentSim.getObjLoc().contains("Kompor")) {
                         System.out.println("Sim mematikan kompor.");
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kompor.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke kompor untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke kompor untuk menjalankan aksi ini.");
                     }
                 } else if (equals(act, "SIT")) {
                     if (currentSim.getObjLoc().contains("Kasur") || equals(currentSim.getObjLoc(), "Meja dan kursi")) {
@@ -485,14 +478,14 @@ public class CLIMain extends Main {
 
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di meje dan kursi ataupun kasur.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke meja dan kursi ataupun kasur untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke meja dan kursi ataupun kasur untuk menjalankan aksi ini.");
                     }
                 } else if (equals(act, "WASH HAND")) {
                     if (equals(currentSim.getObjLoc(), "Wastafel")) {
-                        System.out.println("Sim mencuci tangan");
+                        System.out.println("Sim mencuci tangan.");
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di wastafel.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke wastafel untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke wastafel untuk menjalankan aksi ini.");
                     }
                 } else if (equals(act, "LOOK MIRROR")) {
                     if (equals(currentSim.getObjLoc(), "Cermin")) {
@@ -503,20 +496,20 @@ public class CLIMain extends Main {
 
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di cermin.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke cermin untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke cermin untuk menjalankan aksi ini.");
                     }
                 } else if (equals(act, "THROW MIRROR")) {
                     if (equals(currentSim.getObjLoc(), "Cermin")) {
                         System.out.println("Sim melempar cermin. Cermin hancur!");
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di cermin.");
-                        System.out.println("Silahkan melakukan Action - Go to Object ke cermin untuk menjalankan aksi ini.");
+                        System.out.println("Silakan melakukan Action - Go to Object ke cermin untuk menjalankan aksi ini.");
                     }
                 } else {
-                    System.out.println("Aksi tidak valid");
+                    System.out.println("Aksi tidak valid.");
                 }
             } else {
-                System.out.println("Perintah tidak valid");
+                System.out.println("Perintah tidak valid.");
             }
         }
         scanner.close();
@@ -569,9 +562,8 @@ public class CLIMain extends Main {
         // Validasi lokasi rumah Sim
         world.printMatrixHouse();
         System.out.println("Masukkan titik untuk mendirikan rumah: ");
-        boolean done = false;
-        int x = 0, y = 0;
-        while (!done) {
+        int x, y;
+        while (true) {
             System.out.print("X: ");
             x = scanner.nextInt();
             System.out.print("Y: ");
@@ -579,7 +571,7 @@ public class CLIMain extends Main {
             if ((x < 0 || x > world.getLength() - 1) || (y < 0 || y > world.getWidth() - 1)) {
                 System.out.println("Titik tidak valid. World berukuran 64x64.");
             } else {
-                done = true;
+                break;
             }
         }
 
@@ -968,7 +960,7 @@ public class CLIMain extends Main {
 
             }
         } else { // Kalau sim berada di rumah orang lain
-            System.out.println("Sim harus berada di rumah sendiri untuk memasang barang");
+            System.out.println("Sim harus berada di rumah sendiri untuk memasang barang.");
         }
     }
 
@@ -1030,7 +1022,7 @@ public class CLIMain extends Main {
         do {
             System.out.print("Masukkan nama pekerjaan baru: ");
             jobName = scanner.nextLine();
-            System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama");
+            System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama.");
         } while (Main.equals(jobName, oldJobName));
         occupation.setJobName(jobName);
         occupation.setDailySalary(Occupation.getListJob().get(jobName));
@@ -1038,7 +1030,7 @@ public class CLIMain extends Main {
         // Harus bayar 1/2 dari gaji harian pekerjaan baru
         int payChangeJob = (int) (0.5 * occupation.getDailySalary());
         if (currentSim.getMoney() < payChangeJob) {
-            System.out.println("Uang tidak mencukupi untuk pindah pekerjaan");
+            System.out.println("Uang tidak mencukupi untuk pindah pekerjaan.");
             occupation.setJobName(oldJobName);
             occupation.setDailySalary(oldDailySalary);
         } else {

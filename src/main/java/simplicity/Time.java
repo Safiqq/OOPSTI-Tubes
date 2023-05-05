@@ -79,7 +79,7 @@ public class Time {
     // setter
     public void setDay(int day) throws IllegalArgumentException {
         if (day < 1) {
-            throw new IllegalArgumentException("Hari yang dimasukkan tidak valid");
+            throw new IllegalArgumentException("Hari yang dimasukkan tidak valid.");
         }
         this.day = day;
     }
@@ -90,10 +90,10 @@ public class Time {
 
     public void setMinute(int minute) throws IllegalArgumentException {
         if (minute < 0 || minute > 12) {
-            throw new IllegalArgumentException("Menit yang dimasukkan tidak valid");
+            throw new IllegalArgumentException("Menit yang dimasukkan tidak valid.");
         } else if (minute == 12) {
             if (second != 0) {
-                throw new IllegalArgumentException("Menit yang dimasukkan tidak valid");
+                throw new IllegalArgumentException("Menit yang dimasukkan tidak valid.");
             }
         }
         this.minute = minute;
@@ -105,7 +105,7 @@ public class Time {
 
     public void setSecond(int second) throws IllegalArgumentException {
         if (second < 0 || second > 59) {
-            throw new IllegalArgumentException("Detik yang dimasukkan tidak valid");
+            throw new IllegalArgumentException("Detik yang dimasukkan tidak valid.");
         }
         this.second = second;
     }
@@ -116,7 +116,7 @@ public class Time {
 
     public void setTime(int day, int minute, int second) throws IllegalArgumentException {
         if (!isValid(day, minute, second)) {
-            throw new IllegalArgumentException("Tanggal yang dimasukkan tidak valid");
+            throw new IllegalArgumentException("Tanggal yang dimasukkan tidak valid.");
         }
         this.day = day;
         this.minute = minute;

@@ -16,7 +16,7 @@ public class Motive {
         if (mood > 100) {
             mood = 100;
         } else if (mood <= 0) {
-            throw new IllegalArgumentException("Mood Sim mencapai 0, Sim mati karena depresi");
+            throw new IllegalArgumentException("Mood Sim mencapai 0, Sim mati karena depresi.");
         }
     }
 
@@ -25,7 +25,7 @@ public class Motive {
         if (hunger > 100) {
             hunger = 100;
         } else if (hunger <= 0) {
-            throw new IllegalArgumentException("Kekenyangan Sim mencapai 0, Sim mati karena kelaparan");
+            throw new IllegalArgumentException("Kekenyangan Sim mencapai 0, Sim mati karena kelaparan.");
         }
     }
 
@@ -34,7 +34,7 @@ public class Motive {
         if (health > 100) {
             health = 100;
         } else if (health <= 0) {
-            throw new IllegalArgumentException("Kesehatan Sim mencapai 0, Sim mati karena sakit");
+            throw new IllegalArgumentException("Kesehatan Sim mencapai 0, Sim mati karena sakit.");
         }
     }
 
@@ -49,7 +49,7 @@ public class Motive {
 
         this.mood = mood;
         if (mood <= 0) {
-            throw new IllegalArgumentException("Mood Sim mencapai 0, Sim mati karena depresi");
+            throw new IllegalArgumentException("Mood Sim mencapai 0, Sim mati karena depresi.");
         }
     }
 
@@ -64,7 +64,7 @@ public class Motive {
 
         this.hunger = hunger;
         if (hunger <= 0) {
-            throw new IllegalArgumentException("Kekenyangan Sim mencapai 0, Sim mati karena kelaparan");
+            throw new IllegalArgumentException("Kekenyangan Sim mencapai 0, Sim mati karena kelaparan.");
         }
     }
 
@@ -79,7 +79,7 @@ public class Motive {
 
         this.health = health;
         if (health <= 0) {
-            throw new IllegalArgumentException("Kesehatan Sim mencapai 0, Sim mati karena sakit");
+            throw new IllegalArgumentException("Kesehatan Sim mencapai 0, Sim mati karena sakit.");
         }
     }
 }
