@@ -3,6 +3,7 @@ package simplicity;
 import com.google.common.primitives.Ints;
 
 import java.util.Map;
+import java.util.Set;
 
 public class Print {
     public static void printMenu(int[] numbers) {
@@ -70,13 +71,25 @@ public class Print {
         }
     }
 
+    public static void printStatus(Sim sim) {
+        Set<String> keys = sim.getMapStatus().keySet();
+        if (keys.size() > 0) {
+            System.out.println("Status Sim sekarang:");
+            int i = 0;
+            for (String status : sim.getMapStatus().keySet()) {
+                System.out.println(++i + ". " + status + " (Waktu tersisa " + sim.getMapStatus().get(status) + " detik.");
+            }
+        } else {
+            System.out.println("Sim tidak memiliki status yang sedang aktif.");
+        }
+    }
+
     public static void printListSim() {
         System.out.println("Daftar Sim yang dapat dimainkan:");
         int i = 0;
         for (Sim sim : Sim.getListSim()) {
             System.out.println(++i + ". " + sim.getFullName());
         }
-        System.out.println();
     }
 
     public static void viewSimFood(Sim sim) {

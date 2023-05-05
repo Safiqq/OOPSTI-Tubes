@@ -282,8 +282,7 @@ public class CLIMain extends Main {
                         // penambahan efek tidur apakah akumulasi dalam hari tersebut atau langsung
                         // dibagi tiap tidur
 
-                        System.out.print("Masukkan durasi tidur (dalam detik): ");
-                        int simSleepTime = scanner.nextInt();
+                        int simSleepTime = validateTime("tidur", 4 * 60);
 
                         currentSim.deleteStatus("Not Sleep");
                         // daySleepSim = time.getDay();
@@ -424,7 +423,6 @@ public class CLIMain extends Main {
                     }
 
                 } else if (equals(act, "BUY ITEM")) {
-                    Print.showBuyObjectMenu();
                     buyItem();
 
                 } else if (equals(act, "MOVE ROOM")) {
@@ -441,6 +439,7 @@ public class CLIMain extends Main {
                     if (equals(currentSim.getObjLoc(), "Jam")) {
                         System.out.println("Waktu yang tersisa di- " + time.getTime());
                         // sisa waktu yang masih ada untuk seluruh tindakan yang bisa ditinggal
+                        Print.printStatus(currentSim);
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di jam.");
                         System.out.println("Silahkan melakukan Action - Go to Object ke jam untuk menjalankan aksi ini.");
@@ -522,7 +521,7 @@ public class CLIMain extends Main {
         boolean done = false;
         int time = 0;
         while (!done) {
-            System.out.print("Masukkan durasi " + action + " (dalam detik): ");
+            System.out.print("Masukkan durasi " + action + " (kelipatan " + kelipatan + ", dalam detik): ");
             time = scanner.nextInt();
             if (time % kelipatan != 0) {
                 System.out.println("Durasi " + action + " harus kelipatan " + kelipatan);
@@ -686,6 +685,7 @@ public class CLIMain extends Main {
                             Room newRoom = new Room(newRoomName, null, null, _tempRoom, null);
                             _tempRoom.setRightSide(newRoom);
                             house.addListRoom(newRoom);
+                            currentSim.setMoney(currentSim.getMoney() - 1500);
                         });
                         thread.start();
                         break;
@@ -702,6 +702,7 @@ public class CLIMain extends Main {
                             Room newRoom = new Room(newRoomName, null, null, null, _tempRoom);
                             _tempRoom.setLeftSide(newRoom);
                             house.addListRoom(newRoom);
+                            currentSim.setMoney(currentSim.getMoney() - 1500);
                         });
                         thread.start();
                         break;
@@ -718,6 +719,7 @@ public class CLIMain extends Main {
                             Room newRoom = new Room(newRoomName, null, _tempRoom, null, null);
                             _tempRoom.setUpperSide(newRoom);
                             house.addListRoom(newRoom);
+                            currentSim.setMoney(currentSim.getMoney() - 1500);
                         });
                         thread.start();
                         break;
@@ -734,6 +736,7 @@ public class CLIMain extends Main {
                             Room newRoom = new Room(newRoomName, _tempRoom, null, null, null);
                             _tempRoom.setBottomSide(newRoom);
                             house.addListRoom(newRoom);
+                            currentSim.setMoney(currentSim.getMoney() - 1500);
                         });
                         thread.start();
                         break;
@@ -741,9 +744,6 @@ public class CLIMain extends Main {
                         System.out.println("Lokasi tidak valid.");
                     }
                 }
-                // Decrease money
-                currentSim.setMoney(currentSim.getMoney() - 1500);
-                currentSim.addStatus("Upgrade house-" + newRoomName, 18 * 60);
             } else {
                 System.out.println("Uang Sim tidak cukup untuk upgrade rumah.");
             }
@@ -754,6 +754,7 @@ public class CLIMain extends Main {
 
     public void buyItem() {
         if (currentSim.getMapStatus().get("Buy Item") == null) {
+            Print.showBuyObjectMenu();
             int buynumber;
 
             do {
@@ -999,7 +1000,6 @@ public class CLIMain extends Main {
             NonFood targetBarang = listBarang.get(numBarang - 1);
             currentSim.getSimLoc().getPoint().setX(targetBarang.getStartPoint().getX());
             currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
-            System.out.println("Kamu berhasil berpindah tempat ke objek " + currentSim.getObjLoc() + ".");
         }
         //kalau numBarang lebih dari total barang
         else {
