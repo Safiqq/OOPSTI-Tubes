@@ -100,13 +100,13 @@ public class Action {
 
         /* Aksi Buatan */
         /* Aksi Naik Meja dan Kursi */
-        listAction.add(new Action("Climb Table and Chair", "Sims dapat naik ke atas meja dan kursi."));
+        listAction.add(new Action("Climb Table and Chair", "Sims dapat naik ke atas meja dan kursi untuk melepas kekesalan."));
 
         /* Aksi Menyalakan Kompor */
         listAction.add(new Action("Turn On Stove", "Kompor harus dinyalakan terlebih dahulu untuk bisa memasak."));
 
         /* Aksi Mematikan Kompor */
-        listAction.add(new Action("Turn Off Stove", "Kompor harus dinyalakan terlebih dahulu untuk bisa memasak."));
+        listAction.add(new Action("Turn Off Stove", "Kompor harus dimatikan setelah memasak."));
 
         /* Aksi Duduk */
         listAction.add(new Action("Sit", "Sims dapat duduk di meja dan kursi ataupun kasur."));

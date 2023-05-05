@@ -19,6 +19,8 @@ public class NonFood extends Objek implements Purchasable {
     public NonFood(String objekName, Point startPoint, Point endPoint) {
         super(objekName);
         listAction = new ArrayList<>();
+        listAction.add(Action.get("Work"));
+        listAction.add(Action.get("Exercise"));
         if (Main.equals(objekName, "Kasur Single")) {
             setLWP(4, 1, 50);
 
@@ -55,6 +57,7 @@ public class NonFood extends Objek implements Purchasable {
 
             listAction.add(Action.get("Eat"));
             listAction.add(Action.get("Climb Table and Chair"));
+            listAction.add(Action.get("Sit"));
         } else if (Main.equals(objekName, "Jam")) {
             setLWP(1, 1, 10);
 
@@ -69,6 +72,14 @@ public class NonFood extends Objek implements Purchasable {
             listAction.add(Action.get("Look Mirror"));
             listAction.add(Action.get("Throw Mirror"));
         }
+
+        listAction.add(Action.get("Visit"));
+        listAction.add(Action.get("Upgrade House"));
+        listAction.add(Action.get("Buy Item"));
+        listAction.add(Action.get("Move Room"));
+        listAction.add(Action.get("View Inventory"));
+        listAction.add(Action.get("Install Item"));
+
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }

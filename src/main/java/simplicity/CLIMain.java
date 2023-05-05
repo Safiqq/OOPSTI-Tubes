@@ -116,7 +116,12 @@ public class CLIMain extends Main {
                 Print.viewSimInventory(currentSim);
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
-                upgradeHouse();
+                if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())){
+                    upgradeHouse();
+                } else {
+                    System.out.println("Sim tidak sedang berada di rumah sendiri.");
+                    System.out.println("Silahkan kembali ke rumah sendiri untuk melakukan upgrade House");
+                }
 
             } else if (equals(menu, "MOVE ROOM")) {
                 moveRoom();
@@ -418,7 +423,12 @@ public class CLIMain extends Main {
                     }
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
-                    upgradeHouse();
+                    if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())){
+                        upgradeHouse();
+                    } else {
+                        System.out.println("Sim tidak sedang berada di rumah sendiri.");
+                        System.out.println("Silahkan kembali ke rumah sendiri untuk melakukan upgrade House");
+                    }
 
                 } else if (equals(act, "BUY ITEM")) {
                     Print.showBuyObjectMenu();

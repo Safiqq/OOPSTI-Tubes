@@ -36,7 +36,7 @@ public class World {
     }
 
     public boolean isWorldAvail(Point houseLoc) {
-        return matrixHouse[houseLoc.getY()][houseLoc.getX()] == null;
+        return matrixHouse[houseLoc.getX()][houseLoc.getY()] == null;
     }
 
     public boolean isHouseBuildAble() {
@@ -53,11 +53,7 @@ public class World {
 
     public void addHouse(House house) {
         // add house ke world
-        if (isWorldAvail(house.getHouseLoc())) {
-            matrixHouse[house.getHouseLoc().getY()][house.getHouseLoc().getX()] = house;
-        } else {
-            System.out.println("Sudah ada rumah Sim lain");
-        }
+        matrixHouse[house.getHouseLoc().getX()][house.getHouseLoc().getY()] = house;
     }
 
     public Point searchHouse(String owner) {
