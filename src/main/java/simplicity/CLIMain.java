@@ -70,7 +70,7 @@ public class CLIMain extends Main {
         }
 
         System.out.println("Selamat bermain!");
-        System.out.println("Ketik 'HELP' untuk melihat menu game yang tersedia.");
+        Print.showMenu();
 
         // Looping game
         while (isStarted) {
@@ -1039,7 +1039,7 @@ public class CLIMain extends Main {
             currentSim.setTotalWorkTime(0);
         }
     }
-    
+
     public void moveObjek(){
         //Hanya dapat memindahkan barang di rumah sendiri
         if(currentSim.getSimLoc().getHouse().getOwner() == currentSim.getFullName()){
