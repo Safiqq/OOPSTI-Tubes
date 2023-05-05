@@ -129,13 +129,13 @@ public class CLIMain extends Main {
             } else if (equals(menu, "EDIT ROOM")) {
                 boolean done = false;
                 while (!done) {
-                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (beli/pindah)");
+                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah)");
                     String ans = scanner.nextLine();
                     if (equals(ans, "BELI")) {
                         buyItem();
                         done = true;
                     } else if (equals(ans, "PINDAH")) {
-                        installItem();
+                        moveObjek();
                         done = true;
                     } else {
                         System.out.println("Perintah tidak valid");
