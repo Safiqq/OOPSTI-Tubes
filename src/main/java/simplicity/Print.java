@@ -77,7 +77,7 @@ public class Print {
             System.out.println("Status Sim sekarang:");
             int i = 0;
             for (String status : sim.getMapStatus().keySet()) {
-                System.out.println(++i + ". " + status + " (Waktu tersisa " + sim.getMapStatus().get(status) + " detik.");
+                System.out.println(++i + ". " + status + " (Waktu tersisa " + sim.getMapStatus().get(status) + " detik)");
             }
         } else {
             System.out.println("Sim tidak memiliki status yang sedang aktif.");
