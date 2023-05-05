@@ -161,7 +161,7 @@ public class NonFood extends Objek implements Purchasable {
     }
 
     public void setPrice(int price) {
-        price = price;
+        this.price = price;
     }
 
     public List<Action> getListAction() {
