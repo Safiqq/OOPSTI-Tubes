@@ -200,10 +200,6 @@ public class Sim {
                 Sim.getListSim().remove(this);
             }
         }
-        if (Main.equals(actionName, "Work")) {
-            setMoney(money + occupation.getDailySalary());
-            setTotalWorkTime(totalWorkTime + 1);
-        }
     }
 
     public void exercise(int time) {

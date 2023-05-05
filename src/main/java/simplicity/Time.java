@@ -45,8 +45,12 @@ public class Time {
             if (duration > 0) {
                 sim.getMapStatus().put(status, duration - 1);
             }
+            if (!Main.equals(status, "Sleep")) {
+                if (duration % Action.get(status).getListEffect().get(0).getCooldown() == 0) {
+                    sim.applyEffect(status);
+                }
+            }
             if (duration <= 0) {
-                sim.applyEffect(status);
                 sim.deleteStatus(status);
             }
         }

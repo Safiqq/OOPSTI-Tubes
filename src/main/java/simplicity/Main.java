@@ -22,6 +22,7 @@ public abstract class Main {
     protected static Time time;
     protected Sim currentSim;
     protected int dayAddSim;
+    protected int daySleepSim;
 
     public static String[] getMenu() {
         return menu;

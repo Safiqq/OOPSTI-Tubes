@@ -109,10 +109,7 @@ public class Action {
         listAction.add(new Action("Turn Off Stove", "Kompor harus dinyalakan terlebih dahulu untuk bisa memasak."));
 
         /* Aksi Duduk */
-        listAction.add(new Action("Sit", "Sims dapat duduk di kursi ataupun kasur."));
-
-        /* Aksi Buang Air Besar */
-        listAction.add(new Action("Defecate", "Sims dapat melakukan buang air besar di toilet."));
+        listAction.add(new Action("Sit", "Sims dapat duduk di meja dan kursi ataupun kasur."));
 
         /* Aksi Cuci Tangan */
         listAction.add(new Action("Wash Hand", "Sims dapat cuci tangan di wastafel."));
