@@ -1000,6 +1000,7 @@ public class CLIMain extends Main {
             NonFood targetBarang = listBarang.get(numBarang - 1);
             currentSim.getSimLoc().getPoint().setX(targetBarang.getStartPoint().getX());
             currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
+            System.out.println("Kamu berhasil berpindah tempat ke objek " + currentSim.getObjLoc() + ".");
         }
         //kalau numBarang lebih dari total barang
         else {
