@@ -294,8 +294,6 @@ public class CLIMain extends Main {
 
                 } else if (equals(act, "EAT")) {
                     if (equals(currentSim.getObjLoc(), "Meja dan kursi")) {
-                        // Duration belum diset
-                        currentSim.addStatus("Eat", 0);
                         // efek makan
                         eat();
                     } else {
