@@ -41,12 +41,14 @@ public class Time {
 
     public void effectCountdown(Sim sim) {
         for (String status : sim.getMapStatus().keySet()) {
-            int duration = sim.getMapStatus().get(status);
+            int duration = sim.getMapStatus().get(status) - 1;
             if (duration > 0) {
-                sim.getMapStatus().put(status, duration - 1);
+                sim.getMapStatus().put(status, duration);
             }
             if (Action.get(status).getListEffect().size() > 0) {
-                System.out.println("Sim " + sim.getFullName() + " sedang melakukan " + status + " (" + duration + " detik lagi).");
+                if (duration > 0) {
+                    System.out.println("Sim " + sim.getFullName() + " sedang melakukan " + status + " (" + duration + " detik lagi).");
+                }
                 if (duration % Action.get(status).getListEffect().get(0).getCooldown() == 0) {
                     sim.applyEffect(status);
                 }
