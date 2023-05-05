@@ -1000,13 +1000,6 @@ public class CLIMain extends Main {
 
     public void goToObjek() {
         ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
-        //print daftar barang yang ada di ruangan + startPoint nya
-        System.out.println("Daftar barang yang ada di ruangan (Nama barang - Lokasi) : ");
-        int i = 1;
-        for(NonFood barang : listBarang){
-            System.out.println(i + ". " +  barang.getObjekName() + " - (" + barang.getStartPoint().getX() + "," + barang.getStartPoint().getY() + ")" );
-            i++;
-        }
         
         System.out.print("Masukkan nomor barang yang dituju :  ");
         int numBarang = scanner.nextInt();
@@ -1015,6 +1008,7 @@ public class CLIMain extends Main {
             NonFood targetBarang = listBarang.get(numBarang-1);
             currentSim.getSimLoc().getPoint().setX(targetBarang.getStartPoint().getX());
             currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
+            System.out.println("Kamu berhasil berpindah tempat ke objek " + currentSim.getObjLoc() + ".");
         }
         //kalau numBarang lebih dari total barang
         else{
