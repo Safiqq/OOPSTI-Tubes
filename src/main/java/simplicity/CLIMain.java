@@ -1074,17 +1074,28 @@ public class CLIMain extends Main {
                         } else {
                             Point startPoint = new Point(startX, startY);
                             Point endPoint = new Point(endX, endY);
+                            
                             NonFood[][] matrixBarang = currentSim.getSimLoc().getRoom().getMatrixBarang();
-                            if (currentSim.getSimLoc().getRoom().isSpaceEmpty(startPoint, endPoint)) {
-                                for (int i = startX; i <= endX; i++) {
-                                    for (int j = startY; j <= endY; j++) {
-                                        matrixBarang[j][i] = null;
-                                    }
+                            for (int i = targetBarang.getStartPoint().getX(); i <= targetBarang.getEndPoint().getX(); i++) {
+                                for (int j = targetBarang.getStartPoint().getY(); j <= targetBarang.getEndPoint().getY(); j++) {
+                                    matrixBarang[j][i] = null;
                                 }
+                            }
+                            if (currentSim.getSimLoc().getRoom().isSpaceEmpty(startPoint, endPoint)) {
                                 targetBarang.setStartPoint(startPoint);
                                 targetBarang.setEndPoint(endPoint);
+                                for (int i = targetBarang.getStartPoint().getY(); i <= targetBarang.getEndPoint().getY(); i++) {
+                                    for (int j = targetBarang.getStartPoint().getX(); j <= targetBarang.getEndPoint().getX(); j++) {
+                                        matrixBarang[i][j] = targetBarang;
+                                    }
+                                }
                                 pointValid = true;
                             } else {
+                                for (int i = targetBarang.getStartPoint().getX(); i <= targetBarang.getEndPoint().getX(); i++) {
+                                    for (int j = targetBarang.getStartPoint().getY(); j <= targetBarang.getEndPoint().getY(); j++) {
+                                        matrixBarang[j][i] = targetBarang;
+                                    }
+                                }
                                 System.out.println("Lokasi sudah diisi barang lain.");
                             }
                         }

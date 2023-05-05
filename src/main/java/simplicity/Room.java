@@ -19,7 +19,7 @@ public class Room {
     // default room
     public Room() {
         this("Ruang Utama");
-        NonFood kasurSingle = new NonFood("Kasur single", new Point(), new Point(0, 3));
+        NonFood kasurSingle = new NonFood("Kasur single", new Point(), new Point(3, 0));
         NonFood toilet = new NonFood("Toilet", new Point(5, 5));
         NonFood komporGas = new NonFood("Kompor gas", new Point(2, 5), new Point(3, 5));
         NonFood mejaDanKursi = new NonFood("Meja dan kursi", new Point(2, 1), new Point(4, 3));
