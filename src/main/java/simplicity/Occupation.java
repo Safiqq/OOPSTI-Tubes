@@ -15,6 +15,10 @@ public class Occupation {
         dailySalary = listJob.get(jobName);
     }
 
+    public static Map<String, Integer> getListJob() {
+        return listJob;
+    }
+
     public static List<String> getKeys() {
         return keys;
     }
@@ -34,29 +38,6 @@ public class Occupation {
         listJob.put("Pelukis", 20);
         listJob.put("Tukang Parkir", 2);
         listJob.put("Pengusaha", 60);
-    }
-
-    public void changeJob() {
-        System.out.println("Daftar pekerjaan yang tersedia: ");
-        for (int i = 0; i < keys.size(); i++) {
-            System.out.println(i + 1 + ". " + keys.get(i));
-        }
-
-        Scanner scanner = new Scanner(System.in);
-        boolean done = false;
-        String oldJobName = jobName;
-        while (!done) {
-            System.out.print("Masukkan nama pekerjaan baru: ");
-            jobName = scanner.nextLine();
-            if (!Main.equals(jobName, oldJobName)) {
-                done = true;
-            } else {
-                System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama");
-            }
-        }
-
-        dailySalary = listJob.get(jobName);
-        scanner.close();
     }
 
     public String getJobName() {

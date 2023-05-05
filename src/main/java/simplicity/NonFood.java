@@ -124,9 +124,9 @@ public class NonFood extends Objek implements Purchasable {
     }
 
     public void setLWP(int length, int width, int price) {
-        this.length = length;
-        this.width = width;
-        this.price = price;
+        setLength(length);
+        setWidth(width);
+        setPrice(price);
     }
 
     public int getLength() {

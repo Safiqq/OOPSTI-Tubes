@@ -43,7 +43,8 @@ public class GUIMain extends Main {
 
     public void showMainFrame() {
         JFrame frame = new JFrame("SimPlicity - Start Screen");
-        frame.setLayout(new FlowLayout());
+        frame.setLocationRelativeTo(null);
+        // frame.setLayout(new FlowLayout());
         frame.setSize(1280, 720);
         frame.setResizable(false);
 
@@ -62,12 +63,10 @@ public class GUIMain extends Main {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(createButton("Start Game", e -> {
-            String simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM",
-                    JOptionPane.QUESTION_MESSAGE);
+            String simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM", JOptionPane.QUESTION_MESSAGE);
             if (simName != null) {
                 while (equals(simName.trim(), "")) {
-                    simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM",
-                            JOptionPane.QUESTION_MESSAGE);
+                    simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM", JOptionPane.QUESTION_MESSAGE);
                     if (simName == null)
                         break;
                 }

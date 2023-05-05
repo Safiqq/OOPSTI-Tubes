@@ -84,9 +84,6 @@ public class Action {
         listAction.add(new Action("Upgrade House", "Sim bisa menghabiskan uang virtual untuk meningkatkan rumahnya dengan menambah ruangan."));
 
         /* Aksi Beli Barang */
-        // Random random = new Random();
-        // random.nextInt(13) + 4 = [4..16]
-        // random.nextInt(13) + 4)};
         listAction.add(new Action("Buy Item", "Sim bisa menghabiskan uang virtual untuk mengisi rumahnya dengan barang-barang."));
 
         /* Aksi Berpindah Ruangan */

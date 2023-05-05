@@ -6,40 +6,38 @@ import java.util.Map;
 
 public class Print {
     public static void printMenu(int[] numbers) {
-        int i = 1;
+        int i = 0;
         for (int j = 0; j < Main.getMenu().length; j++) {
             if (Ints.contains(numbers, j)) {
-                System.out.println(i + ". " + Main.getMenu()[j]);
-                i++;
+                System.out.println(++i + ". " + Main.getMenu()[j]);
             }
         }
     }
 
     public static void showMenuBegin() {
         System.out.println("Menu game yang tersedia:");
-        printMenu(new int[] { 0, 1, 2 });
+        printMenu(new int[]{0, 1, 2});
     }
 
     public static void showMenu() {
         System.out.println("Menu game yang tersedia:");
-        printMenu(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 });
+        printMenu(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13});
     }
 
     public static void showAction(String objekName) {
         System.out.println("Aksi yang dapat dipilih:");
 
         NonFood objek = NonFood.get(objekName);
-        int i = 1;
+        int i = 0;
         for (Action action : objek.getListAction()) {
-            System.out.println(i + ". " + action.getActionName());
-            i++;
+            System.out.println(++i + ". " + action.getActionName());
         }
     }
 
     public static void showCookingMenu() {
-        int i = 1;
+        int i = 0;
         for (Food food : Food.getListFood()) {
-            System.out.print(i + ". " + food.getObjekName() + " (Kekenyangan: " + food.getFoodHunger() + ", Bahan: ");
+            System.out.print(++i + ". " + food.getObjekName() + " (Kekenyangan: " + food.getFoodHunger() + ", Bahan: ");
             int groceriesCount = food.getListGroceries().size();
             for (int j = 0; j < groceriesCount; j++) {
                 System.out.print(food.getObjekName());
@@ -54,25 +52,29 @@ public class Print {
 
     public static void showBuyObjectMenu() {
         System.out.println("Berikut list object non makanan yang dapat dibeli:");
-        int i = 1;
+        int i = 0;
         for (NonFood objek : NonFood.getListNonFood()) {
-            System.out.println(i + ". " + objek.getObjekName() + " (Dimensi: " + objek.getLength() + "x"
-                    + objek.getWidth() + ", Harga: " + objek.getPrice() + ")");
-            i++;
+            System.out.println(++i + ". " + objek.getObjekName() + " (Dimensi: " + objek.getLength() + "x" + objek.getWidth() + ", Harga: " + objek.getPrice() + ")");
         }
         System.out.println("Berikut list object bahan makanan yang dapat dibeli:");
         for (Groceries groceries : Groceries.getListGroceries()) {
-            System.out.println(i + ". " + groceries.getObjekName() + " (Kekenyangan: " + groceries.getHunger()
-                    + ", Harga: " + groceries.getPrice() + ")");
+            System.out.println(++i + ". " + groceries.getObjekName() + " (Kekenyangan: " + groceries.getHunger() + ", Harga: " + groceries.getPrice() + ")");
+        }
+    }
+
+    public static void printListObjek(Room room) {
+        System.out.println("Objek yang ada di ruang " + room.getRoomName() + ":");
+        int i = 0;
+        for (NonFood objek : room.getListObjek()) {
+            System.out.println(++i + ". " + objek.getObjekName() + " (" + objek.getStartPoint().getX() + ", " + objek.getStartPoint().getY() + ")");
         }
     }
 
     public static void printListSim() {
         System.out.println("Daftar Sim yang dapat dimainkan:");
-        int i = 1;
+        int i = 0;
         for (Sim sim : Sim.getListSim()) {
-            System.out.println(i + ". " + sim.getFullName());
-            i++;
+            System.out.println(++i + ". " + sim.getFullName());
         }
         System.out.println();
     }

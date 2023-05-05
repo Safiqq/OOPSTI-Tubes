@@ -2,8 +2,8 @@ package simplicity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 public class CLIMain extends Main {
     private final Scanner scanner;
@@ -17,8 +17,6 @@ public class CLIMain extends Main {
     }
 
     public void start() {
-        // Inisialisasi main
-        CLIMain main = new CLIMain();
         Print.showMenuBegin();
         System.out.println("Ketik 'START GAME' untuk memulai game atau 'HELP' untuk melihat menu game.");
 
@@ -197,12 +195,13 @@ public class CLIMain extends Main {
                 }
 
             } else if (equals(menu, "GO TO OBJECT")) {
-                currentSim.goToObjek();
+                Print.printListObjek(currentSim.getSimLoc().getRoom());
+                goToObjek();
 
             } else if (equals(menu, "CHANGE JOB")) {
                 // harus setidaknya 12 menit bekerja
                 if (currentSim.getTotalWorkTime() >= 720) {
-                    currentSim.newJob();
+                    newJob();
                     currentSim.setDayChangeJob(time.getDay());
                 } else {
                     System.out.println("Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit.");
@@ -361,7 +360,7 @@ public class CLIMain extends Main {
                             System.out.println("Tidak ada rumah yang dimiliki oleh " + ownerHouse);
                             Print.printListSim();
                         } else {
-                            if (houseLoc == currentSim.getSimLoc().getHouse().getHouseLoc()){
+                            if (houseLoc == currentSim.getSimLoc().getHouse().getHouseLoc()) {
                                 System.out.println("Rumah yang ingin dituju Sim sama dengan rumah lokasi Sim tengah berada");
                             } else {
                                 done = true;
@@ -374,7 +373,7 @@ public class CLIMain extends Main {
                     double x = Math.pow(houseLoc.getX() - currentSim.getSimLoc().getHouse().getHouseLoc().getX(), 2);
                     double y = Math.pow(houseLoc.getY() - currentSim.getSimLoc().getHouse().getHouseLoc().getY(), 2);
                     double walkTime = Math.sqrt(x + y);
-                    
+
                     currentSim.addStatus("Walking", (int) walkTime);
                     time.sleepMain(currentSim, (int) walkTime);
 
@@ -386,7 +385,7 @@ public class CLIMain extends Main {
                     currentSim.getSimLoc().getPoint().setY(3);
 
                     // efek tidak berlaku untuk rumah Sim sendiri
-                    if (!equals(ownerHouse, currentSim.getFullName())){
+                    if (!equals(ownerHouse, currentSim.getFullName())) {
                         // validasi waktu berkunjung kelipatan 30
                         int simVisitTime = validateTime("berkunjung", 30);
 
@@ -476,19 +475,6 @@ public class CLIMain extends Main {
             }
         }
         return time;
-    }
-
-    // Bersihkan layar terminal
-    public void clearScreen() {
-        try {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows"))
-                Runtime.getRuntime().exec("cls");
-            else
-                Runtime.getRuntime().exec("clear");
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
     }
 
     // Buat Sim. Validasi sampai nama Sim ada di listSim
@@ -604,55 +590,76 @@ public class CLIMain extends Main {
 
     // Sim upgrade rumah (tambah ruangan)
     public void upgradeHouse() {
-        House house = currentSim.getSimLoc().getHouse();
-        List<Room> listRoom = house.getListRoom();
-        Room tempRoom = currentSim.getSimLoc().getRoom();
-        System.out.println("List ruangan di rumahmu:");
-        for (int i = 0; i < listRoom.size(); i++) {
-            System.out.println((i + 1) + ". " + listRoom.get(i).getRoomName());
-        }
-
         if (currentSim.isMoneyEnough(1500)) {
-            // Kalau rumah sekarang cuma ada 1 ruangan
+            House house = currentSim.getSimLoc().getHouse();
+            List<Room> listRoom = house.getListRoom();
+            Room tempRoom = currentSim.getSimLoc().getRoom();
+            System.out.println("List ruangan di rumahmu:");
+            for (int i = 0; i < listRoom.size(); i++) {
+                System.out.println((i + 1) + ". " + listRoom.get(i).getRoomName());
+            }
+
             if (listRoom.size() > 1) {
-                while (true) {
+                do {
                     System.out.print("Masukkan nama salah satu ruangan sebagai acuan: ");
                     String roomName = scanner.nextLine();
                     tempRoom = house.get(roomName);
-                    if (tempRoom != null) {
-                        break;
-                    } else {
-                        System.out.println("Ruangan tidak dikenali...");
-                    }
-                }
+                    System.out.println("Ruangan tidak dikenali...");
+                } while (tempRoom == null);
             }
 
             System.out.print("Masukkan nama ruangan baru:");
             String newRoomName = scanner.nextLine();
+            final Room _tempRoom = tempRoom;
 
             // Loop untuk mendapatkan lokasi ruangan baru yang valid
             while (true) {
-                System.out.printf("Pilih lokasi %s disebelah Ruangan Utama (kiri/kanan/atas/bawah): ", newRoomName);
+                System.out.printf("Pilih lokasi %s di sebelah %s (KIRI/KANAN/ATAS/BAWAH): ", newRoomName, tempRoom.getRoomName());
                 String roomLoc = scanner.nextLine();
+                final String _statusName = "Upgrade House - " + tempRoom.getRoomName() + " - " + roomLoc;
                 if (Main.equals(roomLoc, "KANAN")) {
-                    Room newRoom = new Room(newRoomName, null, null, tempRoom, null);
-                    tempRoom.setRightSide(newRoom);
-                    house.addListRoom(newRoom);
+                    currentSim.addStatus(_statusName, 18 * 60);
+                    Thread thread = new Thread(() -> {
+                        while (currentSim.getMapStatus().get(_statusName) != null) {
+                        }
+                        Room newRoom = new Room(newRoomName, null, null, _tempRoom, null);
+                        _tempRoom.setRightSide(newRoom);
+                        house.addListRoom(newRoom);
+                    });
+                    thread.start();
                     break;
                 } else if (Main.equals(roomLoc, "KIRI")) {
-                    Room newRoom = new Room(newRoomName, null, null, null, tempRoom);
-                    tempRoom.setLeftSide(newRoom);
-                    house.addListRoom(newRoom);
+                    currentSim.addStatus("Upgrade House - " + tempRoom.getRoomName() + " - " + roomLoc, 18 * 60);
+                    Thread thread = new Thread(() -> {
+                        while (currentSim.getMapStatus().get(_statusName) != null) {
+                        }
+                        Room newRoom = new Room(newRoomName, null, null, null, _tempRoom);
+                        _tempRoom.setLeftSide(newRoom);
+                        house.addListRoom(newRoom);
+                    });
+                    thread.start();
                     break;
                 } else if (Main.equals(roomLoc, "ATAS")) {
-                    Room newRoom = new Room(newRoomName, null, tempRoom, null, null);
-                    tempRoom.setUpperSide(newRoom);
-                    house.addListRoom(newRoom);
+                    currentSim.addStatus("Upgrade House - " + tempRoom.getRoomName() + " - " + roomLoc, 18 * 60);
+                    Thread thread = new Thread(() -> {
+                        while (currentSim.getMapStatus().get(_statusName) != null) {
+                        }
+                        Room newRoom = new Room(newRoomName, null, _tempRoom, null, null);
+                        _tempRoom.setUpperSide(newRoom);
+                        house.addListRoom(newRoom);
+                    });
+                    thread.start();
                     break;
                 } else if (Main.equals(roomLoc, "BAWAH")) {
-                    Room newRoom = new Room(newRoomName, tempRoom, null, null, null);
-                    tempRoom.setBottomSide(newRoom);
-                    house.addListRoom(newRoom);
+                    currentSim.addStatus("Upgrade House - " + tempRoom.getRoomName() + " - " + roomLoc, 18 * 60);
+                    Thread thread = new Thread(() -> {
+                        while (currentSim.getMapStatus().get(_statusName) != null) {
+                        }
+                        Room newRoom = new Room(newRoomName, _tempRoom, null, null, null);
+                        _tempRoom.setBottomSide(newRoom);
+                        house.addListRoom(newRoom);
+                    });
+                    thread.start();
                     break;
                 } else {
                     System.out.println("Lokasi tidak valid.");
@@ -669,18 +676,14 @@ public class CLIMain extends Main {
     public void buyItem() {
         int buynumber;
 
-        while (true) {
+        do {
             System.out.println("Masukkan nomor item yang ingin dibeli.");
             System.out.print("Nomor: ");
             buynumber = scanner.nextInt();
-            if (buynumber >= 1 && buynumber <= 18) {
-                break;
-            } else {
-                System.out.println("Nomor tidak teridentifikasi. Masukkan nomor yang tersedia.");
-            }
-        }
+            System.out.println("Nomor tidak teridentifikasi. Masukkan nomor yang tersedia.");
+        } while (buynumber < 1 || buynumber > 18);
 
-        Objek objek = null;
+        Objek objek;
 
         if (buynumber == 1 && currentSim.isMoneyEnough(NonFood.get("Kasur Single").getPrice())) {
             objek = new NonFood("Kasur Single");
@@ -718,20 +721,29 @@ public class CLIMain extends Main {
             objek = new Groceries("Kacang");
         } else if (buynumber == 18 && currentSim.isMoneyEnough(Groceries.get("Susu").getPrice())) {
             objek = new Groceries("Susu");
+        } else {
+            objek = null;
         }
 
         Random rd = new Random();
-        double randomizer = rd.nextDouble(1.5);
-        int waktukirim = (int) (randomizer * 30);
+        int randomizer = rd.nextInt(5) + 1; // [1..5]
+        int waktukirim = randomizer * 30;
 
         if (objek != null) {
+            final String _statusName = "Buy Item - " + objek.getObjekName();
             if (Main.equals(objek.getClass().getSimpleName(), "Groceries")) {
                 if (currentSim.isMoneyEnough(((Groceries) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((Groceries) objek).getPrice());
                     System.out.println("Mengirim barang...");
-                    currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
-                    // time.sleepMain(currentSim, waktukirim);
-                    System.out.println("Berhasil membeli barang!");
+
+                    currentSim.addStatus(_statusName, waktukirim);
+                    Thread thread = new Thread(() -> {
+                        while (currentSim.getMapStatus().get(_statusName) != null) {
+                        }
+                        currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
+                        System.out.println("Berhasil membeli barang!");
+                    });
+                    thread.start();
                 } else {
                     System.out.println("Uangmu kurang :(");
                 }
@@ -739,9 +751,15 @@ public class CLIMain extends Main {
                 if (currentSim.isMoneyEnough(((NonFood) objek).getPrice())) {
                     currentSim.setMoney(currentSim.getMoney() - ((NonFood) objek).getPrice());
                     System.out.println("Mengirim barang...");
-                    currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
-                    // time.sleepMain(currentSim, waktukirim);
-                    System.out.println("Berhasil membeli barang!");
+
+                    currentSim.addStatus(_statusName, waktukirim);
+                    Thread thread = new Thread(() -> {
+                        while (currentSim.getMapStatus().get(_statusName) != null) {
+                        }
+                        currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
+                        System.out.println("Berhasil membeli barang!");
+                    });
+                    thread.start();
                 } else {
                     System.out.println("Uangmu kurang :(");
                 }
@@ -877,6 +895,70 @@ public class CLIMain extends Main {
             }
         } else {
             System.out.println("Tidak ada makanan dengan nama " + namaMakanan);
+        }
+    }
+
+    public void goToObjek() {
+        System.out.print("Masukkan nama barang: ");
+        String objekName = scanner.nextLine();
+
+        ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
+        for (NonFood barang : listBarang) {
+            // Kalo barang ada di ruangan
+            if (Main.equals(objekName, barang.getObjekName())) {
+                NonFood[][] matrixBarang = currentSim.getSimLoc().getRoom().getMatrixBarang();
+                for (int i = 0; i < 6; i++) {
+                    for (int j = 0; j < 6; j++) {
+                        if (matrixBarang[j][i] == barang) {
+                            currentSim.getSimLoc().getPoint().setX(i);
+                            currentSim.getSimLoc().getPoint().setY(j);
+                            System.out.println("Kamu berhasil berpindah tempat ke objek " + barang.getObjekName() + ".");
+                            break;
+                        }
+                    }
+                }
+                break;
+            } else { // Kalo barang ga ada di ruangan
+                System.out.printf("%s tidak tersedia di %s.", barang.getObjekName(), currentSim.getSimLoc().getRoom().getRoomName());
+            }
+        }
+    }
+
+    public void newJob() {
+        Occupation occupation = currentSim.getOccupation();
+
+        // Change job
+        System.out.println("Daftar pekerjaan yang tersedia: ");
+        List<String> keys = Occupation.getKeys();
+        for (int i = 0; i < keys.size(); i++) {
+            System.out.println(i + 1 + ". " + keys.get(i));
+        }
+
+        boolean done = false;
+        String oldJobName = occupation.getJobName();
+        int oldDailySalary = occupation.getDailySalary();
+        String jobName;
+        while (true) {
+            System.out.print("Masukkan nama pekerjaan baru: ");
+            jobName = scanner.nextLine();
+            if (!Main.equals(jobName, oldJobName)) {
+                break;
+            } else {
+                System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama");
+            }
+        }
+        occupation.setJobName(jobName);
+        occupation.setDailySalary(Occupation.getListJob().get(jobName));
+
+        // Harus bayar 1/2 dari gaji harian pekerjaan baru
+        int payChangeJob = (int) (0.5 * occupation.getDailySalary());
+        if (currentSim.getMoney() < payChangeJob) {
+            System.out.println("Uang tidak mencukupi untuk pindah pekerjaan");
+            occupation.setJobName(oldJobName);
+            occupation.setDailySalary(oldDailySalary);
+        } else {
+            currentSim.setMoney(currentSim.getMoney() - payChangeJob);
+            currentSim.setTotalWorkTime(0);
         }
     }
 }

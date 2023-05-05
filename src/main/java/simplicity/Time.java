@@ -45,7 +45,7 @@ public class Time {
             if (duration > 0) {
                 sim.getMapStatus().put(status, duration - 1);
             }
-            if (duration == 0) {
+            if (duration <= 0) {
                 sim.applyEffect(status);
                 sim.deleteStatus(status);
             }

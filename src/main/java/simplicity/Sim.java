@@ -1,9 +1,9 @@
 package simplicity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class Sim {
     private static final List<Sim> listSim = new ArrayList<>();
@@ -26,6 +26,7 @@ public class Sim {
         money = 100;
         occupation = new Occupation(); // inisiasi di class occupation
         inventory = new Inventory(); // inisiasi di class inventory
+        mapStatus = new HashMap<>();
         House house = new House(fullName);
         simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 
@@ -38,6 +39,7 @@ public class Sim {
         money = 100;
         occupation = new Occupation(); // inisiasi di class occupation
         inventory = new Inventory(); // inisiasi di class inventory
+        mapStatus = new HashMap<>();
         House house = new House(fullName, houseLoc);
         simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 
@@ -204,21 +206,6 @@ public class Sim {
         }
     }
 
-    public void newJob() {
-        Occupation oldJob = occupation;
-        occupation.changeJob();
-        // harus bayar 1/2 dari gaji harian pekerjaan baru
-        int payChangeJob = (int) (0.5 * occupation.getDailySalary());
-        if (money < payChangeJob) {
-            System.out.println("Uang tidak mencukupi untuk pindah pekerjaan");
-            occupation.setJobName(oldJob.getJobName());
-            occupation.setDailySalary(oldJob.getDailySalary());
-        } else {
-            money -= payChangeJob;
-            totalWorkTime = 0;
-        }
-    }
-
     public void exercise(int time) {
         // efek +5 kesehatan/20 dtk, -5 kekenyangan/20 dtk, +10 mood/20 dtk
         int plusHealth = 5 * (time / 20);
@@ -292,10 +279,6 @@ public class Sim {
         }
     }
 
-    public void cook() {
-
-    }
-
     public void visit(int time) {
         // +10 mood/30 dtk, -10 kekenyangan/30 dtk
         int plusMood = 10 * (time / 30);
@@ -328,60 +311,6 @@ public class Sim {
             System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim!");
             listSim.remove(this);
         }
-    }
-
-    public void goTo() {
-        // cuma untuk pindah di satu ruangan
-        Scanner scan = new Scanner(System.in);
-        boolean pointValid = false;
-        while (!pointValid) {
-            System.out.print("Masukan titik X tujuan: ");
-            int X = scan.nextInt();
-            System.out.println();
-
-            System.out.print("Masukan titik Y tujuan: ");
-            int Y = scan.nextInt();
-            System.out.println();
-
-            if (X < 0 || X > 5 || Y < 0 || Y > 5) {
-                System.out.println("Point tidak valid.");
-            } else {
-                Point point = new Point(X, Y);
-                simLoc.setPoint(point);
-                pointValid = true;
-            }
-        }
-        scan.close();
-    }
-
-    public void goToObjek() {
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Masukkan nama barang: ");
-        String objekName = scan.nextLine();
-        System.out.println();
-
-        ArrayList<NonFood> listBarang = simLoc.getRoom().getListObjek();
-        for (NonFood barang : listBarang) {
-            // kalo barang ada di ruangan
-            if (Main.equals(objekName, barang.getObjekName())) {
-                NonFood[][] matrixBarang = simLoc.getRoom().getMatrixBarang();
-                for (int i = 0; i < 6; i++) {
-                    for (int j = 0; j < 6; j++) {
-                        if (matrixBarang[j][i] == barang) {
-                            simLoc.getPoint().setX(i);
-                            simLoc.getPoint().setY(j);
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-            // kalo barang ga ada di ruangan
-            else {
-                System.out.printf("%s tidak tersedia di %s.", barang.getObjekName(), simLoc.getRoom());
-            }
-        }
-        scan.close();
     }
 
     public String getObjLoc() {

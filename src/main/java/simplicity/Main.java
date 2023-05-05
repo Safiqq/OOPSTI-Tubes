@@ -19,7 +19,6 @@ public abstract class Main {
             "Change Job - Sim dapat mengganti pekerjaan",
             "Action - Melakukan sebuah aksi pada suatu objek"
     };
-
     protected static Time time;
     protected Sim currentSim;
     protected int dayAddSim;
