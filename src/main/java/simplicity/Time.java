@@ -45,7 +45,8 @@ public class Time {
             if (duration > 0) {
                 sim.getMapStatus().put(status, duration - 1);
             }
-            if (!Main.equals(status, "Sleep")) {
+            if (Action.get(status).getListEffect().size() > 0) {
+                System.out.println("Sim " + sim.getFullName() + " sedang melakukan " + status + " (" + duration + " detik lagi).");
                 if (duration % Action.get(status).getListEffect().get(0).getCooldown() == 0) {
                     sim.applyEffect(status);
                 }
