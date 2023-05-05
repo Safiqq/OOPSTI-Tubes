@@ -865,100 +865,96 @@ public class CLIMain extends Main {
             boolean barangValid = false;
             Box<NonFood> boxNonFood = currentSim.getInventory().getBoxNonFood();
 
-            System.out.println("List barang di inventory Anda:");
-            int i = 1;
-            for (NonFood barang : boxNonFood.getList()) {
-                System.out.println(i + ". " + barang.getObjekName() + " - " + boxNonFood.getCount(barang.getObjekName()));
-                i++;
-            }
-
-            // looping input nama barang
-            while (!barangValid) {
-                System.out.print("Masukkan nama barang yang ingin dipasang: ");
-                String namaBarang = scanner.nextLine();
-                System.out.println();
-                // cek barang di inventory
+            if (boxNonFood.getList().size() > 0) {
+                System.out.println("List barang di inventory Anda:");
+                int i = 0;
                 for (NonFood barang : boxNonFood.getList()) {
-                    // kalau barang ada di inventory
-                    if (Main.equals(namaBarang, barang.getObjekName())) {
-                        boolean roomValid = false;
-
-                        // looping input nama ruangan
-                        while (!roomValid) {
-                            System.out.print("Masukkan nama ruangan: ");
-                            String roomName = scanner.nextLine();
-                            System.out.println();
-                            // cek valid ruangan
-                            for (Room room : currentSim.getSimLoc().getHouse().getListRoom()) {
-                                // kalau nama ruangan valid
-                                if (Main.equals(roomName, room.getRoomName())) {
-                                    boolean pointValid = false;
-                                    while (!pointValid) {
-                                        // input lokasi barang di ruangan
-                                        System.out.print("Masukkan lokasi awal sumbu X barang: ");
-                                        int startX = scanner.nextInt();
-                                        System.out.println();
-
-                                        System.out.print("Masukkan lokasi awal sumbu Y barang: ");
-                                        int startY = scanner.nextInt();
-                                        System.out.println();
-
-                                        System.out.print("Masukkan lokasi akhir sumbu X barang: ");
-                                        int endX = scanner.nextInt();
-                                        System.out.println();
-
-                                        System.out.print("Masukkan lokasi akhir sumbu Y barang: ");
-                                        int endY = scanner.nextInt();
-                                        System.out.println();
-
-                                        // Kalau point berada diluar 0-5
-                                        if (startX < 0 || startX > 5 || startY < 0 || startY > 5 || endX < 0 || endX > 5 || endY < 0 || endY > 5) {
-                                            System.out.println("Point tidak valid.");
-                                            // Kalau point berada di antara 0-5
-                                        } else {
-                                            int length = Math.abs(startX - endX) + 1;
-                                            int width = Math.abs(startY - endY) + 1;
-                                            // Kalau point sesuai dengan ukuran barang
-                                            if ((length == barang.getLength()) && (width == barang.getWidth())) {
-                                                Point startPoint = new Point(startX, startY);
-                                                Point endPoint = new Point(endX, endY);
-                                                // Kalau lokasi yang dipilih tersedia
-                                                if (room.isSpaceEmpty(startPoint, endPoint)) {
-                                                    room.insertBarang(barang);
-                                                    room.addListObjek(barang);
-                                                    boxNonFood.delete(barang.getObjekName());
-                                                    pointValid = true;
-                                                }
-                                                // Kalau lokasi yang dipilih ga tersedia
-                                                else {
-                                                    System.out.println("Area ruangan tidak kosong.");
-                                                }
-                                            }
-                                            // Kalau point tidak sesuai ukuran barang
-                                            else {
-                                                System.out.println("Point tidak sesuai dengan ukuran barang.");
-                                            }
-                                        }
-                                    }
-                                    roomValid = true;
-                                    break;
-                                }
-                                // Kalau nama ruangan tidak valid
-                                else {
-                                    System.out.println("Ruangan tidak dikenali.");
-                                }
-                            }
-
-                        }
-                        barangValid = true;
-                        break;
-                    }
-                    // Kalau barang ga ada di inventory
-                    else {
-                        System.out.println("Barang tidak ada di inventory.");
-                    }
+                    System.out.println(++i + ". " + barang.getObjekName() + " - " + boxNonFood.getCount(barang.getObjekName()));
                 }
 
+                // Looping input nama barang
+                while (!barangValid) {
+                    System.out.print("Masukkan nama barang yang ingin dipasang: ");
+                    String namaBarang = scanner.nextLine();
+                    System.out.println();
+                    // cek barang di inventory
+                    for (NonFood barang : boxNonFood.getList()) {
+                        // kalau barang ada di inventory
+                        if (Main.equals(namaBarang, barang.getObjekName())) {
+                            boolean roomValid = false;
+
+                            // looping input nama ruangan
+                            while (!roomValid) {
+                                System.out.print("Masukkan nama ruangan: ");
+                                String roomName = scanner.nextLine();
+                                System.out.println();
+                                // cek valid ruangan
+                                for (Room room : currentSim.getSimLoc().getHouse().getListRoom()) {
+                                    // kalau nama ruangan valid
+                                    if (Main.equals(roomName, room.getRoomName())) {
+                                        boolean pointValid = false;
+                                        while (!pointValid) {
+                                            // input lokasi barang di ruangan
+                                            System.out.print("Masukkan lokasi awal sumbu X barang: ");
+                                            int startX = scanner.nextInt();
+                                            System.out.println();
+
+                                            System.out.print("Masukkan lokasi awal sumbu Y barang: ");
+                                            int startY = scanner.nextInt();
+                                            System.out.println();
+
+                                            System.out.print("Masukkan lokasi akhir sumbu X barang: ");
+                                            int endX = scanner.nextInt();
+                                            System.out.println();
+
+                                            System.out.print("Masukkan lokasi akhir sumbu Y barang: ");
+                                            int endY = scanner.nextInt();
+                                            System.out.println();
+
+                                            // Kalau point berada diluar 0-5
+                                            if (startX < 0 || startX > 5 || startY < 0 || startY > 5 || endX < 0 || endX > 5 || endY < 0 || endY > 5) {
+                                                System.out.println("Point tidak valid.");
+                                                // Kalau point berada di antara 0-5
+                                            } else {
+                                                int length = Math.abs(startX - endX) + 1;
+                                                int width = Math.abs(startY - endY) + 1;
+                                                // Kalau point sesuai dengan ukuran barang
+                                                if ((length == barang.getLength()) && (width == barang.getWidth())) {
+                                                    Point startPoint = new Point(startX, startY);
+                                                    Point endPoint = new Point(endX, endY);
+                                                    // Kalau lokasi yang dipilih tersedia
+                                                    if (room.isSpaceEmpty(startPoint, endPoint)) {
+                                                        room.insertBarang(barang);
+                                                        room.addListObjek(barang);
+                                                        boxNonFood.delete(barang.getObjekName());
+                                                        pointValid = true;
+                                                    } else { // Kalau lokasi yang dipilih ga tersedia
+                                                        System.out.println("Area ruangan tidak kosong.");
+                                                    }
+                                                } else { // Kalau point tidak sesuai ukuran barang
+                                                    System.out.println("Point tidak sesuai dengan ukuran barang.");
+                                                }
+                                            }
+                                        }
+                                        roomValid = true;
+                                        break;
+                                    }
+                                    // Kalau nama ruangan tidak valid
+                                    else {
+                                        System.out.println("Ruangan tidak dikenali.");
+                                    }
+                                }
+
+                            }
+                            barangValid = true;
+                            break;
+                        } else { // Kalau barang ga ada di inventory
+                            System.out.println("Barang tidak ada di inventory.");
+                        }
+                    }
+                }
+            } else {
+                System.out.println("Inventory Anda kosong. Beli barang terlebih dahulu!");
             }
         } else { // Kalau sim berada di rumah orang lain
             System.out.println("Sim harus berada di rumah sendiri untuk memasang barang.");
@@ -999,9 +995,9 @@ public class CLIMain extends Main {
             NonFood targetBarang = listBarang.get(numBarang - 1);
             currentSim.getSimLoc().getPoint().setX(targetBarang.getStartPoint().getX());
             currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
-            System.out.println("Kamu berhasil berpindah tempat ke objek " + currentSim.getObjLoc() + ".");
+            System.out.println("Anda berhasil berpindah tempat ke objek " + currentSim.getObjLoc() + ".");
         }
-        //kalau numBarang lebih dari total barang
+        // Kalau numBarang lebih dari total barang
         else {
             System.out.println("Masukan tidak valid. Pilih nomor yang tersedia.");
         }
@@ -1074,7 +1070,7 @@ public class CLIMain extends Main {
                         } else {
                             Point startPoint = new Point(startX, startY);
                             Point endPoint = new Point(endX, endY);
-                            
+
                             NonFood[][] matrixBarang = currentSim.getSimLoc().getRoom().getMatrixBarang();
                             for (int i = targetBarang.getStartPoint().getX(); i <= targetBarang.getEndPoint().getX(); i++) {
                                 for (int j = targetBarang.getStartPoint().getY(); j <= targetBarang.getEndPoint().getY(); j++) {
@@ -1089,6 +1085,7 @@ public class CLIMain extends Main {
                                         matrixBarang[i][j] = targetBarang;
                                     }
                                 }
+                                System.out.println("Barang " + targetBarang.getObjekName() + " berhasil dipindah.");
                                 pointValid = true;
                             } else {
                                 for (int i = targetBarang.getStartPoint().getX(); i <= targetBarang.getEndPoint().getX(); i++) {
