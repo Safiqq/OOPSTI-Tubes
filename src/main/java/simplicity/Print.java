@@ -51,12 +51,12 @@ public class Print {
     }
 
     public static void showBuyObjectMenu() {
-        System.out.println("Berikut list object non makanan yang dapat dibeli:");
+        System.out.println("Berikut list objek non makanan yang dapat dibeli:");
         int i = 0;
         for (NonFood objek : NonFood.getListNonFood()) {
             System.out.println(++i + ". " + objek.getObjekName() + " (Dimensi: " + objek.getLength() + "x" + objek.getWidth() + ", Harga: " + objek.getPrice() + ")");
         }
-        System.out.println("Berikut list object bahan makanan yang dapat dibeli:");
+        System.out.println("Berikut list objek bahan makanan yang dapat dibeli:");
         for (Groceries groceries : Groceries.getListGroceries()) {
             System.out.println(++i + ". " + groceries.getObjekName() + " (Kekenyangan: " + groceries.getHunger() + ", Harga: " + groceries.getPrice() + ")");
         }
@@ -66,7 +66,7 @@ public class Print {
         System.out.println("Objek yang ada di ruang " + room.getRoomName() + ":");
         int i = 0;
         for (NonFood objek : room.getListObjek()) {
-            System.out.println(++i + ". " + objek.getObjekName() + " (" + objek.getStartPoint().getX() + ", " + objek.getStartPoint().getY() + ")");
+            System.out.println(++i + ". " + objek.getObjekName() + " [(" + objek.getStartPoint().getX() + ", " + objek.getStartPoint().getY() + ") - (" + objek.getEndPoint().getX() + ", " + objek.getEndPoint().getY() + ")]");
         }
     }
 

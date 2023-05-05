@@ -116,7 +116,7 @@ public class CLIMain extends Main {
                 Print.viewSimInventory(currentSim);
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
-                if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())){
+                if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())) {
                     upgradeHouse();
                 } else {
                     System.out.println("Sim tidak sedang berada di rumah sendiri.");
@@ -416,7 +416,7 @@ public class CLIMain extends Main {
                     }
 
                 } else if (equals(act, "UPGRADE HOUSE")) {
-                    if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())){
+                    if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())) {
                         upgradeHouse();
                     } else {
                         System.out.println("Sim tidak sedang berada di rumah sendiri.");
@@ -495,7 +495,7 @@ public class CLIMain extends Main {
                         currentSim.addStatus("Look Mirror", simMirrorTime);
                         System.out.println("Sim bercermin.");
                         time.sleepMain(currentSim, simMirrorTime);
-                        
+
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di cermin.");
                         System.out.println("Silahkan melakukan Action - Go to Object ke cermin untuk menjalankan aksi ini.");
@@ -646,225 +646,216 @@ public class CLIMain extends Main {
 
     // Sim upgrade rumah (tambah ruangan)
     public void upgradeHouse() {
-        if (currentSim.isMoneyEnough(1500)) {
-            House house = currentSim.getSimLoc().getHouse();
-            List<Room> listRoom = house.getListRoom();
-            Room tempRoom = currentSim.getSimLoc().getRoom();
-            System.out.println("List ruangan di rumahmu:");
-            for (int i = 0; i < listRoom.size(); i++) {
-                System.out.println((i + 1) + ". " + listRoom.get(i).getRoomName());
-            }
-
-            if (listRoom.size() > 1) {
-                do {
-                    System.out.print("Masukkan nama salah satu ruangan sebagai acuan: ");
-                    String roomName = scanner.nextLine();
-                    tempRoom = house.get(roomName);
-                    System.out.println("Ruangan tidak dikenali...");
-                } while (tempRoom == null);
-            }
-
-            System.out.print("Masukkan nama ruangan baru:");
-            String newRoomName = scanner.nextLine();
-            Room _tempRoom = tempRoom;
-
-            // Loop untuk mendapatkan lokasi ruangan baru yang valid
-            while (true) {
-                System.out.printf("Pilih lokasi %s di sebelah %s (KIRI/KANAN/ATAS/BAWAH): ", newRoomName, tempRoom.getRoomName());
-                String roomLoc = scanner.nextLine();
-                String statusName = "Upgrade House - " + tempRoom.getRoomName() + " - " + roomLoc;
-                if (Main.equals(roomLoc, "KANAN")) {
-                    currentSim.addStatus(statusName, 18 * 60);
-                    Thread thread = new Thread(() -> {
-                        while (currentSim.getMapStatus().get(statusName) != null) {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        Room newRoom = new Room(newRoomName, null, null, _tempRoom, null);
-                        _tempRoom.setRightSide(newRoom);
-                        house.addListRoom(newRoom);
-                    });
-                    thread.start();
-                    break;
-                } else if (Main.equals(roomLoc, "KIRI")) {
-                    currentSim.addStatus(statusName, 18 * 60);
-                    Thread thread = new Thread(() -> {
-                        while (currentSim.getMapStatus().get(statusName) != null) {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        Room newRoom = new Room(newRoomName, null, null, null, _tempRoom);
-                        _tempRoom.setLeftSide(newRoom);
-                        house.addListRoom(newRoom);
-                    });
-                    thread.start();
-                    break;
-                } else if (Main.equals(roomLoc, "ATAS")) {
-                    currentSim.addStatus(statusName, 18 * 60);
-                    Thread thread = new Thread(() -> {
-                        while (currentSim.getMapStatus().get(statusName) != null) {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        Room newRoom = new Room(newRoomName, null, _tempRoom, null, null);
-                        _tempRoom.setUpperSide(newRoom);
-                        house.addListRoom(newRoom);
-                    });
-                    thread.start();
-                    break;
-                } else if (Main.equals(roomLoc, "BAWAH")) {
-                    currentSim.addStatus(statusName, 18 * 60);
-                    Thread thread = new Thread(() -> {
-                        while (currentSim.getMapStatus().get(statusName) != null) {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                        Room newRoom = new Room(newRoomName, _tempRoom, null, null, null);
-                        _tempRoom.setBottomSide(newRoom);
-                        house.addListRoom(newRoom);
-                    });
-                    thread.start();
-                    break;
-                } else {
-                    System.out.println("Lokasi tidak valid.");
+        if (currentSim.getMapStatus().get("Upgrade House") == null) {
+            if (currentSim.isMoneyEnough(1500)) {
+                House house = currentSim.getSimLoc().getHouse();
+                List<Room> listRoom = house.getListRoom();
+                Room tempRoom = currentSim.getSimLoc().getRoom();
+                System.out.println("List ruangan di rumahmu:");
+                for (int i = 0; i < listRoom.size(); i++) {
+                    System.out.println((i + 1) + ". " + listRoom.get(i).getRoomName());
                 }
+
+                if (listRoom.size() > 1) {
+                    do {
+                        System.out.print("Masukkan nama salah satu ruangan sebagai acuan: ");
+                        String roomName = scanner.nextLine();
+                        tempRoom = house.get(roomName);
+                        System.out.println("Ruangan tidak dikenali...");
+                    } while (tempRoom == null);
+                }
+
+                System.out.print("Masukkan nama ruangan baru:");
+                String newRoomName = scanner.nextLine();
+                Room _tempRoom = tempRoom;
+
+                // Loop untuk mendapatkan lokasi ruangan baru yang valid
+                while (true) {
+                    System.out.printf("Pilih lokasi %s di sebelah %s (KIRI/KANAN/ATAS/BAWAH): ", newRoomName, tempRoom.getRoomName());
+                    String roomLoc = scanner.nextLine();
+                    if (Main.equals(roomLoc, "KANAN")) {
+                        currentSim.addStatus("Upgrade House", 18 * 60);
+                        Thread thread = new Thread(() -> {
+                            while (currentSim.getMapStatus().get("Upgrade House") != null) {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            Room newRoom = new Room(newRoomName, null, null, _tempRoom, null);
+                            _tempRoom.setRightSide(newRoom);
+                            house.addListRoom(newRoom);
+                        });
+                        thread.start();
+                        break;
+                    } else if (Main.equals(roomLoc, "KIRI")) {
+                        currentSim.addStatus("Upgrade House", 18 * 60);
+                        Thread thread = new Thread(() -> {
+                            while (currentSim.getMapStatus().get("Upgrade House") != null) {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            Room newRoom = new Room(newRoomName, null, null, null, _tempRoom);
+                            _tempRoom.setLeftSide(newRoom);
+                            house.addListRoom(newRoom);
+                        });
+                        thread.start();
+                        break;
+                    } else if (Main.equals(roomLoc, "ATAS")) {
+                        currentSim.addStatus("Upgrade House", 18 * 60);
+                        Thread thread = new Thread(() -> {
+                            while (currentSim.getMapStatus().get("Upgrade House") != null) {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            Room newRoom = new Room(newRoomName, null, _tempRoom, null, null);
+                            _tempRoom.setUpperSide(newRoom);
+                            house.addListRoom(newRoom);
+                        });
+                        thread.start();
+                        break;
+                    } else if (Main.equals(roomLoc, "BAWAH")) {
+                        currentSim.addStatus("Upgrade House", 18 * 60);
+                        Thread thread = new Thread(() -> {
+                            while (currentSim.getMapStatus().get("Upgrade House") != null) {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                            Room newRoom = new Room(newRoomName, _tempRoom, null, null, null);
+                            _tempRoom.setBottomSide(newRoom);
+                            house.addListRoom(newRoom);
+                        });
+                        thread.start();
+                        break;
+                    } else {
+                        System.out.println("Lokasi tidak valid.");
+                    }
+                }
+                // Decrease money
+                currentSim.setMoney(currentSim.getMoney() - 1500);
+                currentSim.addStatus("Upgrade house-" + newRoomName, 18 * 60);
+            } else {
+                System.out.println("Uang Sim tidak cukup untuk upgrade rumah.");
             }
-            // Decrease money
-            currentSim.setMoney(currentSim.getMoney() - 1500);
-            currentSim.addStatus("Upgrade house-" + newRoomName, 18 * 60);
         } else {
-            System.out.println("Uang Sim tidak cukup untuk upgrade rumah.");
+            System.out.println("Anda sudah upgrade rumah! Tunggu sampai upgrade rumah selesai.");
         }
     }
 
     public void buyItem() {
-        int buynumber;
+        if (currentSim.getMapStatus().get("Buy Item") == null) {
+            int buynumber;
 
-        do {
-            System.out.println("Masukkan nomor item yang ingin dibeli.");
-            System.out.print("Nomor: ");
-            buynumber = scanner.nextInt();
-        } while (buynumber < 1 || buynumber > 18);
+            do {
+                System.out.println("Masukkan nomor item yang ingin dibeli.");
+                System.out.print("Nomor: ");
+                buynumber = scanner.nextInt();
+            } while (buynumber < 1 || buynumber > 18);
 
-        Objek objek;
+            Objek objek;
 
-        if (buynumber == 1 && currentSim.isMoneyEnough(NonFood.get("Kasur Single").getPrice())) {
-            objek = new NonFood("Kasur Single");
-        } else if (buynumber == 2 && currentSim.isMoneyEnough(NonFood.get("Kasur Queen Size").getPrice())) {
-            objek = new NonFood("Kasur Queen Size");
-        } else if (buynumber == 3 && currentSim.isMoneyEnough(NonFood.get("Kasur King Size").getPrice())) {
-            objek = new NonFood("Kasur King Size");
-        } else if (buynumber == 4 && currentSim.isMoneyEnough(NonFood.get("Toilet").getPrice())) {
-            objek = new NonFood("Toilet");
-        } else if (buynumber == 5 && currentSim.isMoneyEnough(NonFood.get("Kompor Gas").getPrice())) {
-            objek = new NonFood("Kompor Gas");
-        } else if (buynumber == 6 && currentSim.isMoneyEnough(NonFood.get("Kompor Listrik").getPrice())) {
-            objek = new NonFood("Kompor Listrik");
-        } else if (buynumber == 7 && currentSim.isMoneyEnough(NonFood.get("Meja dan Kursi").getPrice())) {
-            objek = new NonFood("Meja dan Kursi");
-        } else if (buynumber == 8 && currentSim.isMoneyEnough(NonFood.get("Jam").getPrice())) {
-            objek = new NonFood("Jam");
-        } else if (buynumber == 9 && currentSim.isMoneyEnough(NonFood.get("Wastafel").getPrice())) {
-            objek = new NonFood("Wastafel");
-        } else if (buynumber == 10 && currentSim.isMoneyEnough(NonFood.get("Cermin").getPrice())) {
-            objek = new NonFood("Cermin");
-        } else if (buynumber == 11 && currentSim.isMoneyEnough(Groceries.get("Nasi").getPrice())) {
-            objek = new Groceries("Nasi");
-        } else if (buynumber == 12 && currentSim.isMoneyEnough(Groceries.get("Kentang").getPrice())) {
-            objek = new Groceries("Kentang");
-        } else if (buynumber == 13 && currentSim.isMoneyEnough(Groceries.get("Ayam").getPrice())) {
-            objek = new Groceries("Ayam");
-        } else if (buynumber == 14 && currentSim.isMoneyEnough(Groceries.get("Sapi").getPrice())) {
-            objek = new Groceries("Sapi");
-        } else if (buynumber == 15 && currentSim.isMoneyEnough(Groceries.get("Wortel").getPrice())) {
-            objek = new Groceries("Wortel");
-        } else if (buynumber == 16 && currentSim.isMoneyEnough(Groceries.get("Bayam").getPrice())) {
-            objek = new Groceries("Bayam");
-        } else if (buynumber == 17 && currentSim.isMoneyEnough(Groceries.get("Kacang").getPrice())) {
-            objek = new Groceries("Kacang");
-        } else if (buynumber == 18 && currentSim.isMoneyEnough(Groceries.get("Susu").getPrice())) {
-            objek = new Groceries("Susu");
-        } else {
-            objek = null;
-        }
+            if (buynumber == 1 && currentSim.isMoneyEnough(NonFood.get("Kasur Single").getPrice())) {
+                objek = new NonFood("Kasur Single");
+            } else if (buynumber == 2 && currentSim.isMoneyEnough(NonFood.get("Kasur Queen Size").getPrice())) {
+                objek = new NonFood("Kasur Queen Size");
+            } else if (buynumber == 3 && currentSim.isMoneyEnough(NonFood.get("Kasur King Size").getPrice())) {
+                objek = new NonFood("Kasur King Size");
+            } else if (buynumber == 4 && currentSim.isMoneyEnough(NonFood.get("Toilet").getPrice())) {
+                objek = new NonFood("Toilet");
+            } else if (buynumber == 5 && currentSim.isMoneyEnough(NonFood.get("Kompor Gas").getPrice())) {
+                objek = new NonFood("Kompor Gas");
+            } else if (buynumber == 6 && currentSim.isMoneyEnough(NonFood.get("Kompor Listrik").getPrice())) {
+                objek = new NonFood("Kompor Listrik");
+            } else if (buynumber == 7 && currentSim.isMoneyEnough(NonFood.get("Meja dan Kursi").getPrice())) {
+                objek = new NonFood("Meja dan Kursi");
+            } else if (buynumber == 8 && currentSim.isMoneyEnough(NonFood.get("Jam").getPrice())) {
+                objek = new NonFood("Jam");
+            } else if (buynumber == 9 && currentSim.isMoneyEnough(NonFood.get("Wastafel").getPrice())) {
+                objek = new NonFood("Wastafel");
+            } else if (buynumber == 10 && currentSim.isMoneyEnough(NonFood.get("Cermin").getPrice())) {
+                objek = new NonFood("Cermin");
+            } else if (buynumber == 11 && currentSim.isMoneyEnough(Groceries.get("Nasi").getPrice())) {
+                objek = new Groceries("Nasi");
+            } else if (buynumber == 12 && currentSim.isMoneyEnough(Groceries.get("Kentang").getPrice())) {
+                objek = new Groceries("Kentang");
+            } else if (buynumber == 13 && currentSim.isMoneyEnough(Groceries.get("Ayam").getPrice())) {
+                objek = new Groceries("Ayam");
+            } else if (buynumber == 14 && currentSim.isMoneyEnough(Groceries.get("Sapi").getPrice())) {
+                objek = new Groceries("Sapi");
+            } else if (buynumber == 15 && currentSim.isMoneyEnough(Groceries.get("Wortel").getPrice())) {
+                objek = new Groceries("Wortel");
+            } else if (buynumber == 16 && currentSim.isMoneyEnough(Groceries.get("Bayam").getPrice())) {
+                objek = new Groceries("Bayam");
+            } else if (buynumber == 17 && currentSim.isMoneyEnough(Groceries.get("Kacang").getPrice())) {
+                objek = new Groceries("Kacang");
+            } else if (buynumber == 18 && currentSim.isMoneyEnough(Groceries.get("Susu").getPrice())) {
+                objek = new Groceries("Susu");
+            } else {
+                objek = null;
+            }
 
-        Random rd = new Random();
-        int randomizer = rd.nextInt(5) + 1; // [1..5]
-        int waktukirim = randomizer * 30;
+            Random rd = new Random();
+            int randomizer = rd.nextInt(5) + 1; // [1..5]
+            int waktukirim = randomizer * 30;
 
-        if (objek != null) {
-            final String _statusName = "Buy Item - " + objek.getObjekName();
-            if (Main.equals(objek.getClass().getSimpleName(), "Groceries")) {
-                if (currentSim.isMoneyEnough(((Groceries) objek).getPrice())) {
-                    currentSim.setMoney(currentSim.getMoney() - ((Groceries) objek).getPrice());
-                    System.out.println("Mengirim barang...");
+            if (objek != null) {
+                final String _statusName = "Buy Item";
+                if (Main.equals(objek.getClass().getSimpleName(), "Groceries")) {
+                    if (currentSim.isMoneyEnough(((Groceries) objek).getPrice())) {
+                        currentSim.setMoney(currentSim.getMoney() - ((Groceries) objek).getPrice());
+                        System.out.println("Mengirim barang...");
 
-                    currentSim.addStatus(_statusName, waktukirim);
-                    Thread thread = new Thread(() -> {
-                        while (currentSim.getMapStatus().get(_statusName) != null) {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
+                        currentSim.addStatus(_statusName, waktukirim);
+                        Thread thread = new Thread(() -> {
+                            while (currentSim.getMapStatus().get(_statusName) != null) {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
-                        }
-                        currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
-                        System.out.println("Berhasil membeli barang!");
-                    });
-                    thread.start();
-
-                    try{
-                        thread.join();
+                            currentSim.getInventory().getBoxGroceries().add((Groceries) objek);
+                            System.out.println("Berhasil membeli barang!");
+                        });
+                        thread.start();
+                    } else {
+                        System.out.println("Uangmu kurang :(");
                     }
-                    catch(Exception e){
-                        e.getMessage();
-                    }
-                } else {
-                    System.out.println("Uangmu kurang :(");
-                }
-            } else if (Main.equals(objek.getClass().getSimpleName(), "NonFood")) {
-                if (currentSim.isMoneyEnough(((NonFood) objek).getPrice())) {
-                    currentSim.setMoney(currentSim.getMoney() - ((NonFood) objek).getPrice());
-                    System.out.println("Mengirim barang...");
+                } else if (Main.equals(objek.getClass().getSimpleName(), "NonFood")) {
+                    if (currentSim.isMoneyEnough(((NonFood) objek).getPrice())) {
+                        currentSim.setMoney(currentSim.getMoney() - ((NonFood) objek).getPrice());
+                        System.out.println("Mengirim barang...");
 
-                    currentSim.addStatus(_statusName, waktukirim);
-                    Thread thread = new Thread(() -> {
-                        while (currentSim.getMapStatus().get(_statusName) != null) {
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
+                        currentSim.addStatus(_statusName, waktukirim);
+                        Thread thread = new Thread(() -> {
+                            while (currentSim.getMapStatus().get(_statusName) != null) {
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }
-                        }
-                        currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
-                        System.out.println("Berhasil membeli barang!");
-                    });
-                    thread.start();
-
-                    try{
-                        thread.join();
+                            currentSim.getInventory().getBoxNonFood().add((NonFood) objek);
+                            System.out.println("Berhasil membeli barang!");
+                        });
+                        thread.start();
+                    } else {
+                        System.out.println("Uangmu kurang :(");
                     }
-                    catch(Exception e){
-                        e.getMessage();
-                    }
-
-
-                } else {
-                    System.out.println("Uangmu kurang :(");
                 }
             }
+        } else {
+            System.out.println("Anda sudah memesan barang! Tunggu sampai barang datang baru beli lagi.");
         }
     }
 
@@ -1003,21 +994,21 @@ public class CLIMain extends Main {
         //print daftar barang yang ada di ruangan + startPoint nya
         System.out.println("Daftar barang yang ada di ruangan (Nama barang - Lokasi) : ");
         int i = 1;
-        for(NonFood barang : listBarang){
-            System.out.println(i + ". " +  barang.getObjekName() + " - (" + barang.getStartPoint().getX() + "," + barang.getStartPoint().getY() + ")" );
+        for (NonFood barang : listBarang) {
+            System.out.println(i + ". " + barang.getObjekName() + " - (" + barang.getStartPoint().getX() + "," + barang.getStartPoint().getY() + ")");
             i++;
         }
-        
+
         System.out.print("Masukkan nomor barang yang dituju :  ");
         int numBarang = scanner.nextInt();
-        
-        if(numBarang <= listBarang.size()){
-            NonFood targetBarang = listBarang.get(numBarang-1);
+
+        if (numBarang <= listBarang.size()) {
+            NonFood targetBarang = listBarang.get(numBarang - 1);
             currentSim.getSimLoc().getPoint().setX(targetBarang.getStartPoint().getX());
             currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
         }
         //kalau numBarang lebih dari total barang
-        else{
+        else {
             System.out.println("Masukan tidak valid. Pilih nomor yang tersedia.");
         }
     }
