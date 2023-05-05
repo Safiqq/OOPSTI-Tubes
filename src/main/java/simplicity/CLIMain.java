@@ -127,8 +127,9 @@ public class CLIMain extends Main {
                 moveRoom();
 
             } else if (equals(menu, "EDIT ROOM")) {
-                while (true) {
-                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah)");
+                boolean done = false;
+                while (!done) {
+                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah) : ");
                     String ans = scanner.nextLine();
                     if (equals(ans, "BELI")) {
                         buyItem();
