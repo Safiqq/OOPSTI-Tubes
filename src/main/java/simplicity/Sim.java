@@ -2,8 +2,10 @@ package simplicity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Sim {
     private static final List<Sim> listSim = new ArrayList<>();
@@ -165,12 +167,7 @@ public class Sim {
     }
 
     public void deleteStatus(String status) {
-        List<Action> listAction = Action.getListAction();
-        for (Action action : listAction) {
-            if (Main.equals(status, action.getActionName())) {
-                mapStatus.remove(status);
-            }
-        }
+        mapStatus.keySet().removeIf(key -> Main.equals(key, status));
     }
 
     public Location getSimLoc() {
