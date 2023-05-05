@@ -1,9 +1,9 @@
 package simplicity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Sim {
     private static final List<Sim> listSim = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Sim {
         money = 100;
         occupation = new Occupation(); // inisiasi di class occupation
         inventory = new Inventory(); // inisiasi di class inventory
-        mapStatus = new HashMap<>();
+        mapStatus = new ConcurrentHashMap<>();
         House house = new House(fullName);
         simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 
@@ -39,7 +39,7 @@ public class Sim {
         money = 100;
         occupation = new Occupation(); // inisiasi di class occupation
         inventory = new Inventory(); // inisiasi di class inventory
-        mapStatus = new HashMap<>();
+        mapStatus = new ConcurrentHashMap<>();
         House house = new House(fullName, houseLoc);
         simLoc = new Location(house, house.getDefaultRoom(), new Point(3, 3)); // inisiasi di class location
 

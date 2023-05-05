@@ -36,7 +36,7 @@ public class World {
     }
 
     public boolean isWorldAvail(Point houseLoc) {
-        return matrixHouse[houseLoc.getX()][houseLoc.getY()] == null;
+        return matrixHouse[houseLoc.getY()][houseLoc.getX()] == null;
     }
 
     public boolean isHouseBuildAble() {
@@ -44,8 +44,9 @@ public class World {
         // false jika tidak ada
         for (int i = 0; i < length; i++) {
             for (int j = 0; j < width; j++) {
-                if (matrixHouse[i][j] == null)
+                if (matrixHouse[i][j] == null) {
                     return true;
+                }
             }
         }
         return false;
@@ -53,21 +54,23 @@ public class World {
 
     public void addHouse(House house) {
         // add house ke world
-        matrixHouse[house.getHouseLoc().getX()][house.getHouseLoc().getY()] = house;
+        matrixHouse[house.getHouseLoc().getY()][house.getHouseLoc().getX()] = house;
     }
 
     public Point searchHouse(String owner) {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < length; j++) {
-                if (Main.equals(matrixHouse[i][j].getOwner(), owner)) {
-                    return new Point(i, j);
+                if (matrixHouse[i][j] != null) {
+                    if (Main.equals(matrixHouse[i][j].getOwner(), owner)) {
+                        return new Point(j, i);
+                    }
                 }
             }
         }
         return null;
     }
 
-    public House findHouse(Point houseLoc){
+    public House findHouse(Point houseLoc) {
         return matrixHouse[houseLoc.getY()][houseLoc.getX()];
     }
 

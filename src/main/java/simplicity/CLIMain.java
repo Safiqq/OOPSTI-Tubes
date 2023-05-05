@@ -350,13 +350,14 @@ public class CLIMain extends Main {
                     }
 
                 } else if (equals(act, "VISIT")) {
-                    boolean done = false;
-                    Point houseLoc = null;
-                    String ownerHouse = null;
-                    while (!done) {
+                    Point houseLoc;
+                    String ownerHouse;
+                    while (true) {
                         System.out.print("Masukkan nama pemilik rumah yang ingin dikunjungi: ");
                         ownerHouse = scanner.nextLine();
+                        System.out.println("ownerHouse: " + ownerHouse);
                         houseLoc = world.searchHouse(ownerHouse);
+                        System.out.println("houseLoc: " + houseLoc);
                         if (houseLoc == null) {
                             System.out.println("Tidak ada rumah yang dimiliki oleh " + ownerHouse);
                             Print.printListSim();
@@ -364,7 +365,7 @@ public class CLIMain extends Main {
                             if (houseLoc == currentSim.getSimLoc().getHouse().getHouseLoc()) {
                                 System.out.println("Rumah yang ingin dituju Sim sama dengan rumah lokasi Sim tengah berada");
                             } else {
-                                done = true;
+                                break;
                             }
                         }
                     }
@@ -373,30 +374,34 @@ public class CLIMain extends Main {
                     // x1, y1 titik rumah tempat sim berada, x2, y2 titik rumah yang ingin dikunjungi
                     double x = Math.pow(houseLoc.getX() - currentSim.getSimLoc().getHouse().getHouseLoc().getX(), 2);
                     double y = Math.pow(houseLoc.getY() - currentSim.getSimLoc().getHouse().getHouseLoc().getY(), 2);
-                    double walkTime = Math.sqrt(x + y);
+                    int walkTime = (int) Math.sqrt(x + y);
 
-                    currentSim.addStatus("Walking", (int) walkTime);
-                    time.sleepMain(currentSim, (int) walkTime);
+                    if (walkTime == 0) {
+                        currentSim.addStatus("Visit", walkTime);
+                        time.sleepMain(currentSim, walkTime);
 
-                    // lokasi Sim baru di Ruang Utama point 3,3
-                    House visited = world.findHouse(houseLoc);
-                    currentSim.getSimLoc().setHouse(visited);
-                    currentSim.getSimLoc().setRoom(visited.get("Ruang Utama"));
-                    currentSim.getSimLoc().getPoint().setX(3);
-                    currentSim.getSimLoc().getPoint().setY(3);
+                        // lokasi Sim baru di Ruang Utama point 3,3
+                        House visited = world.findHouse(houseLoc);
+                        System.out.println("visited: " + visited);
+                        currentSim.getSimLoc().setHouse(visited);
+                        currentSim.getSimLoc().setRoom(visited.get("Ruang Utama"));
+                        currentSim.getSimLoc().getPoint().setX(3);
+                        currentSim.getSimLoc().getPoint().setY(3);
 
-                    // efek tidak berlaku untuk rumah Sim sendiri
-                    if (!equals(ownerHouse, currentSim.getFullName())) {
+                        // efek tidak berlaku untuk rumah Sim sendiri
+                        // if (!equals(ownerHouse, currentSim.getFullName())) {
                         // validasi waktu berkunjung kelipatan 30
-                        int simVisitTime = validateTime("berkunjung", 30);
+                        // int simVisitTime = validateTime("berkunjung", 30);
+                        //
+                        // currentSim.addStatus("Visit", simVisitTime);
+                        // time.sleepMain(currentSim, simVisitTime);
 
-                        currentSim.addStatus("Visit", simVisitTime);
-
-                        // waktu berkunjung
-                        time.sleepMain(currentSim, simVisitTime);
-
+                        // } else {
+                        // System.out.println("Sim sampai di rumah sendiri");
+                        // }
+                        System.out.println("Sim " + currentSim.getFullName() + " sudah sampai di rumah " + visited.getOwner() + ".");
                     } else {
-                        System.out.println("Sim sampai di rumah sendiri");
+                        System.out.println("Sim " + currentSim.getFullName() + " sudah berada di rumahnya sendiri.");
                     }
 
                 } else if (equals(act, "PEE")) {
@@ -1044,7 +1049,7 @@ public class CLIMain extends Main {
 
     public void moveObjek() {
         //Hanya dapat memindahkan barang di rumah sendiri
-        if (currentSim.getSimLoc().getHouse().getOwner() == currentSim.getFullName()) {
+        if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())) {
             ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
             //print daftar barang yang ada di ruangan + startPoint nya
             System.out.println("Daftar barang yang ada di ruangan (Nama barang - Lokasi) : ");
