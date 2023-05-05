@@ -202,41 +202,6 @@ public class Sim {
         }
     }
 
-    public void exercise(int time) {
-        // efek +5 kesehatan/20 dtk, -5 kekenyangan/20 dtk, +10 mood/20 dtk
-        int plusHealth = 5 * (time / 20);
-        int minusHunger = -5 * (time / 20);
-        int plusMood = 10 * (time / 20);
-
-        // menghapus sim dari list sim jika mati
-        try {
-            motive.changeHealth(plusHealth);
-            motive.changeHunger(minusHunger);
-            motive.changeMood(plusMood);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
-            listSim.remove(this);
-        }
-    }
-
-    public void sleep(int time) {
-        // efek tidur
-        // +30 mood/240 dtk, +20 kesehatan/240 dtk
-        int plusMood = 30 * (time / 240);
-        int plusHealth = 20 * (time / 240);
-
-        // menghapus sim dari list sim jika mati
-        try {
-            motive.changeMood(plusMood);
-            motive.changeHealth(plusHealth);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
-            listSim.remove(this);
-        }
-    }
-
     public boolean checkGroceries(String namaGroc) {
         return getInventory().getBoxGroceries().isNotEmpty(namaGroc);
     }
@@ -247,66 +212,6 @@ public class Sim {
 
     public boolean checkFood(String namaFood) {
         return getInventory().getBoxFood().isNotEmpty(namaFood);
-    }
-
-    // thread hapus aja jd sleepMain di main
-    public void cook(Food makanan) {
-        System.out.println("Cooking " + makanan.getObjekName());
-        int sleeptime = makanan.getFoodHunger() * 3 / 2 * 1000;
-        System.out.println(".......Please wait.......");
-        try {
-            for (int k = (sleeptime / 1000); k >= 1; k--) {
-                System.out.println("Time remaining " + k + " seconds");
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        System.out.println("Masakanmu selesai!");
-        getInventory().getBoxFood().add(makanan);
-
-        // menghapus sim dari list sim jika mati
-        try {
-            motive.changeMood(10);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim");
-            listSim.remove(this);
-        }
-    }
-
-    public void visit(int time) {
-        // +10 mood/30 dtk, -10 kekenyangan/30 dtk
-        int plusMood = 10 * (time / 30);
-        int minusHunger = -10 * (time / 30);
-
-        // menghapus sim dari list sim jika mati
-        try {
-            motive.changeMood(plusMood);
-            motive.changeHunger(minusHunger);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim!");
-            listSim.remove(this);
-        }
-    }
-
-    public void pee() {
-        // efek buang air: -20 kekenyangan/1 siklus (10 dtk), +10 mood/1 siklus (10 dtk)
-        // 1 siklus = 10 dtk
-
-        int minusHunger = -20;
-        int plusMood = 10;
-
-        // menghapus sim dari list sim jika mati
-        try {
-            motive.changeHunger(minusHunger);
-            motive.changeMood(plusMood);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim!");
-            listSim.remove(this);
-        }
     }
 
     public String getObjLoc() {

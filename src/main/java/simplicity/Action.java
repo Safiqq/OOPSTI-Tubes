@@ -100,7 +100,9 @@ public class Action {
 
         /* Aksi Buatan */
         /* Aksi Naik Meja dan Kursi */
-        listAction.add(new Action("Climb Table and Chair", "Sims dapat naik ke atas meja dan kursi untuk melepas kekesalan."));
+        Effect[] arrayEffect8 = {new Effect("mood", 10, 15), new Effect("hunger", -5, 15)};
+        listAction.add(new Action("Climb Table and Chair", "Sims dapat naik ke atas meja dan kursi untuk melepas kekesalan.", Arrays.asList(arrayEffect8)));
+        Arrays.fill(arrayEffect8, null);
 
         /* Aksi Menyalakan Kompor */
         listAction.add(new Action("Turn On Stove", "Kompor harus dinyalakan terlebih dahulu untuk bisa memasak."));
@@ -108,17 +110,35 @@ public class Action {
         /* Aksi Mematikan Kompor */
         listAction.add(new Action("Turn Off Stove", "Kompor harus dimatikan setelah memasak."));
 
+        /* Tidak Mematikan Kompor */
+        Effect[] arrayEffect9 = {new Effect("health", -5, 10)};
+        listAction.add(new Action("Not Turn Off Stove", "Kompor harus dimatikan setelah memasak.", Arrays.asList(arrayEffect9)));
+        Arrays.fill(arrayEffect9, null);
+
         /* Aksi Duduk */
-        listAction.add(new Action("Sit", "Sims dapat duduk di meja dan kursi ataupun kasur."));
+        Effect[] arrayEffect10 = {new Effect("mood", 10, 10), new Effect("health", 5, 10)};
+        listAction.add(new Action("Sit", "Sims dapat duduk di meja dan kursi ataupun kasur.", Arrays.asList(arrayEffect10)));
+        Arrays.fill(arrayEffect10, null);
 
         /* Aksi Cuci Tangan */
-        listAction.add(new Action("Wash Hand", "Sims dapat cuci tangan di wastafel."));
+        Effect[] arrayEffect111 = {new Effect("health", 10, 10)};
+        listAction.add(new Action("Wash Hand", "Sims dapat cuci tangan di wastafel.", Arrays.asList(arrayEffect111)));
+        Arrays.fill(arrayEffect111, null);
+
+        /* Aksi Tidak Cuci Tangan */
+        Effect[] arrayEffect112 = {new Effect("health", -15, 180)};
+        listAction.add(new Action("Not Wash Hand", "Sims dapat cuci tangan di wastafel.", Arrays.asList(arrayEffect112)));
+        Arrays.fill(arrayEffect112, null);
 
         /* Aksi Bercermin */
-        listAction.add(new Action("Look Mirror", "Sims dapat bercermin di cermin."));
+        Effect[] arrayEffect12 = {new Effect("mood", 10, 15)};
+        listAction.add(new Action("Look Mirror", "Sims dapat bercermin di cermin.", Arrays.asList(arrayEffect12)));
+        Arrays.fill(arrayEffect12, null);
 
         /* Aksi Lempar Cermin */
-        listAction.add(new Action("Throw Mirror", "Cermin yang dilempar akan hilang."));
+        Effect[] arrayEffect13 = {new Effect("mood", 20, 0)};
+        listAction.add(new Action("Throw Mirror", "Cermin yang dilempar akan hilang.", Arrays.asList(arrayEffect13)));
+        Arrays.fill(arrayEffect13, null);
     }
 
     public String getActionName() {
