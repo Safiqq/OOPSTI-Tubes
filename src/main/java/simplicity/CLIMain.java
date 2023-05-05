@@ -127,14 +127,8 @@ public class CLIMain extends Main {
                 moveRoom();
 
             } else if (equals(menu, "EDIT ROOM")) {
-<<<<<<< Updated upstream
                 while (true) {
                     System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah)");
-=======
-                boolean done = false;
-                while (!done) {
-                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah) : ");
->>>>>>> Stashed changes
                     String ans = scanner.nextLine();
                     if (equals(ans, "BELI")) {
                         buyItem();
@@ -1048,18 +1042,13 @@ public class CLIMain extends Main {
     public void moveObjek() {
         //Hanya dapat memindahkan barang di rumah sendiri
         if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())) {
-            ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
-            //print daftar barang yang ada di ruangan + startPoint nya
-            System.out.println("Daftar barang yang ada di ruangan (Nama barang - Lokasi) : ");
-            int i = 1;
-            for (NonFood barang : listBarang) {
-                System.out.println(i + ". " + barang.getObjekName() + " - (" + barang.getStartPoint().getX() + "," + barang.getStartPoint().getY() + ")");
-                i++;
-            }
-
+            //print list objek di ruangan
+            Print.printListObjek(currentSim.getSimLoc().getRoom());
+            
             System.out.print("Masukkan nomor barang yang ingin dipindahkan : ");
             int numBarang = scanner.nextInt();
-
+            
+            ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
             if (numBarang <= listBarang.size()) {
                 NonFood targetBarang = listBarang.get(numBarang - 1);
                 int lengthBarang = targetBarang.getLength();
@@ -1084,7 +1073,13 @@ public class CLIMain extends Main {
                         } else {
                             Point startPoint = new Point(startX, startY);
                             Point endPoint = new Point(endX, endY);
+                            NonFood[][] matrixBarang = currentSim.getSimLoc().getRoom().getMatrixBarang();
                             if (currentSim.getSimLoc().getRoom().isSpaceEmpty(startPoint, endPoint)) {
+                                for(int i = startX ; i <= endX ; i++){
+                                    for(int j = startY ; j <= endY ; j++){
+                                        matrixBarang[j][i] = null;
+                                    }
+                                }
                                 targetBarang.setStartPoint(startPoint);
                                 targetBarang.setEndPoint(endPoint);
                                 pointValid = true;
