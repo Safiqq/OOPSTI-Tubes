@@ -999,28 +999,26 @@ public class CLIMain extends Main {
     }
 
     public void goToObjek() {
-        System.out.print("Masukkan nama barang: ");
-        String objekName = scanner.nextLine();
-
         ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
-        for (NonFood barang : listBarang) {
-            // Kalo barang ada di ruangan
-            if (Main.equals(objekName, barang.getObjekName())) {
-                NonFood[][] matrixBarang = currentSim.getSimLoc().getRoom().getMatrixBarang();
-                for (int i = 0; i < 6; i++) {
-                    for (int j = 0; j < 6; j++) {
-                        if (matrixBarang[j][i] == barang) {
-                            currentSim.getSimLoc().getPoint().setX(i);
-                            currentSim.getSimLoc().getPoint().setY(j);
-                            System.out.println("Kamu berhasil berpindah tempat ke objek " + barang.getObjekName() + ".");
-                            break;
-                        }
-                    }
-                }
-                break;
-            } else { // Kalo barang ga ada di ruangan
-                System.out.printf("%s tidak tersedia di %s.", barang.getObjekName(), currentSim.getSimLoc().getRoom().getRoomName());
-            }
+        //print daftar barang yang ada di ruangan + startPoint nya
+        System.out.println("Daftar barang yang ada di ruangan (Nama barang - Lokasi) : ");
+        int i = 1;
+        for(NonFood barang : listBarang){
+            System.out.println(i + ". " +  barang.getObjekName() + " - (" + barang.getStartPoint().getX() + "," + barang.getStartPoint().getY() + ")" );
+            i++;
+        }
+        
+        System.out.print("Masukkan nomor barang yang dituju :  ");
+        int numBarang = scanner.nextInt();
+        
+        if(numBarang <= listBarang.size()){
+            NonFood targetBarang = listBarang.get(numBarang-1);
+            currentSim.getSimLoc().getPoint().setX(targetBarang.getStartPoint().getX());
+            currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
+        }
+        //kalau numBarang lebih dari total barang
+        else{
+            System.out.println("Masukan tidak valid. Pilih nomor yang tersedia.");
         }
     }
 
