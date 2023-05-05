@@ -433,6 +433,7 @@ public class CLIMain extends Main {
                     Print.viewSimInventory(currentSim);
 
                 } else if (equals(act, "INSTALL ITEM")) {
+                    Print.printListObjek(currentSim.getSimLoc().getRoom());
                     installItem();
 
                 } else if (equals(act, "CHECK TIME")) {
