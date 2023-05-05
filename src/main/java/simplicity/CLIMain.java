@@ -129,7 +129,7 @@ public class CLIMain extends Main {
             } else if (equals(menu, "EDIT ROOM")) {
                 boolean done = false;
                 while (!done) {
-                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah) : ");
+                    System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah): ");
                     String ans = scanner.nextLine();
                     if (equals(ans, "BELI")) {
                         buyItem();
@@ -353,7 +353,7 @@ public class CLIMain extends Main {
                         houseLoc = world.searchHouse(ownerHouse);
                         System.out.println("houseLoc: " + houseLoc);
                         if (houseLoc == null) {
-                            System.out.println("Tidak ada rumah yang dimiliki oleh " + ownerHouse);
+                            System.out.println("Tidak ada rumah yang dimiliki oleh " + ownerHouse + ".");
                             Print.printListSim();
                         } else {
                             if (houseLoc == currentSim.getSimLoc().getHouse().getHouseLoc()) {
@@ -992,7 +992,7 @@ public class CLIMain extends Main {
     public void goToObjek() {
         ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
 
-        System.out.print("Masukkan nomor barang yang dituju :  ");
+        System.out.print("Masukkan nomor barang yang dituju: ");
         int numBarang = scanner.nextInt();
 
         if (numBarang <= listBarang.size()) {
@@ -1045,10 +1045,10 @@ public class CLIMain extends Main {
         if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())) {
             //print list objek di ruangan
             Print.printListObjek(currentSim.getSimLoc().getRoom());
-            
-            System.out.print("Masukkan nomor barang yang ingin dipindahkan : ");
+
+            System.out.print("Masukkan nomor barang yang ingin dipindahkan: ");
             int numBarang = scanner.nextInt();
-            
+
             ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
             if (numBarang <= listBarang.size()) {
                 NonFood targetBarang = listBarang.get(numBarang - 1);
@@ -1057,11 +1057,11 @@ public class CLIMain extends Main {
 
                 boolean pointValid = false;
                 while (!pointValid) {
-                    System.out.print("Masukkan lokasi awal sumbu X (0-5) : ");
+                    System.out.print("Masukkan lokasi awal sumbu X (0-5): ");
                     int startX = scanner.nextInt();
                     System.out.println();
 
-                    System.out.print("Masukkan lokasi awal sumbu Y (0-5) : ");
+                    System.out.print("Masukkan lokasi awal sumbu Y (0-5): ");
                     int startY = scanner.nextInt();
                     System.out.println();
 
@@ -1076,8 +1076,8 @@ public class CLIMain extends Main {
                             Point endPoint = new Point(endX, endY);
                             NonFood[][] matrixBarang = currentSim.getSimLoc().getRoom().getMatrixBarang();
                             if (currentSim.getSimLoc().getRoom().isSpaceEmpty(startPoint, endPoint)) {
-                                for(int i = startX ; i <= endX ; i++){
-                                    for(int j = startY ; j <= endY ; j++){
+                                for (int i = startX; i <= endX; i++) {
+                                    for (int j = startY; j <= endY; j++) {
                                         matrixBarang[j][i] = null;
                                     }
                                 }
