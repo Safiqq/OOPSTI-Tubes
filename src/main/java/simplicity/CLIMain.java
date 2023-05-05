@@ -1048,4 +1048,69 @@ public class CLIMain extends Main {
             currentSim.setTotalWorkTime(0);
         }
     }
+
+    public void moveObjek(){
+        //Hanya dapat memindahkan barang di rumah sendiri
+        if(currentSim.getSimLoc().getHouse().getOwner() == currentSim.getFullName()){
+            ArrayList<NonFood> listBarang = currentSim.getSimLoc().getRoom().getListObjek();
+            //print daftar barang yang ada di ruangan + startPoint nya
+            System.out.println("Daftar barang yang ada di ruangan (Nama barang - Lokasi) : ");
+            int i = 1;
+            for(NonFood barang : listBarang){
+                System.out.println(i + ". " +  barang.getObjekName() + " - (" + barang.getStartPoint().getX() + "," + barang.getStartPoint().getY() + ")" );
+                i++;
+            }
+    
+            System.out.print("Masukkan nomor barang yang ingin dipindahkan : ");
+            int numBarang = scanner.nextInt();
+            
+            if(numBarang <= listBarang.size()){
+                NonFood targetBarang = listBarang.get(numBarang-1);
+                int lengthBarang = targetBarang.getLength();
+                int widthBarang = targetBarang.getWidth();
+    
+                boolean pointValid = false;
+                while(!pointValid){
+                    System.out.print("Masukkan lokasi awal sumbu X (0-5) : ");
+                    int startX = scanner.nextInt();
+                    System.out.println();
+    
+                    System.out.print("Masukkan lokasi awal sumbu Y (0-5) : ");
+                    int startY = scanner.nextInt();
+                    System.out.println();
+    
+                    if(startX >= 0 && startX <= 5 && startY >= 0 && startY <= 5){
+                        int endX = startX + lengthBarang - 1;
+                        int endY = startY + widthBarang - 1;
+    
+                        if(endX > 5 || endY > 5){
+                            System.out.println("Lokasi yang dipilih kurang besar.");
+                        }
+                        else{
+                            Point startPoint = new Point(startX, startY);
+                            Point endPoint = new Point(endX, endY);
+                            if(currentSim.getSimLoc().getRoom().isSpaceEmpty(startPoint, endPoint)){
+                                targetBarang.setStartPoint(startPoint);
+                                targetBarang.setEndPoint(endPoint);
+                                pointValid = true;
+                            }
+                            else{
+                                System.out.println("Lokasi sudah diisi barang lain.");
+                            }
+                        }
+                    }
+                    else{
+                        System.out.println("Masukkan lokasi tidak valid.");
+                    }
+                }
+            }
+            //kalau numBarang lebih dari total barang
+            else{
+                System.out.println("Masukan tidak valid. Pilih nomor yang tersedia.");
+            }
+        }
+        else{
+            System.out.println("Tidak dapat memindahkan barang di rumah Sim lain.");
+        }
+    }
 }
