@@ -370,7 +370,7 @@ public class CLIMain extends Main {
                     double y = Math.pow(houseLoc.getY() - currentSim.getSimLoc().getHouse().getHouseLoc().getY(), 2);
                     int walkTime = (int) Math.sqrt(x + y);
 
-                    if (walkTime == 0) {
+                    if (walkTime > 0) {
                         currentSim.addStatus("Visit", walkTime);
                         time.sleepMain(currentSim, walkTime);
 
