@@ -175,6 +175,7 @@ public class CLIMain extends Main {
                             newSim = menuAddSim();
                             if (newSim != null) {
                                 dayAddSim = time.getDay(); // hanya dapat dilakukan 1 hari sekali
+                                System.out.println();
                                 break;
                             } else {
                                 System.out.println("Silakan mencoba mendaftarkan Sim baru di lokasi yang berbeda.");

@@ -64,7 +64,7 @@ public class Print {
     }
 
     public static void printListObjek(Room room) {
-        System.out.println("Objek yang ada di ruang " + room.getRoomName() + ":");
+        System.out.println("Objek yang ada di " + room.getRoomName() + ":");
         int i = 0;
         for (NonFood objek : room.getListObjek()) {
             System.out.println(++i + ". " + objek.getObjekName() + " [(" + objek.getStartPoint().getX() + ", " + objek.getStartPoint().getY() + ") - (" + objek.getEndPoint().getX() + ", " + objek.getEndPoint().getY() + ")]");
