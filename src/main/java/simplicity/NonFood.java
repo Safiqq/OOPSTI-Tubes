@@ -70,7 +70,7 @@ public class NonFood extends Objek implements Purchasable {
             setLWP(1, 1, 50);
 
             listAction.add(Action.get("Look Mirror"));
-            listAction.add(Action.get("Throw Mirror"));
+            listAction.add(Action.get("Dance Mirror"));
         }
 
         listAction.add(Action.get("Visit"));

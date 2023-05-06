@@ -121,8 +121,8 @@ public class Action {
         listAction.add(new Action("Look Mirror", "Sims dapat bercermin di cermin.", Arrays.asList(arrayEffect12)));
 
         /* Aksi Lempar Cermin */
-        Effect[] arrayEffect13 = {new Effect("mood", 20, 0)};
-        listAction.add(new Action("Throw Mirror", "Cermin yang dilempar akan hilang.", Arrays.asList(arrayEffect13)));
+        Effect[] arrayEffect13 = {new Effect("mood", 20, 15)};
+        listAction.add(new Action("Dance Mirror", "Sim dapat joget didepan cermin untuk meningkatkan mood.", Arrays.asList(arrayEffect13)));
     }
 
     public String getActionName() {

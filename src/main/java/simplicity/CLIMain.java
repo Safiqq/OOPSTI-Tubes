@@ -504,9 +504,16 @@ public class CLIMain extends Main {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di cermin.");
                         System.out.println("Silakan menjalankan menu Go to Object ke cermin untuk menjalankan aksi ini.");
                     }
-                } else if (equals(act, "THROW MIRROR")) {
+                } else if (equals(act, "MIRROR DANCE")) {
                     if (equals(currentSim.getObjLoc(), "Cermin")) {
-                        System.out.println("Sim melempar cermin. Cermin hancur!");
+                        int simDanceTime = validateTime("joget", 15);
+                        currentSim.addStatus("Dance Mirror", simDanceTime);
+                        System.out.println("Sim joget di depan cermin!");
+                        time.sleepMain(currentSim, simDanceTime);
+
+                        // tambah waktu berkunjung jika Sim di rumah orang
+                        currentSim.visitingEffect(simDanceTime);
+
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di cermin.");
                         System.out.println("Silakan menjalankan menu Go to Object ke cermin untuk menjalankan aksi ini.");
