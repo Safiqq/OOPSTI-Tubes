@@ -23,7 +23,6 @@ public class GUIMain extends Main {
     private final Font font16;
     private final Font font20;
     private boolean isActionFrameActive;
-    private JPanel roomPanel;
 
     public GUIMain() {
         importFont();
@@ -320,7 +319,6 @@ public class GUIMain extends Main {
         }
 
         panel.setPreferredSize(new Dimension(648, 648));
-        roomPanel = panel;
         return panel;
     }
 
@@ -625,10 +623,6 @@ public class GUIMain extends Main {
                 currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
                 showMessagePopup(frame, "Anda berhasil berpindah tempat ke objek " + currentSim.getObjLoc() + ".", "Succeed");
 
-                if (roomPanel != null) {
-                    roomPanel.revalidate();
-                    roomPanel.repaint();
-                }
             } else { // Kalau numBarang lebih dari total barang
                 showMessagePopup(frame, "Masukan tidak valid. Pilih nomor yang tersedia.", "Failed");
             }
