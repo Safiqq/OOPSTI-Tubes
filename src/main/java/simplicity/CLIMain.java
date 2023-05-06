@@ -39,6 +39,7 @@ public class CLIMain extends Main {
         while (!isStarted) {
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
+            System.out.println();
             if (equals(menu, "START GAME")) {
                 isStarted = true;
             } else if (equals(menu, "EXIT")) {
@@ -84,6 +85,7 @@ public class CLIMain extends Main {
         }
 
         System.out.println("Selamat bermain!");
+        System.out.println();
         Print.showMenu();
         currentSim.addStatus("Not Sleep", 10 * 60);
 
@@ -111,8 +113,9 @@ public class CLIMain extends Main {
             countSalary();
 
             // Input command
-            System.out.print("Masukkan perintah: ");
+            System.out.print("Masukkan menu game yang diinginkan: ");
             String menu = scanner.nextLine();
+            System.out.println();
             if (equals(menu, "HELP")) {
                 Print.showMenu();
 
@@ -122,13 +125,19 @@ public class CLIMain extends Main {
                 System.exit(0);
 
             } else if (equals(menu, "VIEW SIM INFO")) {
+                System.out.println("==========SIM INFO==========");
                 Print.viewSimInfo(currentSim);
+                System.out.println("================================");
 
             } else if (equals(menu, "VIEW CURRENT LOCATION")) {
+                System.out.println("==========SIM LOCATION==========");
                 Print.viewSimLoc(currentSim);
+                System.out.println("================================");
 
             } else if (equals(menu, "VIEW INVENTORY")) {
+                System.out.println("==========SIM INVENTORY==========");
                 Print.viewSimInventory(currentSim);
+                System.out.println("=================================");
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
                 if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())) {
@@ -229,6 +238,7 @@ public class CLIMain extends Main {
 
                 System.out.print("Masukkan aksi yang ingin dijalankan: ");
                 String act = scanner.nextLine();
+                System.out.println();
 
                 if (equals(act, "WORK")) {
                     // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
