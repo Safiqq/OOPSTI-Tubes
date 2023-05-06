@@ -899,7 +899,6 @@ public class CLIMain extends Main {
                         while (!roomValid) {
                             System.out.print("Masukkan nomor ruangan: ");
                             int numRoom = scanner.nextInt();
-                            System.out.println();
                             
                             if (numRoom <= j && numRoom > 0){
                                 roomValid = true;
@@ -910,7 +909,6 @@ public class CLIMain extends Main {
                                 while (!pointValid) {
                                     System.out.print("Masukkan lokasi awal sumbu X barang: ");
                                     int startX = scanner.nextInt();
-                                    System.out.println();
                                     
                                     System.out.print("Masukkan lokasi awal sumbu Y barang: ");
                                     int startY = scanner.nextInt();
@@ -1079,7 +1077,6 @@ public class CLIMain extends Main {
                 while (!pointValid) {
                     System.out.print("Masukkan lokasi awal sumbu X (0-5): ");
                     int startX = scanner.nextInt();
-                    System.out.println();
 
                     System.out.print("Masukkan lokasi awal sumbu Y (0-5): ");
                     int startY = scanner.nextInt();
