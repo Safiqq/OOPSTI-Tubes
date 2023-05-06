@@ -42,8 +42,8 @@ public class World {
     public boolean isHouseBuildAble() {
         // true jika ada spot kosong untuk membangun rumah
         // false jika tidak ada
-        for (int i = 0; i < length; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < length; j++) {
                 if (matrixHouse[i][j] == null) {
                     return true;
                 }
@@ -76,8 +76,8 @@ public class World {
 
     public void deleteHouse(Sim deleted){
         String simName = deleted.getFullName();
-        for (int i = 0; i < length; i++){
-            for (int j = 0; j < width; j++){
+        for (int i = 0; i < width; i++){
+            for (int j = 0; j < length; j++){
                 if (Main.equals(matrixHouse[i][j].getOwner(), simName)){
                     // hapus rumah Sim
                     matrixHouse[i][j] = null;
