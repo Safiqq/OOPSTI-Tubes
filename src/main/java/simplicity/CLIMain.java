@@ -1040,7 +1040,7 @@ public class CLIMain extends Main {
         if (time.getDay() > currentSim.getDayWork()) {
             // gaji harian (4 menit kerja = 240 dtk)
             // gaji baru dihitung setelah berganti hari
-            if (currentSim.getWorkTime() > 240) {
+            if (currentSim.getWorkTime() >= 240) {
                 int payday = currentSim.getOccupation().getDailySalary() * (currentSim.getWorkTime() / 240);
                 currentSim.setMoney(currentSim.getMoney() + payday);
 

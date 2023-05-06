@@ -6,7 +6,7 @@ public class Time {
     private int second;
 
     public Time() {
-        this(1, 12, 0);
+        this(1, 11, 59);
     }
 
     public Time(int day, int minute, int second) {
@@ -17,13 +17,11 @@ public class Time {
         if (day < 1) {
             return false;
         }
-        if (minute < 0 || minute > 12) {
+
+        if (minute < 0 || minute > 11) {
             return false;
-        } else if (minute == 12) {
-            if (second != 0) {
-                return false;
-            }
-        }
+        } 
+
         return second >= 0 && second <= 59;
     }
 

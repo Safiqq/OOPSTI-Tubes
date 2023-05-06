@@ -15,7 +15,7 @@ public class Sim {
     private Inventory inventory;
     private Map<String, Integer> mapStatus;
     private int workTime = 0;
-    private int dayWork = 0;
+    private int dayWork = 1;
     private int storeWorkTime = 0;
     private int totalWorkTime = 0;
     private int dayChangeJob = 0;
