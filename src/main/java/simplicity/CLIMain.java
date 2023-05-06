@@ -92,6 +92,9 @@ public class CLIMain extends Main {
                 }
             }
 
+            // hitung gaji Sim
+            countSalary();
+
             // Input command
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
@@ -237,27 +240,6 @@ public class CLIMain extends Main {
 
                         // tambah waktu berkunjung jika Sim di rumah orang
                         currentSim.visitingEffect(simWorkTime);
-
-                        // hitung gaji
-                        if (time.getDay() > currentSim.getDayWork()) {
-                            // gaji harian (4 menit kerja = 240 dtk)
-                            // gaji baru dihitung setelah berganti hari
-                            if (currentSim.getWorkTime() > 240) {
-                                int payday = currentSim.getOccupation().getDailySalary() * (currentSim.getWorkTime() / 240);
-                                currentSim.setMoney(currentSim.getMoney() + payday);
-
-                                currentSim.setDayWork(time.getDay());
-                                currentSim.setWorkTime(0);
-                            }
-                            // tidak bekerja lebih dari 4 menit, maka tidak digaji
-
-                            // klo ada waktu kerja yg kepotong hari, ditambah ke workTime setelah berganti
-                            // hari dan telah direset 0
-                            if (currentSim.getStoreWorkTime() > 0) {
-                                currentSim.setWorkTime(currentSim.getWorkTime() + currentSim.getStoreWorkTime());
-                                currentSim.setStoreWorkTime(0);
-                            }
-                        }
 
                     } else {
                         System.out.println("Pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan.");
@@ -1052,6 +1034,29 @@ public class CLIMain extends Main {
         } else {
             currentSim.setMoney(currentSim.getMoney() - payChangeJob);
             currentSim.setTotalWorkTime(0);
+        }
+    }
+
+    public void countSalary(){
+        // hitung gaji
+        if (time.getDay() > currentSim.getDayWork()) {
+            // gaji harian (4 menit kerja = 240 dtk)
+            // gaji baru dihitung setelah berganti hari
+            if (currentSim.getWorkTime() > 240) {
+                int payday = currentSim.getOccupation().getDailySalary() * (currentSim.getWorkTime() / 240);
+                currentSim.setMoney(currentSim.getMoney() + payday);
+
+                currentSim.setDayWork(time.getDay());
+                currentSim.setWorkTime(0);
+            }
+            // tidak bekerja lebih dari 4 menit, maka tidak digaji
+
+            // klo ada waktu kerja yg kepotong hari, ditambah ke workTime setelah berganti
+            // hari dan telah direset 0
+            if (currentSim.getStoreWorkTime() > 0) {
+                currentSim.setWorkTime(currentSim.getWorkTime() + currentSim.getStoreWorkTime());
+                currentSim.setStoreWorkTime(0);
+            }
         }
     }
 
