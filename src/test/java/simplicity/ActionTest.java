@@ -18,7 +18,7 @@ public class ActionTest {
     @Test
     public void testFood() {
         assertEquals("Work", a1.getActionName());
-        assertEquals("Sim harus bekerja", a2.getDescription());
+        assertEquals("Sim harus bekerja", a1.getDescription());
         assertEquals("Exercise", a2.getActionName());
         assertEquals("Sim dapat berolahraga", a2.getDescription());
     }
