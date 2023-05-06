@@ -384,8 +384,7 @@ public class CLIMain extends Main {
                 } else if (equals(act, "PEE")) {
                     if (equals(currentSim.getObjLoc(), "Toilet")) {
                         // sim minimal buang air 1 kali tiap habis makan
-                        // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa
-                        // buang air -> gimana
+                        // efek tidak buang air: -5 kesehatan dan -5 mood 4 menit setelah makan tanpa buang air
 
                         currentSim.deleteStatus("Not Pee");
                         currentSim.addStatus("Pee", 10);
@@ -475,7 +474,18 @@ public class CLIMain extends Main {
                     }
                 } else if (equals(act, "WASH HAND")) {
                     if (equals(currentSim.getObjLoc(), "Wastafel")) {
+                        // sim minimal cuci tangan 1 kali tiap habis makan
+                        // efek tidak cuci tangan: -15 health 3 menit setelah makan tidak cuci tangan
+                        
+                        int simWashTime = validateTime("cuci tangan", 10);
+                        currentSim.deleteStatus("Not Wash Hand");
+                        currentSim.addStatus("Wash Hand", simWashTime);
                         System.out.println("Sim mencuci tangan.");
+                        time.sleepMain(currentSim, simWashTime);
+
+                        // tambah waktu berkunjung jika Sim di rumah orang
+                        currentSim.visitingEffect(simWashTime);
+
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di wastafel.");
                         System.out.println("Silakan menjalankan menu Go to Object ke wastafel untuk menjalankan aksi ini.");
@@ -976,6 +986,7 @@ public class CLIMain extends Main {
                 System.out.println("Anda selesai makan!");
                 currentSim.getInventory().getBoxFood().delete(food);
                 currentSim.addStatus("Not Pee", 4 * 60);
+                currentSim.addStatus("Not Wash Hand", 3 * 60);
             } else {
                 System.out.println("Anda tidak memiliki makanan " + namaMakanan);
             }
