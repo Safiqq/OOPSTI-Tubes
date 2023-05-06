@@ -31,7 +31,7 @@ public class Print {
         NonFood objek = NonFood.get(objekName);
         int i = 0;
         for (Action action : objek.getListAction()) {
-            System.out.println(++i + ". " + action.getActionName());
+            System.out.println(++i + ". " + action.getActionName() + " - " + action.getDescription());
         }
     }
 
