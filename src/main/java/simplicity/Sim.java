@@ -201,6 +201,7 @@ public class Sim {
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Sim dengan nama " + fullName + " dihapus dari daftar Sim.");
+                Main.world.deleteHouse(this);
                 Sim.getListSim().remove(this);
             }
         }

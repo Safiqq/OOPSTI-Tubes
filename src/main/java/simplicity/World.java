@@ -74,7 +74,18 @@ public class World {
         return matrixHouse[houseLoc.getY()][houseLoc.getX()];
     }
 
-    // mau benerin tampilan print?
+    public void deleteHouse(Sim deleted){
+        String simName = deleted.getFullName();
+        for (int i = 0; i < length; i++){
+            for (int j = 0; j < width; j++){
+                if (Main.equals(matrixHouse[i][j].getOwner(), simName)){
+                    // hapus rumah Sim
+                    matrixHouse[i][j] = null;
+                }
+            }
+        }
+    }
+
     public void printMatrixHouse() {
         // menampilkan world
         System.out.println();
