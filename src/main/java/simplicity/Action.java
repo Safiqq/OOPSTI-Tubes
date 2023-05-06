@@ -113,7 +113,7 @@ public class Action {
         listAction.add(new Action("Wash Hand", "Sims dapat cuci tangan di wastafel.", Arrays.asList(arrayEffect111)));
 
         /* Aksi Tidak Cuci Tangan */
-        Effect[] arrayEffect112 = {new Effect("health", -15, 180)};
+        Effect[] arrayEffect112 = {new Effect("health", -15, 3 * 60)};
         listAction.add(new Action("Not Wash Hand", "Sims dapat cuci tangan di wastafel.", Arrays.asList(arrayEffect112)));
 
         /* Aksi Bercermin */

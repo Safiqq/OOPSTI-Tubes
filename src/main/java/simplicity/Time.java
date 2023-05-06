@@ -47,7 +47,9 @@ public class Time {
             }
             if (Action.get(status).getListEffect().size() > 0) {
                 if (duration > 0) {
-                    System.out.println("Sim " + sim.getFullName() + " sedang melakukan " + status + " (" + duration + " detik lagi).");
+                    if (!Main.equals(status, "Not Sleep") && !Main.equals(status, "Not Pee") && !Main.equals(status, "Not Turn Off Stove") && !Main.equals(status, "Not Wash Hand")){
+                        System.out.println("Sim " + sim.getFullName() + " sedang melakukan " + status + " (" + duration + " detik lagi).");
+                    }
                 }
                 if (duration % Action.get(status).getListEffect().get(0).getCooldown() == 0) {
                     sim.applyEffect(status);
