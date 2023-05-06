@@ -19,10 +19,6 @@ memiliki keahlian dengan bahasa Java, Indra dan Doni meminta kalian untuk membua
 | Fredrick Runie Taslim  | 18221156 |
 | Rania Sasi Kirana      | 18221168 |
 
-### Kompilasi Program
-
-### Struktur Program
-
 ## Requirements
 
 1. JDK v8+
