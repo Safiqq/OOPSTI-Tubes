@@ -17,6 +17,21 @@ public class CLIMain extends Main {
     }
 
     public void start() {
+        String art = """
+             ________  ___  _____ ______   ________  ___       ___  ________  ___  _________    ___    ___ 
+            |\\   ____\\|\\  \\|\\   _ \\  _   \\|\\   __  \\|\\  \\     |\\  \\|\\   ____\\|\\  \\|\\___   ___\\ |\\  \\  /  /|
+            \\ \\  \\___|\\ \\  \\ \\  \\\\\\__\\ \\  \\ \\  \\|\\  \\ \\  \\    \\ \\  \\ \\  \\___|\\ \\  \\|___ \\  \\_| \\ \\  \\/  / /
+             \\ \\_____  \\ \\  \\ \\  \\\\|__| \\  \\ \\   ____\\ \\  \\    \\ \\  \\ \\  \\    \\ \\  \\   \\ \\  \\   \\ \\    / / 
+              \\|____|\\  \\ \\  \\ \\  \\    \\ \\  \\ \\  \\___|\\ \\  \\____\\ \\  \\ \\  \\____\\ \\  \\   \\ \\  \\   \\/  /  /  
+                ____\\_\\  \\ \\__\\ \\__\\    \\ \\__\\ \\__\\    \\ \\_______\\ \\__\\ \\_______\\ \\__\\   \\ \\__\\__/  / /    
+               |\\_________\\|__|\\|__|     \\|__|\\|__|     \\|_______|\\|__|\\|_______|\\|__|    \\|__|\\___/ /     
+               \\|_________|                                                                   \\|___|/      
+                              
+               
+                """;
+        for(int i=0 ; i<art.length() ; i++){
+            System.out.print(art.charAt(i));
+        }
         Print.showMenuBegin();
         System.out.println("Ketik 'START GAME' untuk memulai game atau 'HELP' untuk melihat menu game.");
 
@@ -24,6 +39,7 @@ public class CLIMain extends Main {
         while (!isStarted) {
             System.out.print("Masukkan perintah: ");
             String menu = scanner.nextLine();
+            System.out.println();
             if (equals(menu, "START GAME")) {
                 isStarted = true;
             } else if (equals(menu, "EXIT")) {
@@ -69,6 +85,7 @@ public class CLIMain extends Main {
         }
 
         System.out.println("Selamat bermain!");
+        System.out.println();
         Print.showMenu();
         currentSim.addStatus("Not Sleep", 10 * 60);
 
@@ -96,8 +113,9 @@ public class CLIMain extends Main {
             countSalary();
 
             // Input command
-            System.out.print("Masukkan perintah: ");
+            System.out.print("Masukkan menu game yang diinginkan: ");
             String menu = scanner.nextLine();
+            System.out.println();
             if (equals(menu, "HELP")) {
                 Print.showMenu();
 
@@ -107,13 +125,19 @@ public class CLIMain extends Main {
                 System.exit(0);
 
             } else if (equals(menu, "VIEW SIM INFO")) {
+                System.out.println("==========SIM INFO==========");
                 Print.viewSimInfo(currentSim);
+                System.out.println("================================");
 
             } else if (equals(menu, "VIEW CURRENT LOCATION")) {
+                System.out.println("==========SIM LOCATION==========");
                 Print.viewSimLoc(currentSim);
+                System.out.println("================================");
 
             } else if (equals(menu, "VIEW INVENTORY")) {
+                System.out.println("==========SIM INVENTORY==========");
                 Print.viewSimInventory(currentSim);
+                System.out.println("=================================");
 
             } else if (equals(menu, "UPGRADE HOUSE")) {
                 if (equals(currentSim.getSimLoc().getHouse().getOwner(), currentSim.getFullName())) {
@@ -151,6 +175,7 @@ public class CLIMain extends Main {
                             newSim = menuAddSim();
                             if (newSim != null) {
                                 dayAddSim = time.getDay(); // hanya dapat dilakukan 1 hari sekali
+                                System.out.println();
                                 break;
                             } else {
                                 System.out.println("Silakan mencoba mendaftarkan Sim baru di lokasi yang berbeda.");
@@ -214,6 +239,7 @@ public class CLIMain extends Main {
 
                 System.out.print("Masukkan aksi yang ingin dijalankan: ");
                 String act = scanner.nextLine();
+                System.out.println();
 
                 if (equals(act, "WORK")) {
                     // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
