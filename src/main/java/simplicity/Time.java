@@ -103,7 +103,7 @@ public class Time {
     }
 
     public int getSecond() {
-        return second;
+        return second + 1;
     }
 
     public void setSecond(int second) throws IllegalArgumentException {
