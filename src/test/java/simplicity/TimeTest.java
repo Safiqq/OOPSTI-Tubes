@@ -1,16 +1,16 @@
 package simplicity;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class TimeTest {
     private static Time time1, time2, time3;
 
     @BeforeClass
-    public static void setUp() throws Exception {
+    public static void setUp() {
         time1 = new Time();
         time2 = new Time(3, 10, 59);
         time3 = new Time();

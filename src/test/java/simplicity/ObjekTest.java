@@ -1,22 +1,22 @@
 package simplicity;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class ObjekTest {
-    private static Objek obj1;
+    private static Objek obj;
 
     @BeforeClass
-    public static void setUp() throws Exception {
-        obj1 = new Objek("Kursi");
+    public static void setUp() {
+        obj = new Objek("Kursi");
     }
 
     @Test
-    public void testObjekName(){
-        assertEquals("Kursi",obj1.getObjekName());
-        obj1.setObjekName("Meja");
-        assertEquals("Meja",obj1.getObjekName());
+    public void testObjekName() {
+        assertEquals("Kursi", obj.getObjekName());
+        obj.setObjekName("Meja");
+        assertEquals("Meja", obj.getObjekName());
     }
 }

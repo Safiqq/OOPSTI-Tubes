@@ -1,16 +1,16 @@
 package simplicity;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class MotiveTest {
     private static Motive motive1, motive2;
 
     @BeforeClass
-    public static void setUp() throws Exception {
+    public static void setUp() {
         motive1 = new Motive();
         motive2 = new Motive();
     }

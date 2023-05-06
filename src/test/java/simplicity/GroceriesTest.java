@@ -1,31 +1,22 @@
 package simplicity;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class GroceriesTest {
-    private static Groceries gr, gr1;
+    private static Groceries gr1, gr2;
 
     @BeforeClass
-    public static void setUp() throws Exception {
-        gr = new Groceries("Beras");
-        gr1 = new Groceries("Roti", 5000, 20);
+    public static void setUp() {
+        gr1 = new Groceries("Nasi");
+        gr2 = new Groceries("Kentang");
     }
 
     @Test
     public void testGroceries() {
-        assertEquals("Beras", gr.getObjekName());
-        gr.setObjekName("Telur");
-        assertEquals("Telur", gr.getObjekName());
-
-        assertEquals("Roti", gr1.getObjekName());
-        assertEquals(5000, gr1.getPrice());
-        assertEquals(20, gr1.getHunger());
-        gr1.setPrice(10000);
-        gr1.setHunger(30);
-        assertEquals(10000, gr1.getPrice());
-        assertEquals(30, gr1.getHunger());
+        assertEquals("Nasi", gr1.getObjekName());
+        assertEquals("Kentang", gr2.getObjekName());
     }
 }

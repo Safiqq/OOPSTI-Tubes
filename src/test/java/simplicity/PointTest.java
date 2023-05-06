@@ -1,15 +1,15 @@
 package simplicity;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 import org.junit.BeforeClass;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class PointTest {
     private static Point p1, p2;
 
     @BeforeClass
-    public static void setUp() throws Exception {
+    public static void setUp() {
         p1 = new Point();
         p2 = new Point(5, 3);
     }
