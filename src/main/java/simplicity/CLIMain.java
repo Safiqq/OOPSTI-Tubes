@@ -127,8 +127,7 @@ public class CLIMain extends Main {
                 moveRoom();
 
             } else if (equals(menu, "EDIT ROOM")) {
-                boolean done = false;
-                while (!done) {
+                while (true) {
                     System.out.print("Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah): ");
                     String ans = scanner.nextLine();
                     if (equals(ans, "BELI")) {
@@ -403,7 +402,7 @@ public class CLIMain extends Main {
                         upgradeHouse();
                     } else {
                         System.out.println("Sim tidak sedang berada di rumah sendiri.");
-                        System.out.println("Silakan kembali ke rumah sendiri untuk melakukan upgrade House");
+                        System.out.println("Silakan kembali ke rumah sendiri untuk melakukan upgrade House!");
                     }
 
                 } else if (equals(act, "BUY ITEM")) {
@@ -476,7 +475,7 @@ public class CLIMain extends Main {
                     if (equals(currentSim.getObjLoc(), "Wastafel")) {
                         // sim minimal cuci tangan 1 kali tiap habis makan
                         // efek tidak cuci tangan: -15 health 3 menit setelah makan tidak cuci tangan
-                        
+
                         int simWashTime = validateTime("cuci tangan", 10);
                         currentSim.deleteStatus("Not Wash Hand");
                         currentSim.addStatus("Wash Hand", simWashTime);
@@ -637,7 +636,7 @@ public class CLIMain extends Main {
             while (true) {
                 System.out.print("Masukkan nama ruangan yang ingin didatangi: ");
                 String roomName = scanner.nextLine();
-                if (Main.equals(oldRoom, roomName)) {
+                if (equals(oldRoom, roomName)) {
                     System.out.println("Nama ruangan sama dengan tempat Sim berada ");
                     System.out.println("Sim berada di ruangan " + oldRoom);
                     System.out.println();
@@ -671,7 +670,9 @@ public class CLIMain extends Main {
                         System.out.print("Masukkan nama salah satu ruangan sebagai acuan: ");
                         String roomName = scanner.nextLine();
                         tempRoom = house.get(roomName);
-                        System.out.println("Ruangan tidak dikenali...");
+                        if (tempRoom == null) {
+                            System.out.println("Ruangan tidak dikenali...");
+                        }
                     } while (tempRoom == null);
                 }
 
@@ -683,7 +684,7 @@ public class CLIMain extends Main {
                 while (true) {
                     System.out.printf("Pilih lokasi %s di sebelah %s (KIRI/KANAN/ATAS/BAWAH): ", newRoomName, tempRoom.getRoomName());
                     String roomLoc = scanner.nextLine();
-                    if (Main.equals(roomLoc, "KANAN")) {
+                    if (equals(roomLoc, "KANAN")) {
                         currentSim.addStatus("Upgrade House", 18 * 60);
                         Thread thread = new Thread(() -> {
                             while (currentSim.getMapStatus().get("Upgrade House") != null) {
@@ -700,7 +701,7 @@ public class CLIMain extends Main {
                         });
                         thread.start();
                         break;
-                    } else if (Main.equals(roomLoc, "KIRI")) {
+                    } else if (equals(roomLoc, "KIRI")) {
                         currentSim.addStatus("Upgrade House", 18 * 60);
                         Thread thread = new Thread(() -> {
                             while (currentSim.getMapStatus().get("Upgrade House") != null) {
@@ -717,7 +718,7 @@ public class CLIMain extends Main {
                         });
                         thread.start();
                         break;
-                    } else if (Main.equals(roomLoc, "ATAS")) {
+                    } else if (equals(roomLoc, "ATAS")) {
                         currentSim.addStatus("Upgrade House", 18 * 60);
                         Thread thread = new Thread(() -> {
                             while (currentSim.getMapStatus().get("Upgrade House") != null) {
@@ -734,7 +735,7 @@ public class CLIMain extends Main {
                         });
                         thread.start();
                         break;
-                    } else if (Main.equals(roomLoc, "BAWAH")) {
+                    } else if (equals(roomLoc, "BAWAH")) {
                         currentSim.addStatus("Upgrade House", 18 * 60);
                         Thread thread = new Thread(() -> {
                             while (currentSim.getMapStatus().get("Upgrade House") != null) {
@@ -822,7 +823,7 @@ public class CLIMain extends Main {
 
             if (objek != null) {
                 final String _statusName = "Buy Item";
-                if (Main.equals(objek.getClass().getSimpleName(), "Groceries")) {
+                if (equals(objek.getClass().getSimpleName(), "Groceries")) {
                     if (currentSim.isMoneyEnough(((Groceries) objek).getPrice())) {
                         currentSim.setMoney(currentSim.getMoney() - ((Groceries) objek).getPrice());
                         System.out.println("Mengirim barang...");
@@ -843,7 +844,7 @@ public class CLIMain extends Main {
                     } else {
                         System.out.println("Uangmu kurang :(");
                     }
-                } else if (Main.equals(objek.getClass().getSimpleName(), "NonFood")) {
+                } else if (equals(objek.getClass().getSimpleName(), "NonFood")) {
                     if (currentSim.isMoneyEnough(((NonFood) objek).getPrice())) {
                         currentSim.setMoney(currentSim.getMoney() - ((NonFood) objek).getPrice());
                         System.out.println("Mengirim barang...");
@@ -873,7 +874,7 @@ public class CLIMain extends Main {
 
     public void installItem() {
         // kalau sim sedang berada di rumah sendiri
-        if (Main.equals(currentSim.getFullName(), currentSim.getSimLoc().getHouse().getOwner())) {
+        if (equals(currentSim.getFullName(), currentSim.getSimLoc().getHouse().getOwner())) {
             Box<NonFood> boxNonFood = currentSim.getInventory().getBoxNonFood();
             if (boxNonFood.getList().size() > 0) {
                 System.out.println("List barang di inventory Anda:");
@@ -881,7 +882,7 @@ public class CLIMain extends Main {
                 for (NonFood barang : boxNonFood.getList()) {
                     System.out.println((++i) + ". Objek: " + barang.getObjekName() + ", Jumlah: " + boxNonFood.getCount(barang.getObjekName()));
                 }
-                
+
                 // Looping input barang
                 boolean barangValid = false;
                 while (!barangValid) {
@@ -889,47 +890,47 @@ public class CLIMain extends Main {
                     int numBarang = scanner.nextInt();
                     System.out.println();
 
-                    if (numBarang <= i && numBarang > 0){
+                    if (numBarang <= i && numBarang > 0) {
                         barangValid = true;
-                        NonFood targetBarang = boxNonFood.getList().get(numBarang-1);
+                        NonFood targetBarang = boxNonFood.getList().get(numBarang - 1);
                         int length = targetBarang.getLength();
                         int width = targetBarang.getWidth();
-                        
+
                         //Print list room yang ada di rumah
                         int j = 0;
-                        for(Room room : currentSim.getSimLoc().getHouse().getListRoom()){
+                        for (Room room : currentSim.getSimLoc().getHouse().getListRoom()) {
                             System.out.println((++j) + ". " + room.getRoomName());
                         }
-                        
+
                         //Looping input ruangan
                         boolean roomValid = false;
                         while (!roomValid) {
                             System.out.print("Masukkan nomor ruangan: ");
                             int numRoom = scanner.nextInt();
-                            
-                            if (numRoom <= j && numRoom > 0){
+
+                            if (numRoom <= j && numRoom > 0) {
                                 roomValid = true;
-                                Room targetRoom = currentSim.getSimLoc().getHouse().getListRoom().get(numRoom-1);
-                                
+                                Room targetRoom = currentSim.getSimLoc().getHouse().getListRoom().get(numRoom - 1);
+
                                 //Looping input lokasi barang
                                 boolean pointValid = false;
                                 while (!pointValid) {
                                     System.out.print("Masukkan lokasi awal sumbu X barang: ");
                                     int startX = scanner.nextInt();
-                                    
+
                                     System.out.print("Masukkan lokasi awal sumbu Y barang: ");
                                     int startY = scanner.nextInt();
                                     System.out.println();
-                                    
-                                    if (startX >= 0 && startX <= 5 && startY >= 0 && startY <= 5){
+
+                                    if (startX >= 0 && startX <= 5 && startY >= 0 && startY <= 5) {
                                         int endX = startX + length - 1;
-                                        int endY = startY + width -1;
-                                        
-                                        if (endX <= 5 && endY <= 5){
+                                        int endY = startY + width - 1;
+
+                                        if (endX <= 5 && endY <= 5) {
                                             Point startPoint = new Point(startX, startY);
                                             Point endPoint = new Point(endX, endY);
-                                            
-                                            if (targetRoom.isSpaceEmpty(startPoint, endPoint)){
+
+                                            if (targetRoom.isSpaceEmpty(startPoint, endPoint)) {
                                                 targetBarang.setStartPoint(startPoint);
                                                 targetBarang.setEndPoint(endPoint);
                                                 targetRoom.insertBarang(targetBarang);
@@ -939,14 +940,14 @@ public class CLIMain extends Main {
                                             } else {
                                                 System.out.println("Sudah ada barang lain di lokasi yang dipilih.");
                                             }
-                                            
+
                                         } else {
                                             System.out.println("Lokasi yang dipilih kurang besar.");
                                         }
                                     } else {
                                         System.out.println("Input lokasi tidak valid.");
                                     }
-                                    
+
                                 }
                             } else {
                                 System.out.println("Nomor ruangan tidak valid");
@@ -1023,10 +1024,10 @@ public class CLIMain extends Main {
         do {
             System.out.print("Masukkan nama pekerjaan baru: ");
             jobName = scanner.nextLine();
-            if (Main.equals(jobName, oldJobName)){
+            if (equals(jobName, oldJobName)) {
                 System.out.println("Pekerjaan baru sama dengan pekerjaan yang lama.");
             }
-        } while (Main.equals(jobName, oldJobName));
+        } while (equals(jobName, oldJobName));
         occupation.setJobName(jobName);
         occupation.setDailySalary(Occupation.getListJob().get(jobName));
 
@@ -1042,7 +1043,7 @@ public class CLIMain extends Main {
         }
     }
 
-    public void countSalary(){
+    public void countSalary() {
         // hitung gaji
         if (time.getDay() > currentSim.getDayWork()) {
             // gaji harian (4 menit kerja = 240 dtk)
