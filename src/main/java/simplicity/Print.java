@@ -36,6 +36,7 @@ public class Print {
     }
 
     public static void showCookingMenu() {
+        System.out.println("Makanan yang tersedia:");
         int i = 0;
         for (Food food : Food.getListFood()) {
             System.out.print(++i + ". " + food.getObjekName() + " (Kekenyangan: " + food.getFoodHunger() + ", Bahan: ");

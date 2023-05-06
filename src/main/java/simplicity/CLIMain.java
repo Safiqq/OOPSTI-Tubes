@@ -312,7 +312,7 @@ public class CLIMain extends Main {
                         }
 
                         if (food != null) {
-                            int cookTime = (int) food.getFoodHunger() * 3 / 2;
+                            int cookTime = food.getFoodHunger() * 3 / 2;
                             Action.get("Cook").getListEffect().get(0).setCooldown(cookTime);
                             currentSim.addStatus("Cook", cookTime);
                             time.sleepMain(currentSim, cookTime);
@@ -370,7 +370,7 @@ public class CLIMain extends Main {
                         currentSim.addStatus("Visit", walkTime);
                         time.sleepMain(currentSim, walkTime);
                         int apply = walkTime / Action.get("Visit").getListEffect().get(0).getCooldown();
-                        for (int i = 0; i < apply; i++){
+                        for (int i = 0; i < apply; i++) {
                             currentSim.applyEffect("Visit");
                         }
 
@@ -908,6 +908,7 @@ public class CLIMain extends Main {
                         int width = targetBarang.getWidth();
 
                         //Print list room yang ada di rumah
+                        System.out.println("List ruangan yang ada:");
                         int j = 0;
                         for (Room room : currentSim.getSimLoc().getHouse().getListRoom()) {
                             System.out.println((++j) + ". " + room.getRoomName());
