@@ -227,7 +227,7 @@ public class Sim {
     }
 
     public void visitingEffect(int time){
-        if(Main.equals(simLoc.getHouse().getOwner(), fullName)){
+        if(!Main.equals(simLoc.getHouse().getOwner(), fullName)){
             visitTime += time;
         }
     }
