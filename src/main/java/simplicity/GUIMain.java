@@ -22,16 +22,18 @@ public class GUIMain extends Main {
     private final static String fontPath = basePath + "/fonts";
     private final String simsColorCode = "#a6e329";
     private final String greyColorCode = "#808080";
-    private Font font16;
-    private Font font20;
+    private final Font font16;
+    private final Font font20;
+    private boolean isActionFrameActive;
 
     public GUIMain() {
+        importFont();
+        isActionFrameActive = false;
+        font16 = new Font("The Sims Sans", Font.PLAIN, 16);
+        font20 = new Font("The Sims Sans", Font.PLAIN, 20);
     }
 
     public void start() {
-        importFont();
-        font16 = new Font("The Sims Sans", Font.PLAIN, 16);
-        font20 = new Font("The Sims Sans", Font.PLAIN, 20);
         showMainFrame();
     }
 
@@ -59,7 +61,11 @@ public class GUIMain extends Main {
     }
 
     public void resetupFrame(JFrame frame) {
-        frame.setSize(1280, 720);
+        resetupFrame(frame, 1280, 720);
+    }
+
+    public void resetupFrame(JFrame frame, int width, int height) {
+        frame.setSize(width, height);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -264,9 +270,9 @@ public class GUIMain extends Main {
                 }
             }
         });
-        JButton button = createBackButton(frame, this::showMainFrame);
+        JButton backButton = createBackButton(frame, this::showMainFrame);
 
-        addToFrame(frame, new Component[]{label1, label2, label3, label4, label5, label6, label7, label8, button, background});
+        addToFrame(frame, new Component[]{label1, label2, label3, label4, label5, label6, label7, label8, backButton, background});
 
         resetupFrame(frame);
     }
@@ -301,7 +307,7 @@ public class GUIMain extends Main {
     }
 
     public void showRoomFrame(Point houseLoc, String roomName) {
-        JFrame frame = new JFrame("House (" + houseLoc.getX() + ", " + houseLoc.getY() + ") - " + roomName);
+        JFrame frame = new JFrame("SimPlicity - House (" + houseLoc.getX() + ", " + houseLoc.getY() + ") - " + roomName);
         setupFrame(frame);
 
         String[] filteredActionNames = Action.getListAction().stream()
@@ -326,7 +332,7 @@ public class GUIMain extends Main {
     }
 
     public void showHelpFrame() {
-        JFrame frame = new JFrame();
+        JFrame frame = new JFrame("SimPlicity - Help");
         setupFrame(frame);
 
         JLabel background = createLabelImage("background.png", 1280, 720);
@@ -339,8 +345,8 @@ public class GUIMain extends Main {
             y += 30;
             frame.add(labelx);
         }
-        JButton button = createBackButton(frame, this::showWorldFrame);
-        addToFrame(frame, new Component[]{label, button, background});
+        JButton backButton = createBackButton(frame, this::showWorldFrame);
+        addToFrame(frame, new Component[]{label, backButton, background});
 
         resetupFrame(frame);
     }
@@ -535,7 +541,7 @@ public class GUIMain extends Main {
                 }
             }
         }, simsColorCode);
-        JButton button7 = createCallbackButton("EDIT ROOM", frame, () -> {
+        JButton button7 = createCallbackButton("EDIT ROOM", () -> {
             while (true) {
                 String ans = showInputPopup(frame, "Apakah Anda ingin membeli barang baru atau memindahkan barang? (Beli/Pindah): ", "Edit Room");
                 if (equals(ans, "BELI")) {
@@ -719,7 +725,7 @@ public class GUIMain extends Main {
                 }
             }
         }, simsColorCode);
-        JButton button8 = createCallbackButton("ADD SIM", frame, () -> {
+        JButton button8 = createCallbackButton("ADD SIM", () -> {
             if (time.getDay() > dayAddSim) {
                 // cek masi ada spot kosong di world ato ngga
                 if (world.isHouseBuildAble()) {
@@ -769,7 +775,7 @@ public class GUIMain extends Main {
                 showMessagePopup(frame, "Menu 'ADD SIM' hanya dapat dijalankan 1 hari sekali.", "Failed");
             }
         }, simsColorCode);
-        JButton button9 = createCallbackButton("CHANGE SIM", frame, () -> {
+        JButton button9 = createCallbackButton("CHANGE SIM", () -> {
             // di listSim hanya ada 1 sim
             if (Sim.getListSim().size() == 1) {
                 showMessagePopup(frame, "Tidak bisa dilakukan pergantian Sim. Hanya terdapat 1 Sim yang terdaftar.<br>Lakukan 'ADD SIM' untuk menambah Sim baru!", "Failed");
@@ -806,7 +812,7 @@ public class GUIMain extends Main {
                 System.out.println("Sim berhasil diganti. Selamat bermain!");
             }
         }, simsColorCode);
-        JButton button10 = createCallbackButton("LIST OBJECT", frame, () -> {
+        JButton button10 = createCallbackButton("LIST OBJECT", () -> {
             ArrayList<NonFood> listObjek = currentSim.getSimLoc().getRoom().getListObjek();
             if (listObjek.size() > 0) {
                 Room room = currentSim.getSimLoc().getRoom();
@@ -820,7 +826,7 @@ public class GUIMain extends Main {
                 showMessagePopup(frame, "Tidak ada daftar objek dalam ruangan " + currentSim.getSimLoc().getRoom().getRoomName() + ".", "Failed");
             }
         }, simsColorCode);
-        JButton button11 = createCallbackButton("GO TO OBJECT", frame, () -> {
+        JButton button11 = createCallbackButton("GO TO OBJECT", () -> {
             Room room = currentSim.getSimLoc().getRoom();
             StringBuilder text = new StringBuilder("Objek yang ada di ruang " + room.getRoomName() + ":");
             int i = 0;
@@ -842,19 +848,89 @@ public class GUIMain extends Main {
                 showMessagePopup(frame, "Masukan tidak valid. Pilih nomor yang tersedia.", "Failed");
             }
         }, simsColorCode);
-        JButton button12 = createCallbackButton("CHANGE JOB", frame, () -> {
+        JButton button12 = createCallbackButton("CHANGE JOB", () -> {
             if (currentSim.getTotalWorkTime() >= 720) {
-                newJob();
+                Occupation occupation = currentSim.getOccupation();
+
+                // Change job
+                String text = "Daftar pekerjaan yang tersedia: ";
+                List<String> keys = Occupation.getKeys();
+                for (int i = 0; i < keys.size(); i++) {
+                    text += "<br>" + (i + 1) + ". " + keys.get(i);
+                }
+
+                String oldJobName = occupation.getJobName();
+                int oldDailySalary = occupation.getDailySalary();
+                String jobName;
+                do {
+                    text += "<br><br>Masukkan nama pekerjaan baru: ";
+                    jobName = showInputPopup(frame, text, "Occupation Name");
+                    if (equals(jobName, oldJobName)) {
+                        showMessagePopup(frame, "Pekerjaan baru sama dengan pekerjaan yang lama.", "Failed");
+                    }
+                } while (equals(jobName, oldJobName));
+                occupation.setJobName(jobName);
+                occupation.setDailySalary(Occupation.getListJob().get(jobName));
+
+                // Harus bayar 1/2 dari gaji harian pekerjaan baru
+                int payChangeJob = (int) (0.5 * occupation.getDailySalary());
+                if (currentSim.getMoney() < payChangeJob) {
+                    showMessagePopup(frame, "Uang tidak mencukupi untuk pindah pekerjaan.", "Failed");
+                    occupation.setJobName(oldJobName);
+                    occupation.setDailySalary(oldDailySalary);
+                } else {
+                    currentSim.setMoney(currentSim.getMoney() - payChangeJob);
+                    currentSim.setTotalWorkTime(0);
+                }
                 currentSim.setDayChangeJob(time.getDay());
             } else {
                 showMessagePopup(frame, "Sim hanya dapat mengganti pekerjaan jika sudah bekerja setidaknya 12 menit.", "Failed");
             }
         }, simsColorCode);
-        JButton button13 = createCallbackButton("ACTION", frame, this::showHelpFrame, simsColorCode);
+        JButton button13 = createCallbackButton("ACTION", () -> {
+            if (!isActionFrameActive) {
+                isActionFrameActive = true;
+                showActionFrame();
+            }
+
+        }, simsColorCode);
 
         addToPanel(panel, new Component[]{button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13});
 
         return panel;
+    }
+
+    public void showActionFrame() {
+        JFrame frame = new JFrame("SimPlicity - Action");
+        setupFrame(frame);
+
+        JButton button1 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button2 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button3 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button4 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button5 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button6 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button7 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button8 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button9 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button10 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button11 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button12 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button13 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button14 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button15 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button16 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button17 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button18 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button19 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton button20 = createCallbackButton("WORK", frame, this::showHelpFrame, simsColorCode);
+        JButton backButton = createBackButton(frame, () -> {
+            isActionFrameActive = false;
+        });
+
+        addToFrame(frame, new Component[]{button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13, button14, button15, button16, button17, button18, button19, button20, backButton});
+
+        resetupFrame(frame, 180, 720);
     }
 
     public JPanel createWorld(JFrame frame) {
@@ -901,7 +977,7 @@ public class GUIMain extends Main {
     }
 
     public void showWorldFrame() {
-        JFrame frame = new JFrame("World Map");
+        JFrame frame = new JFrame("SimPlicity - World");
         setupFrame(frame);
 
         JLabel background = createLabelImage("background.png", 1280, 720);
@@ -911,9 +987,9 @@ public class GUIMain extends Main {
         panelWorld.setBounds(200, 16, panelWorld.getPreferredSize().width, panelWorld.getPreferredSize().height);
         JPanel panelMenu = createMenu(frame);
         panelMenu.setBounds(908, 20, panelMenu.getPreferredSize().width, panelMenu.getPreferredSize().height);
-        JButton button = createBackButton(frame, this::showMainFrame);
+        JButton backButton = createBackButton(frame, this::showMainFrame);
 
-        addToFrame(frame, new Component[]{button, panelWorld, panelMenu, background});
+        addToFrame(frame, new Component[]{backButton, panelWorld, panelMenu, background});
 
         resetupFrame(frame);
     }
