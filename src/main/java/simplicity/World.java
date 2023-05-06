@@ -78,7 +78,7 @@ public class World {
         String simName = deleted.getFullName();
         for (int i = 0; i < width; i++){
             for (int j = 0; j < length; j++){
-                if (Main.equals(matrixHouse[i][j].getOwner(), simName)){
+                if (matrixHouse[i][j] != null && Main.equals(matrixHouse[i][j].getOwner(), simName)){
                     // hapus rumah Sim
                     matrixHouse[i][j] = null;
                 }
