@@ -19,6 +19,7 @@ public class Sim {
     private int storeWorkTime = 0;
     private int totalWorkTime = 0;
     private int dayChangeJob = 0;
+    private int visitTime = 0;
 
     public Sim(String fullName) {
         this.fullName = fullName;
@@ -113,6 +114,14 @@ public class Sim {
 
     public void setDayChangeJob(int dayChangeJob) {
         this.dayChangeJob = dayChangeJob;
+    }
+
+    public int getVisitTime(){
+        return visitTime;
+    }
+
+    public void setVisitTime(int visitTime){
+        this.visitTime = visitTime;
     }
 
     public Occupation getOccupation() {
@@ -214,5 +223,27 @@ public class Sim {
         NonFood[][] matriksBarang = simLoc.getRoom().getMatrixBarang();
         NonFood obj = matriksBarang[simLoc.getPoint().getY()][simLoc.getPoint().getX()];
         return obj.getObjekName();
+    }
+
+    public void visitingEffect(int time){
+        if(Main.equals(simLoc.getHouse().getOwner(), fullName)){
+            visitTime += time;
+        }
+    }
+
+    public void visit(int time){
+        // +10 mood/30 dtk, -10 kekenyangan/30 dtk
+        int plusMood = 10 * (time / 30);
+        int minusHunger = -10 * (time / 30);
+
+        // menghapus sim dari list sim jika mati
+        try {
+            motive.changeMood(plusMood);
+            motive.changeHunger(minusHunger);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Sim dengan nama " + this.getFullName() + " dihapus dari daftar Sim!");
+            listSim.remove(this);
+        }
     }
 }
