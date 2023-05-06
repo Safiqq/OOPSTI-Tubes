@@ -169,7 +169,7 @@ public class NonFood extends Objek implements Purchasable {
     }
 
     public void setListAction(List<Action> action) {
-        this.listAction = listAction;
+        this.listAction = action;
     }
 
     public Point getStartPoint() {
