@@ -49,10 +49,14 @@ public class Time {
                         System.out.println("Sim " + sim.getFullName() + " sedang melakukan " + status + " (" + duration + " detik lagi).");
                     }
                 }
-                if (duration % Action.get(status).getListEffect().get(0).getCooldown() == 0) {
-                    sim.applyEffect(status);
+
+                if (!Main.equals(status, "Visit")){
+                    if (duration % Action.get(status).getListEffect().get(0).getCooldown() == 0) {
+                        sim.applyEffect(status);
+                    }
                 }
             }
+
             if (duration <= 0) {
                 sim.deleteStatus(status);
                 if (Main.equals(status, "Not Sleep")) {

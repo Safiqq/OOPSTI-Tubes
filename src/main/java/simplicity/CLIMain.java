@@ -370,6 +370,10 @@ public class CLIMain extends Main {
 
                         currentSim.addStatus("Visit", walkTime);
                         time.sleepMain(currentSim, walkTime);
+                        int apply = walkTime / Action.get("Visit").getListEffect().get(0).getCooldown();
+                        for (int i = 0; i < apply; i++){
+                            currentSim.applyEffect("Visit");
+                        }
 
                         // lokasi Sim baru di Ruang Utama point 3,3
                         House visited = world.findHouse(houseLoc);
