@@ -13,7 +13,6 @@ public class CLIMain extends Main {
         scanner = new Scanner(System.in);
         time = new Time();
         dayAddSim = 0;
-        daySleepSim = 0;
         isStarted = false;
     }
 
@@ -71,6 +70,7 @@ public class CLIMain extends Main {
 
         System.out.println("Selamat bermain!");
         Print.showMenu();
+        currentSim.addStatus("Not Sleep", 10 * 60);
 
         // Looping game
         while (isStarted) {
@@ -91,9 +91,6 @@ public class CLIMain extends Main {
                     System.out.println("Selamat bermain!");
                 }
             }
-
-            // Cek pas ganti hari, kalau Sim belum tidur addStatus "Not Sleep"
-
 
             // Input command
             System.out.print("Masukkan perintah: ");
@@ -270,18 +267,12 @@ public class CLIMain extends Main {
 
                 } else if (equals(act, "SLEEP")) {
                     if (currentSim.getObjLoc().contains("Kasur")) {
-                        // sim sebagai manusia harus memiliki waktu tidur min 3 mnt setiap harinya
-                        // efek tidak tidur -> -5 kesehatan dan -5 mood setelah 10 mnt tanpa tidur
-                        // apakah harus 3 menit langsung atau boleh dicicil?
-                        // penambahan efek tidur apakah akumulasi dalam hari tersebut atau langsung
-                        // dibagi tiap tidur
-
                         int simSleepTime = validateTime("tidur", 4 * 60);
 
                         currentSim.deleteStatus("Not Sleep");
-                        // daySleepSim = time.getDay();
                         currentSim.addStatus("Sleep", simSleepTime);
                         time.sleepMain(currentSim, simSleepTime);
+                        currentSim.addStatus("Not Sleep", 10 * 60);
 
                     } else {
                         System.out.println("Sim hanya dapat melakukan aksi ini jika sedang di kasur.");

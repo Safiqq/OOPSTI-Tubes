@@ -55,6 +55,9 @@ public class Time {
             }
             if (duration <= 0) {
                 sim.deleteStatus(status);
+                if (Main.equals(status, "Not Sleep")) {
+                    sim.addStatus("Not Sleep", 10 * 60);
+                }
             }
         }
     }

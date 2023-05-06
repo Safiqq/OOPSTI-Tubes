@@ -44,11 +44,11 @@ public class Action {
         listAction.add(new Action("Exercise", "Sim dapat berolahraga", Arrays.asList(arrayEffect2)));
 
         /* Aksi Tidur */
-        Effect[] arrayEffect31 = {new Effect("mood", 30, 240), new Effect("health", 20, 240)};
+        Effect[] arrayEffect31 = {new Effect("mood", 30, 4 * 60), new Effect("health", 20, 4 * 60)};
         listAction.add(new Action("Sleep", "Sim sebagai manusia harus memiliki waktu tidur minimum 3 menit setiap harinya.", Arrays.asList(arrayEffect31)));
 
         /* Tidak Tidur */
-        Effect[] arrayEffect32 = {new Effect("health", -5, 0), new Effect("mood", -5, 0)};
+        Effect[] arrayEffect32 = {new Effect("health", -5, 10 * 60), new Effect("mood", -5, 10 * 60)};
         listAction.add(new Action("Not Sleep", "Sim sebagai manusia harus memiliki waktu tidur minimum 3 menit setiap harinya.", Arrays.asList(arrayEffect32)));
 
         /* Aksi Makan */
@@ -68,7 +68,7 @@ public class Action {
         listAction.add(new Action("Pee", "Sim sebagai manusia virtual memiliki organ pencernaan layaknya manusia biasa.", Arrays.asList(arrayEffect71)));
 
         /* Tidak Buang Air */
-        Effect[] arrayEffect72 = {new Effect("health", -5, 240), new Effect("mood", -5, 240)};
+        Effect[] arrayEffect72 = {new Effect("health", -5, 4 * 60), new Effect("mood", -5, 4 * 60)};
         listAction.add(new Action("Not Pee", "Sim sebagai manusia virtual memiliki organ pencernaan layaknya manusia biasa.", Arrays.asList(arrayEffect72)));
 
         /* Aksi Upgrade Rumah */
