@@ -313,7 +313,7 @@ public class CLIMain extends Main {
                         }
 
                         if (food != null) {
-                            int cookTime = food.getFoodHunger();
+                            int cookTime = (int) food.getFoodHunger() * 3 / 2;
                             Action.get("Cook").getListEffect().get(0).setCooldown(cookTime);
                             currentSim.addStatus("Cook", cookTime);
                             time.sleepMain(currentSim, cookTime);
@@ -324,6 +324,7 @@ public class CLIMain extends Main {
                             for (Groceries groceries : food.getListGroceries()) {
                                 currentSim.deleteGroceriesFromInventory(groceries.getObjekName());
                             }
+                            currentSim.getInventory().getBoxFood().add(food);
                             System.out.println("Berhasil memasak.");
                         }
                     } else {
@@ -972,7 +973,7 @@ public class CLIMain extends Main {
 
     public void eat() {
         Print.viewSimFood(currentSim);
-        System.out.print("Mau makan apa? ");
+        System.out.print("Mau makan apa? : ");
         String namaMakanan = scanner.nextLine();
         if (Food.get(namaMakanan) != null) {
             if (currentSim.checkFood(namaMakanan)) {
