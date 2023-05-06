@@ -117,7 +117,6 @@ public class Print {
     }
 
     public static void viewSimLoc(Sim sim) {
-        System.out.println("Lokasi Sim: ");
         System.out.println("Rumah milik: " + sim.getSimLoc().getHouse().getOwner());
         System.out.println("Nama ruangan: " + sim.getSimLoc().getRoom().getRoomName());
         System.out.println("X: " + sim.getSimLoc().getPoint().getX() + ", Y: " + sim.getSimLoc().getPoint().getY());

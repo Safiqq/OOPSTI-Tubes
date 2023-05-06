@@ -2,6 +2,8 @@ package simplicity;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -18,12 +20,18 @@ public class GUIMain extends Main {
     private final static String basePath = "src/main/resources";
     private final static String imagePath = basePath + "/images";
     private final static String fontPath = basePath + "/fonts";
+    private final String simsColorCode = "#a6e329";
+    private final String greyColorCode = "#808080";
+    private Font font16;
+    private Font font20;
 
     public GUIMain() {
     }
 
     public void start() {
         importFont();
+        font16 = new Font("The Sims Sans", Font.PLAIN, 16);
+        font20 = new Font("The Sims Sans", Font.PLAIN, 20);
         showMainFrame();
     }
 
@@ -77,10 +85,12 @@ public class GUIMain extends Main {
         label.setBounds(0, 0, 1280, 720);
 
         JButton button1 = createButton("Start Game", e -> {
-            String simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM", JOptionPane.QUESTION_MESSAGE);
+            JLabel labelx = new JLabel("Masukkan nama SIM:");
+            labelx.setFont(font16);
+            String simName = JOptionPane.showInputDialog(frame, labelx, "Create SIM", JOptionPane.QUESTION_MESSAGE);
             if (simName != null) {
                 while (equals(simName.trim(), "")) {
-                    simName = JOptionPane.showInputDialog(frame, "Masukkan nama SIM:", "Create SIM", JOptionPane.QUESTION_MESSAGE);
+                    simName = JOptionPane.showInputDialog(frame, labelx, "Create SIM", JOptionPane.QUESTION_MESSAGE);
                     if (simName == null)
                         break;
                 }
@@ -193,13 +203,41 @@ public class GUIMain extends Main {
     }
 
     public JButton createButton(String text, ActionListener callback) {
-        return createButton(text, callback, "#a6e329");
+        return createButton(text, callback, simsColorCode);
+    }
+
+    public JButton createButton(String text, ActionListener callback, int fontSize) {
+        JButton button = new RoundedButton(text, 40, Color.decode(simsColorCode), fontSize);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.addActionListener(callback);
+        return button;
     }
 
     public JButton createButton(String text, ActionListener callback, String colorCode) {
         JButton button = new RoundedButton(text, 40, Color.decode(colorCode));
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.addActionListener(callback);
+        return button;
+    }
+
+    public JButton createBackButton(JFrame oldFrame, Callback callback) {
+        return createCallbackButton("Back", oldFrame, callback, greyColorCode);
+    }
+
+    public JButton createCallbackButton(String text, JFrame oldFrame, Callback callback, String colorCode) {
+        JButton button = createButton(text, e -> {
+            oldFrame.setVisible(false);
+            callback.cb();
+        }, colorCode);
+        button.setFont(font20);
+        return button;
+    }
+
+    public JButton createCallbackButton(String text, Callback callback, String colorCode) {
+        JButton button = createButton(text, e -> {
+            callback.cb();
+        }, colorCode);
+        button.setFont(font20);
         return button;
     }
 
@@ -229,10 +267,7 @@ public class GUIMain extends Main {
                 }
             }
         });
-        JButton button = createButton("Back", e -> {
-            frame.setVisible(false);
-            showMainFrame();
-        }, "#808080");
+        JButton button = createBackButton(frame, () -> showMainFrame());
         button.setBounds(40, 40, button.getPreferredSize().width, button.getPreferredSize().height);
 
         addToFrame(frame, new Component[]{label1, label2, label3, label4, label5, label6, label7, label8, button, background});
@@ -271,35 +306,91 @@ public class GUIMain extends Main {
 
     public void showRoomFrame(Point houseLoc, String roomName) {
         JFrame frame = new JFrame("House (" + houseLoc.getX() + ", " + houseLoc.getY() + ") - " + roomName);
-        frame.setLayout(new FlowLayout());
-        frame.setResizable(false);
+        setupFrame(frame);
 
-        JPanel panel = new JPanel();
         String[] filteredActionNames = Action.getListAction().stream()
                 .map(Action::getActionName)
                 .filter(name -> !name.contains("Not"))
                 .toArray(String[]::new);
-        JComboBox<String> cb = new JComboBox<>(filteredActionNames);
+        JComboBox<String> comboBox = new JComboBox<>(filteredActionNames);
 
-        panel.add(cb);
-        panel.add(createButton("Submit", e -> {
+        JButton button = createButton("Submit", e -> {
             // do action here
-            System.out.println(cb.getSelectedItem());
-        }));
+            System.out.println(comboBox.getSelectedItem());
+        });
+        // JButton button = createCallbackButton("Submit", frame, () -> doAction());
 
-        frame.add(createRoom());
-        frame.add(createSimInfo());
-        frame.add(createRoomInfo());
-        frame.add(createButton("Back", e -> {
-            frame.setVisible(false);
-            showWorldFrame();
-        }));
-        frame.add(panel);
+        JPanel panelRoom = createRoom();
+        JPanel panelSim = createSimInfo();
+        JPanel panelRoomInfo = createRoomInfo();
 
-        frame.pack();
-        frame.setSize(1280, 720);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        addToFrame(frame, new Component[]{button, panelRoom, panelSim, panelRoomInfo});
+
+        resetupFrame(frame);
+    }
+
+    public void showHelpFrame() {
+        JFrame frame = new JFrame();
+        setupFrame(frame);
+
+        JLabel background = createLabelImage("background.png", 1280, 720);
+        background.setBounds(0, 0, 1280, 720);
+        int y = 88;
+        JLabel label = createLabel("HELP", 0, y);
+        y += 50;
+        for (int i = 0; i < menu.length; i++) {
+            JLabel labelx = createLabel(menu[i], 0, y);
+            y += 30;
+            frame.add(labelx);
+        }
+        JButton button = createBackButton(frame, () -> showWorldFrame());
+        addToFrame(frame, new Component[]{label, button, background});
+
+        resetupFrame(frame);
+    }
+
+    public JPanel createMenu(JFrame frame) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        Border lineBorder = BorderFactory.createLineBorder(Color.white, 2);
+        Border titledBorder = BorderFactory.createTitledBorder(lineBorder, "Menu Game", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, font20, Color.white);
+        panel.setBorder(titledBorder);
+        panel.setOpaque(false);
+
+        JButton button1 = createCallbackButton("HELP", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button2 = createCallbackButton("VIEW SIM INFO", () -> {
+            JLabel label = new JLabel("<html>Nama Sim: " + currentSim.getFullName() + "<br>" +
+                    "Pekerjaan Sim: " + currentSim.getOccupation().getJobName() + "<br>" +
+                    "Kesehatan Sim: " + currentSim.getMotive().getHealth() + "<br>" +
+                    "Kekenyangan Sim: " + currentSim.getMotive().getHunger() + "<br>" +
+                    "Mood Sim: " + currentSim.getMotive().getMood() + "<br>" +
+                    "Uang Sim: " + currentSim.getMoney() + "</html>");
+            label.setFont(font16);
+            JOptionPane.showMessageDialog(frame, label, "View Sim Info", JOptionPane.INFORMATION_MESSAGE);
+        }, simsColorCode);
+        JButton button3 = createCallbackButton("VIEW CURRENT LOCATION", () -> {
+            JLabel label = new JLabel("<html>Lokasi Sim:<br>" +
+                    "Rumah milik: " + currentSim.getSimLoc().getHouse().getOwner() + "<br>" +
+                    "Lokasi rumah: (" + currentSim.getSimLoc().getHouse().getHouseLoc().getX() + ", " + currentSim.getSimLoc().getHouse().getHouseLoc().getY() + ")<br>" +
+                    "Nama ruangan: " + currentSim.getSimLoc().getRoom().getRoomName() + "<br>" +
+                    "X: " + currentSim.getSimLoc().getPoint().getX() + ", Y: " + currentSim.getSimLoc().getPoint().getY() + "</html>");
+            label.setFont(font16);
+            JOptionPane.showMessageDialog(frame, label, "View Current Location", JOptionPane.INFORMATION_MESSAGE);
+        }, simsColorCode);
+        JButton button4 = createCallbackButton("VIEW INVENTORY", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button5 = createCallbackButton("UPGRADE HOUSE", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button6 = createCallbackButton("MOVE ROOM", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button7 = createCallbackButton("EDIT ROOM", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button8 = createCallbackButton("ADD SIM", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button9 = createCallbackButton("CHANGE SIM", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button10 = createCallbackButton("LIST OBJECT", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button11 = createCallbackButton("GO TO OBJECT", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button12 = createCallbackButton("CHANGE JOB", frame, () -> showHelpFrame(), simsColorCode);
+        JButton button13 = createCallbackButton("ACTION", frame, () -> showHelpFrame(), simsColorCode);
+
+        addToPanel(panel, new Component[]{button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, button13});
+
+        return panel;
     }
 
     public JPanel createWorld(JFrame frame) {
@@ -352,15 +443,14 @@ public class GUIMain extends Main {
         JLabel background = createLabelImage("background.png", 1280, 720);
         background.setBounds(0, 0, 1280, 720);
 
-        JPanel panel = createWorld(frame);
-        panel.setBounds(80, 16, panel.getPreferredSize().width, panel.getPreferredSize().height);
-        //        frame.add(createSimInfo());
-        JButton button = createButton("Back", e -> {
-            frame.setVisible(false);
-            showMainFrame();
-        });
+        JPanel panelWorld = createWorld(frame);
+        panelWorld.setBounds(200, 16, panelWorld.getPreferredSize().width, panelWorld.getPreferredSize().height);
+        JPanel panelMenu = createMenu(frame);
+        panelMenu.setBounds(908, 20, panelMenu.getPreferredSize().width, panelMenu.getPreferredSize().height);
+        JButton button = createBackButton(frame, () -> showMainFrame());
+        button.setBounds(40, 40, button.getPreferredSize().width, button.getPreferredSize().height);
 
-        addToFrame(frame, new Component[]{button, panel, background});
+        addToFrame(frame, new Component[]{button, panelWorld, panelMenu, background});
 
         resetupFrame(frame);
     }

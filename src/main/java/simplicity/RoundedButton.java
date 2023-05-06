@@ -9,18 +9,24 @@ public class RoundedButton extends JButton {
 
     private final Color backgroundColor;
     private int radius = 20;
+    private final int fontSize;
 
     public RoundedButton(String text, int radius, Color backgroundColor) {
+        this(text, radius, backgroundColor, 24);
+    }
+
+    public RoundedButton(String text, int radius, Color backgroundColor, int fontSize) {
         super(text);
         this.radius = radius;
         this.backgroundColor = backgroundColor;
+        this.fontSize = fontSize;
         init();
     }
 
     private void init() {
         setBackground(backgroundColor);
         setOpaque(false);
-        setFont(new Font("The Sims Sans", Font.PLAIN, 24));
+        setFont(new Font("The Sims Sans", Font.PLAIN, fontSize));
         setForeground(Color.WHITE);
         setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         setFocusPainted(false);
