@@ -30,6 +30,7 @@ public class GUIMain extends Main {
         isActionFrameActive = false;
         font16 = new Font("The Sims Sans", Font.PLAIN, 16);
         font20 = new Font("The Sims Sans", Font.PLAIN, 20);
+        time = new Time();
     }
 
     public void start() {
@@ -319,6 +320,7 @@ public class GUIMain extends Main {
         }
 
         panel.setPreferredSize(new Dimension(648, 648));
+        roomPanel = panel;
         return panel;
     }
 
@@ -623,7 +625,10 @@ public class GUIMain extends Main {
                 currentSim.getSimLoc().getPoint().setY(targetBarang.getStartPoint().getY());
                 showMessagePopup(frame, "Anda berhasil berpindah tempat ke objek " + currentSim.getObjLoc() + ".", "Succeed");
 
-
+                if (roomPanel != null) {
+                    roomPanel.revalidate();
+                    roomPanel.repaint();
+                }
             } else { // Kalau numBarang lebih dari total barang
                 showMessagePopup(frame, "Masukan tidak valid. Pilih nomor yang tersedia.", "Failed");
             }
@@ -708,9 +713,12 @@ public class GUIMain extends Main {
 
         JButton submitButton = createCallbackButton("Submit", () -> {
             String act = (String) comboBox.getSelectedItem();
+            System.out.println(0);
             if (equals(act, "WORK")) {
+                System.out.println(1);
                 // pekerjaan baru hanya dapat dikerjakan 1 hari setelah hari penggantian pekerjaan
                 if (time.getDay() > currentSim.getDayChangeJob()) {
+                    System.out.println(2);
                     // validasi waktu kerja kelipatan 120
                     int simWorkTime = validateTime(frame, "kerja", 120);
                     // cek waktu sisa dalam hari
