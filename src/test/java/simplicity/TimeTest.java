@@ -20,21 +20,17 @@ public class TimeTest {
     public void testTimeConstructor() {
         assertEquals("day not equal", time1.getDay(), 1);
         assertEquals("minute not equal", time1.getMinute(), 12);
-        assertEquals("second not equal", time1.getSecond(), 0);
 
         assertEquals("day not equal", time2.getDay(), 3);
         assertEquals("minute not equal", time2.getMinute(), 10);
-        assertEquals("second not equal", time2.getSecond(), 59);
     }
 
     @Test
     public void testTimeSet() {
         time3.setDay(20);
         time3.setMinute(1);
-        time3.setSecond(1);
         assertEquals("day not equal", time3.getDay(), 20);
         assertEquals("minute not equal", time3.getMinute(), 1);
-        assertEquals("second not equal", time3.getSecond(), 1);
     }
 
     @Test
