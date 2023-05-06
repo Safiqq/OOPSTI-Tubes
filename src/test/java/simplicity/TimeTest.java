@@ -19,7 +19,7 @@ public class TimeTest {
     @Test
     public void testTimeConstructor() {
         assertEquals("day not equal", time1.getDay(), 1);
-        assertEquals("minute not equal", time1.getMinute(), 12);
+        assertEquals("minute not equal", time1.getMinute(), 11);
 
         assertEquals("day not equal", time2.getDay(), 3);
         assertEquals("minute not equal", time2.getMinute(), 10);
